@@ -13,7 +13,6 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - Login back-end con chiamata al database
 
 ## WIP:
-- Base app
 
 ## Fatto:
-- 
+- Base app
