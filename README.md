@@ -13,6 +13,7 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - Schermata post login (ok)
 - Login back-end con chiamata al database
 - Responsive UI
+- Firebase
 - Menu in basso
 
 ## WIP:
