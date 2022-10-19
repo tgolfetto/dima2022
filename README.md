@@ -6,6 +6,19 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - richiesta taglia/colore differente da camerino con notifica sull'app del commesso (Push Notification + Chat)
 - tracciamento reparto in cui è l'utente a fini di business (Location GPS)
 
+## Screens
+- SplashScreen
+- OnBoarding
+- Login/SignUp
+- Home
+- Settings
+- PDP
+- PLP
+- Cart
+- RiepilogoOrdine
+- Camerino
+- Scanner
+- ListaRichieste (Commessa)
 
 ## Da fare:
 - Setup database (firebase?) per login
@@ -13,7 +26,6 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - Schermata post login (ok)
 - Login back-end con chiamata al database
 - Responsive UI
-- Firebase
 - Menu in basso
 
 ## WIP:
@@ -23,7 +35,8 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 
 ## Dependencies:
 -  http
--  
+-  lottie
+-  provider
 
 ## Read List:
 -   https://medium.com/flutterworld/flutter-mvvm-architecture-f8bed2521958

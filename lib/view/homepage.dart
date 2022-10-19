@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './menu.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -11,6 +12,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  var _currentIndex = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -28,8 +30,38 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Menu(
+              currentIndex: _currentIndex,
+              onTap: (i) => setState(() => _currentIndex = i),
+              items: [
+                /// Home
+                BottomBarItem(
+                  icon: const Icon(Icons.home),
+                  title: Text("Home"),
+                  selectedColor: Colors.purple,
+                ),
+
+                /// Likes
+                BottomBarItem(
+                  icon: Icon(Icons.favorite_border),
+                  title: Text("Likes"),
+                  selectedColor: Colors.pink,
+                ),
+
+                /// Search
+                BottomBarItem(
+                  icon: Icon(Icons.search),
+                  title: Text("Search"),
+                  selectedColor: Colors.orange,
+                ),
+
+                /// Profile
+                BottomBarItem(
+                  icon: Icon(Icons.person),
+                  title: Text("Profile"),
+                  selectedColor: Colors.teal,
+                ),
+              ],
             ),
             Text(
               '$_counter',
