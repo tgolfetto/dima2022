@@ -16,3 +16,6 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 
 ## Fatto:
 - Base app
+
+## Read List:
+-   https://medium.com/flutterworld/flutter-mvvm-architecture-f8bed2521958
