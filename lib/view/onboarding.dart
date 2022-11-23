@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:onboarding/onboarding.dart';
+import '../model_view/custom_theme.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -158,122 +160,67 @@ class _OnBoardingState extends State<OnBoarding> {
     ),
   ];
 
-  static const width = 100.0;
-
   @override
   void initState() {
     super.initState();
     index = 0;
   }
 
-  SizedBox _skipButton({void Function(int)? setIndex}) {
-    return SizedBox(
-      width: width,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Material(
-          borderRadius: defaultSkipButtonBorderRadius,
-          color: defaultSkipButtonColor,
-          child: InkWell(
-            borderRadius: defaultSkipButtonBorderRadius,
-            onTap: () {
-              if (setIndex != null) {
-                index = 2;
-                setIndex(2);
-              }
-            },
-            child: const Padding(
-              padding: defaultSkipButtonPadding,
-              child: Text(
-                'Skip',
-                style: defaultSkipButtonTextStyle,
-              ),
-            ),
-          ),
-        ),
-      ),
+  ElevatedButton _skipButton({void Function(int)? setIndex}) {
+    return ElevatedButton(
+      style: buttonStyle,
+      onPressed: () {
+        if (setIndex != null) {
+          index = 2;
+          setIndex(2);
+        }
+      },
+      child: const Text('Skip'),
     );
   }
 
-  SizedBox get _signupButton {
-    return SizedBox(
-      width: width,
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Material(
-          borderRadius: defaultProceedButtonBorderRadius,
-          color: defaultProceedButtonColor,
-          child: InkWell(
-            borderRadius: defaultProceedButtonBorderRadius,
-            onTap: () {},
-            child: const Padding(
-              padding: defaultProceedButtonPadding,
-              child: Text(
-                'Sign up',
-                style: defaultProceedButtonTextStyle,
-              ),
-            ),
-          ),
-        ),
-      ),
+  ElevatedButton get _signupButton {
+    return ElevatedButton(
+      style: buttonStyle,
+      onPressed: () => Modular.to.navigate('/homepage'),
+      child: const Text('Homepage'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: Scaffold(
+    return Scaffold(
         body: Onboarding(
             pages: onboardingPagesList,
             onPageChange: (int pageIndex) {
               index = pageIndex;
             },
             footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-              return DecoratedBox(
-                decoration: BoxDecoration(
-                  color: background,
-                  border: Border.all(
-                    width: 0.0,
-                    color: background,
-                  ),
-                ),
-                child: ColoredBox(
-                  color: background,
-                  child: Padding(
-                    padding: const EdgeInsets.all(45.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        index != pagesLength - 1
-                            ? _skipButton(setIndex: setIndex)
-                            : _signupButton,
-                        Padding(
-                          padding: const EdgeInsets.only(right: 45.0),
-                          child: CustomIndicator(
-                            netDragPercent: dragDistance,
-                            pagesLength: pagesLength,
-                            indicator: Indicator(
-                              indicatorDesign: IndicatorDesign.polygon(
-                                polygonDesign: PolygonDesign(
-                                  polygon: DesignType.polygon_arrow,
-                                ),
-                              ),
+              return Padding(
+                padding: const EdgeInsets.all(45.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    index != pagesLength - 1
+                        ? _skipButton(setIndex: setIndex)
+                        : _signupButton,
+                    Padding(
+                      padding: const EdgeInsets.only(right: 45.0),
+                      child: CustomIndicator(
+                        netDragPercent: dragDistance,
+                        pagesLength: pagesLength,
+                        indicator: Indicator(
+                          indicatorDesign: IndicatorDesign.polygon(
+                            polygonDesign: PolygonDesign(
+                              polygon: DesignType.polygon_arrow,
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               );
-            }),
-      ),
-    );
+            }));
   }
 }

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import './menu.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   int _counter = 0;
   var _currentIndex = 0;
 
@@ -37,28 +37,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 /// Home
                 BottomBarItem(
                   icon: const Icon(Icons.home),
-                  title: Text("Home"),
+                  title: const Text("Home"),
                   selectedColor: Colors.purple,
                 ),
 
                 /// Likes
                 BottomBarItem(
-                  icon: Icon(Icons.favorite_border),
-                  title: Text("Likes"),
+                  icon: const Icon(Icons.favorite_border),
+                  title: const Text("Likes"),
                   selectedColor: Colors.pink,
                 ),
 
                 /// Search
                 BottomBarItem(
-                  icon: Icon(Icons.search),
-                  title: Text("Search"),
+                  icon: const Icon(Icons.search),
+                  title: const Text("Search"),
                   selectedColor: Colors.orange,
                 ),
 
                 /// Profile
                 BottomBarItem(
-                  icon: Icon(Icons.person),
-                  title: Text("Profile"),
+                  icon: const Icon(Icons.person),
+                  title: const Text("Profile"),
                   selectedColor: Colors.teal,
                 ),
               ],
