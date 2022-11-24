@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../view/onboarding.dart';
+import '../view/on_boarding.dart';
 import '../view/homepage.dart';
 import './custom_theme.dart';
 
