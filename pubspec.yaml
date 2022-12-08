@@ -38,6 +38,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   onboarding: ^3.1.0
   flutter_modular: any
+  ai_barcode: ^3.2.4
+  permission_handler: ^10.2.0
 
 dev_dependencies:
   flutter_test:

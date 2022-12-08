@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:onboarding/onboarding.dart';
-import '../model_view/custom_theme.dart';
+import './custom_theme.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -155,6 +155,18 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 
+  ElevatedButton _nextButton({void Function(int)? setIndex}) {
+    return ElevatedButton(
+      style: buttonStyle,
+      onPressed: () {
+        if (setIndex != null) {
+          setIndex(++index);
+        }
+      },
+      child: const Text('Next'),
+    );
+  }
+
   ElevatedButton get _signupButton {
     return ElevatedButton(
       style: buttonStyle,
@@ -175,28 +187,56 @@ class _OnBoardingState extends State<OnBoarding> {
               return Padding(
                 padding: const EdgeInsets.all(45.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 30.0),
-                          child: CustomIndicator(
-                            netDragPercent: dragDistance,
-                            pagesLength: pagesLength,
-                            indicator: Indicator(
-                              indicatorDesign: IndicatorDesign.polygon(
-                                polygonDesign: PolygonDesign(
-                                  polygon: DesignType.polygon_circle,
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.only(top: 30.0),
+                              child:
+                              index != pagesLength - 1
+                                  ? _skipButton(setIndex: setIndex)
+                                  : const SizedBox()
+                          )
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0, right: 30.0),
+                            child: CustomIndicator(
+                              netDragPercent: dragDistance,
+                              pagesLength: pagesLength,
+                              indicator: Indicator(
+                                indicatorDesign: IndicatorDesign.polygon(
+                                  polygonDesign: PolygonDesign(
+                                    polygon: DesignType.polygon_circle,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        index != pagesLength - 1
-                            ? _skipButton(setIndex: setIndex)
-                            : _signupButton,
-                      ],
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child:
+                            index != pagesLength - 1
+                                ? _nextButton(setIndex: setIndex)
+                                : _signupButton,
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

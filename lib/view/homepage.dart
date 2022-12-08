@@ -1,80 +1,93 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import './menu.dart';
+import './custom_theme.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'barcode_scanner_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
-
-  final String title;
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
   var _currentIndex = 0;
+  String _barcodeScanned = '';
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  ElevatedButton get _cartButton {
+    return ElevatedButton(
+      style: buttonStyle,
+      onPressed: () => Modular.to.navigate('/barcode'),
+      child: const Icon(Icons.shopping_cart),
+    );
+  }
+
+  Widget get _mainContent {
+    switch (_currentIndex) {
+      case 1:
+        {
+          return Expanded(
+              flex:1,
+              child: BarcodeScannerWidget((String code) {
+                _barcodeScanned = code;
+                if (kDebugMode) {
+                  print(_barcodeScanned);
+                }
+              }));
+        }
+      default:
+        {
+          return const Text('Home');
+        }
+    }
+  }
+
+  Menu get _bottomMenu {
+    return Menu(
+      currentIndex: _currentIndex,
+      onTap: (i) => setState(() => _currentIndex = i),
+      items: [
+        /// Home
+        BottomBarItem(
+          icon: const Icon(Icons.home),
+          title: const Text("Home"),
+          selectedColor: Colors.purple,
+        ),
+
+        /// Scan
+        BottomBarItem(
+          icon: const Icon(Icons.qr_code_scanner),
+          title: const Text("Scan"),
+          selectedColor: Colors.pink,
+        ),
+
+        /// Dressing room
+        BottomBarItem(
+          icon: const Icon(Icons.switch_access_shortcut),
+          title: const Text("Dressing Room"),
+          selectedColor: Colors.orange,
+        ),
+
+        /// Profile
+        BottomBarItem(
+          icon: const Icon(Icons.person),
+          title: const Text("Profile"),
+          selectedColor: Colors.teal,
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Menu(
-              currentIndex: _currentIndex,
-              onTap: (i) => setState(() => _currentIndex = i),
-              items: [
-                /// Home
-                BottomBarItem(
-                  icon: const Icon(Icons.home),
-                  title: const Text("Home"),
-                  selectedColor: Colors.purple,
-                ),
-
-                /// Likes
-                BottomBarItem(
-                  icon: const Icon(Icons.favorite_border),
-                  title: const Text("Likes"),
-                  selectedColor: Colors.pink,
-                ),
-
-                /// Search
-                BottomBarItem(
-                  icon: const Icon(Icons.search),
-                  title: const Text("Search"),
-                  selectedColor: Colors.orange,
-                ),
-
-                /// Profile
-                BottomBarItem(
-                  icon: const Icon(Icons.person),
-                  title: const Text("Profile"),
-                  selectedColor: Colors.teal,
-                ),
-              ],
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [_cartButton, _mainContent, _bottomMenu],
+      )),
     );
   }
 }
