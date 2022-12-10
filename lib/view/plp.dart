@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/lineitem.dart';
+import '../model/product_query.dart';
+import '../model_view/product.dart';
 
 class Plp extends StatefulWidget {
   const Plp({super.key});
@@ -12,6 +14,13 @@ class _PlpState extends State<Plp> {
 
   @override
   Widget build(BuildContext context) {
-    return const LineItem(sku: 1, size: 48, isAddable: true); ///@TODO: get real list
+    List<LineItem> items = <LineItem>[];
+    for(ProductModel p in Product.retrieveProductList()){
+      items.add(LineItem(sku: p.sku, size: p.size, isAddable: true));
+    }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: items,
+    );
   }
 }
