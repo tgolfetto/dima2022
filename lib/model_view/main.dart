@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../view/barcode_scanner_widget.dart';
-import '../view/cart.dart';
+import '../view/cart_widget.dart';
 import '../view/on_boarding.dart';
 import '../view/homepage.dart';
 import '../view/custom_theme.dart';
@@ -34,7 +33,6 @@ class AppModule extends Module {
   List<ModularRoute> get routes => [
     ChildRoute('/', child: (context, args) => const OnBoarding()),
     ChildRoute('/homepage', child: (context, args) => const HomePage()),
-    ChildRoute('/cart', child: (context, args) => const Cart()),
-    ChildRoute('/barcode', child: (context, args) => BarcodeScannerWidget((String code){print(code);})),
+    ChildRoute('/cart', child: (context, args) => const CartWidget()),
   ];
 }

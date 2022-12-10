@@ -1,9 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:dima2022/model_view/homepage_content_route.dart';
 import 'package:flutter/material.dart';
 import './menu.dart';
 import './custom_theme.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'barcode_scanner_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,34 +13,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _currentIndex = 0;
-  String _barcodeScanned = '';
 
   ElevatedButton get _cartButton {
     return ElevatedButton(
       style: buttonStyle,
-      onPressed: () => Modular.to.navigate('/barcode'),
+      onPressed: () => Modular.to.navigate('/cart'),
       child: const Icon(Icons.shopping_cart),
     );
-  }
-
-  Widget get _mainContent {
-    switch (_currentIndex) {
-      case 1:
-        {
-          return Expanded(
-              flex:1,
-              child: BarcodeScannerWidget((String code) {
-                _barcodeScanned = code;
-                if (kDebugMode) {
-                  print(_barcodeScanned);
-                }
-              }));
-        }
-      default:
-        {
-          return const Text('Home');
-        }
-    }
   }
 
   Menu get _bottomMenu {
@@ -86,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [_cartButton, _mainContent, _bottomMenu],
+        children: [_cartButton, HomepageContentRoute().mainContent(_currentIndex), _bottomMenu],
       )),
     );
   }
