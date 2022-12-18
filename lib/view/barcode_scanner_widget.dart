@@ -49,7 +49,7 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return PlatformAiBarcodeScannerWidget(
-      platformScannerController: _scannerController,
-    );
+          platformScannerController: _scannerController,
+        );
   }
 }

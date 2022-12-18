@@ -11,15 +11,14 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
-
   @override
   Widget build(BuildContext context) {
     List<LineItem> items = <LineItem>[];
-    for(ProductModel p in Product.retrieveProductList()){
+    for (ProductModel p in Product.retrieveProductList()) {
       items.add(LineItem(sku: p.sku, size: p.size, isAddable: true));
     }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ListView(
+      shrinkWrap: true,
       children: items,
     );
   }

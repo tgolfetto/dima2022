@@ -61,11 +61,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [_cartButton, HomepageContentRoute().mainContent(_currentIndex), _bottomMenu],
-      )),
+      body: Column(
+        children: [
+          Container(child: _cartButton),
+          Expanded(child: HomepageContentRoute().mainContent(_currentIndex)),
+          Container(child: _bottomMenu)
+        ],
+      ),
     );
   }
 }

@@ -14,7 +14,6 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
-
   ElevatedButton get _backButton {
     return ElevatedButton(
       style: buttonStyle,
@@ -23,10 +22,10 @@ class _CartWidgetState extends State<CartWidget> {
     );
   }
 
-  Column get _productList{
+  Column get _productList {
     CartModel userCart = Cart.retrieveCart();
     List<LineItem> items = <LineItem>[];
-    for(ProductModel p in userCart.productList){
+    for (ProductModel p in userCart.productList) {
       items.add(LineItem(sku: p.sku, size: p.size, isAddable: false));
     }
     return Column(
@@ -37,15 +36,14 @@ class _CartWidgetState extends State<CartWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            _backButton,
-            const Text('Cart'),
-            _productList
-          ],
+    return Scaffold(
+        body: Column(
+      children: [
+        Container(child: _backButton),
+        Expanded(
+          child: SingleChildScrollView(child: _productList),
         ),
-      );
+      ],
+    ));
   }
 }
