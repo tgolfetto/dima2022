@@ -11,15 +11,28 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
+  final int _productPerRow = 2;
+
   @override
   Widget build(BuildContext context) {
-    List<LineItem> items = <LineItem>[];
-    for (ProductModel p in Product.retrieveProductList()) {
-      items.add(LineItem(sku: p.sku, size: p.size, isAddable: true));
+    List<Row> rows = <Row>[];
+    List<Widget> items = [];
+    List<ProductModel> products = Product.retrieveProductList();
+    for (int i = 1; i <= products.length; i++) {
+      ProductModel p = products[i-1];
+      items.add(LineItem(model: p.model, sizes: p.sizes));
+      if (i != 1 && (i % _productPerRow == 0 || i == products.length - 1)) {
+        rows.add(Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: items,
+        ));
+        items = <LineItem>[];
+      }
     }
-    return ListView(
-      shrinkWrap: true,
-      children: items,
+    return SingleChildScrollView(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: rows),
     );
   }
 }
