@@ -1,16 +1,20 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../model_view/cart.dart';
 import 'custom_theme.dart';
 
 class CartLineItem extends StatelessWidget {
   final int model;
+  final String name;
+  final double price;
   final int size;
 
   Widget get _removeFromCartButton {
     return ElevatedButton(
       style: buttonStyle,
-      onPressed: () => () {
-        ///@TODO: Remove from cart the current item with size/color
-      },
+      onPressed: () => Cart.removeFromCart(model, size),
       child: const Icon(Icons.remove_shopping_cart),
     );
   }
@@ -18,6 +22,8 @@ class CartLineItem extends StatelessWidget {
   const CartLineItem(
       {super.key,
         required this.model,
+        required this.name,
+        required this.price,
         required this.size,
         });
 
@@ -33,7 +39,7 @@ class CartLineItem extends StatelessWidget {
                 width: double.maxFinite,
                 child: Image.asset('assets/images/example.png'),
               ),
-              Text('Product name: $model'),
+              Text('Product name: $name'),
               Text('Size: $size'),
               _removeFromCartButton,
             ],

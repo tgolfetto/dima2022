@@ -1,25 +1,36 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
+import '../model_view/cart.dart';
 import 'custom_theme.dart';
 
-class LineItem extends StatelessWidget {
+class LineItem extends StatefulWidget {
   final int model;
+  final String name;
+  final double price;
   final List<int> sizes;
+
+  const LineItem({
+    super.key,
+    required this.model,
+    required this.name,
+    required this.price,
+    required this.sizes,
+  });
+
+  @override
+  State<LineItem> createState() => _LineItemState();
+}
+
+class _LineItemState extends State<LineItem> {
+  int dropdownValue = 0;
 
   Widget get _addToCartButton {
     return ElevatedButton(
       style: buttonStyle,
-      onPressed: () => () {
-        ///@TODO: Add to cart the current item with size/color
-      },
+      onPressed: () => Cart.addToCart(widget.model, dropdownValue),
       child: const Icon(Icons.add_shopping_cart),
     );
   }
-
-  const LineItem(
-      {super.key,
-      required this.model,
-      required this.sizes,
-      });
 
   @override
   Widget build(BuildContext context) {
@@ -33,50 +44,32 @@ class LineItem extends StatelessWidget {
             width: double.maxFinite,
             child: Image.asset('assets/images/example.png'),
           ),
-          Text('Product name: $model'),
-          _SizeSelector(sizeList: sizes),
+          Text('${widget.model}'),
+          Text('Product name: ${widget.name}'),
+          Text('${widget.price} €'),
+          DropdownButton<int>(
+            value: dropdownValue == 0? widget.sizes[0] : dropdownValue,
+            icon: const Icon(Icons.arrow_downward),
+            elevation: 16,
+            underline: Container(
+              height: 2,
+              color: Colors.deepPurpleAccent,
+            ),
+            onChanged: (int? value) {
+              setState(() {
+                dropdownValue = value!;
+              });
+            },
+            items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
+              return DropdownMenuItem<int>(
+                value: value,
+                child: Text("$value"),
+              );
+            }).toList(),
+          ),
           _addToCartButton,
         ],
       ),
     ));
   }
 }
-
-class _SizeSelector extends StatefulWidget {
-  final List<int> sizeList;
-  const _SizeSelector({super.key, required this.sizeList});
-
-  @override
-  State<_SizeSelector> createState() => _SizeSelectorState();
-}
-
-class _SizeSelectorState extends State<_SizeSelector> {
-  int dropdownValue = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    dropdownValue = widget.sizeList[0];
-    return DropdownButton<int>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (int? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: widget.sizeList.map<DropdownMenuItem<int>>((int value) {
-        return DropdownMenuItem<int>(
-          value: value,
-          child: Text("$value"),
-        );
-      }).toList(),
-    );
-  }
-}
-

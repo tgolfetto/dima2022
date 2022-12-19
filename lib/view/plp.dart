@@ -20,7 +20,7 @@ class _PlpState extends State<Plp> {
     List<ProductModel> products = Product.retrieveProductList();
     for (int i = 1; i <= products.length; i++) {
       ProductModel p = products[i-1];
-      items.add(LineItem(model: p.model, sizes: p.sizes));
+      items.add(LineItem(model: p.model, name: p.name, price: p.price, sizes: p.sizes));
       if (i != 1 && (i % _productPerRow == 0 || i == products.length - 1)) {
         rows.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

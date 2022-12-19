@@ -21,18 +21,6 @@ class _CartWidgetState extends State<CartWidget> {
     );
   }
 
-  Column get _productList {
-    CartModel userCart = Cart.retrieveCart();
-    List<CartLineItem> items = <CartLineItem>[];
-    for (CartProductModel p in userCart.productList) {
-      items.add(CartLineItem(model: p.model, size: p.size));
-    }
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: items,
-    );
-  }
-
   final int _productPerRow = 2;
 
   @override
@@ -43,7 +31,7 @@ class _CartWidgetState extends State<CartWidget> {
     List<CartProductModel> products = userCart.productList;
     for (int i = 1; i <= products.length; i++) {
       CartProductModel p = products[i - 1];
-      items.add(CartLineItem(model: p.model, size: p.size));
+      items.add(CartLineItem(model: p.model, name: p.name, price: p.price, size: p.size));
       if (i != 1 && (i % _productPerRow == 0 || i == products.length - 1)) {
         rows.add(Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
