@@ -1,3 +1,4 @@
+import 'package:dima2022/view/pdp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../view/cart_widget.dart';
@@ -34,5 +35,6 @@ class AppModule extends Module {
     ChildRoute('/', child: (context, args) => const OnBoarding()),
     ChildRoute('/homepage', child: (context, args) => const HomePage()),
     ChildRoute('/cart', child: (context, args) => const CartWidget()),
+    ChildRoute('/pdp', child: (context, args) => Pdp(model: args.data))
   ];
 }

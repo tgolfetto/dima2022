@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import '../model_view/cart.dart';
 import 'custom_theme.dart';
 
@@ -36,40 +37,44 @@ class _LineItemState extends State<LineItem> {
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          SizedBox(
-            width: double.maxFinite,
-            child: Image.asset('assets/images/example.png'),
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              GestureDetector(
+                  onTap: () {
+                    Modular.to.navigate('/pdp', arguments: widget.model);
+                  },
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: Image.asset('assets/images/example.png'),
+                  )),
+              Text('${widget.model}'),
+              Text('Product name: ${widget.name}'),
+              Text('${widget.price} €'),
+              DropdownButton<int>(
+                value: dropdownValue == 0 ? widget.sizes[0] : dropdownValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 16,
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (int? value) {
+                  setState(() {
+                    dropdownValue = value!;
+                  });
+                },
+                items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text("$value"),
+                  );
+                }).toList(),
+              ),
+              _addToCartButton,
+            ],
           ),
-          Text('${widget.model}'),
-          Text('Product name: ${widget.name}'),
-          Text('${widget.price} €'),
-          DropdownButton<int>(
-            value: dropdownValue == 0? widget.sizes[0] : dropdownValue,
-            icon: const Icon(Icons.arrow_downward),
-            elevation: 16,
-            underline: Container(
-              height: 2,
-              color: Colors.deepPurpleAccent,
-            ),
-            onChanged: (int? value) {
-              setState(() {
-                dropdownValue = value!;
-              });
-            },
-            items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
-              return DropdownMenuItem<int>(
-                value: value,
-                child: Text("$value"),
-              );
-            }).toList(),
-          ),
-          _addToCartButton,
-        ],
-      ),
-    ));
+        ));
   }
 }
