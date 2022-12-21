@@ -40,6 +40,9 @@ dependencies:
   flutter_modular: any
   ai_barcode: ^3.2.4
   permission_handler: ^10.2.0
+  layout: ^1.0.3
+    
+
 
 dev_dependencies:
   flutter_test:
