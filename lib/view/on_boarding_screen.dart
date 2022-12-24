@@ -1,9 +1,10 @@
+import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:onboarding/onboarding.dart';
 import './custom_theme.dart';
 
 class OnBoarding extends StatefulWidget {
+  static const routeName = '/on_boarding';
   const OnBoarding({Key? key}) : super(key: key);
 
   @override
@@ -144,7 +145,7 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _skipButton({void Function(int)? setIndex}) {
     return ElevatedButton(
-      style: buttonStyle,
+      style: CustomTheme.buttonStyle,
       onPressed: () {
         if (setIndex != null) {
           index = 2;
@@ -157,7 +158,7 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _nextButton({void Function(int)? setIndex}) {
     return ElevatedButton(
-      style: buttonStyle,
+      style: CustomTheme.buttonStyle,
       onPressed: () {
         if (setIndex != null) {
           setIndex(++index);
@@ -169,8 +170,8 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton get _signupButton {
     return ElevatedButton(
-      style: buttonStyle,
-      onPressed: () => Modular.to.navigate('/homepage'),
+      style: CustomTheme.buttonStyle,
+      onPressed: () => Navigator.of(context).pushReplacementNamed(AuthScreen.routeName),
       child: const Text('Homepage'),
     );
   }

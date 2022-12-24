@@ -41,6 +41,11 @@ dependencies:
   ai_barcode: ^3.2.4
   permission_handler: ^10.2.0
   layout: ^1.0.3
+  provider: ^6.0.5
+  http: ^0.13.5
+  shared_preferences: ^2.0.15
+  intl: ^0.18.0
+  flutter_svg: ^1.1.6
     
 
 

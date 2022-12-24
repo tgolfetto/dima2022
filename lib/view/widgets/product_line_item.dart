@@ -1,9 +1,6 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:layout/layout.dart';
-import '../model_view/cart.dart';
-import 'custom_theme.dart';
+import '../custom_theme.dart';
 
 class LineItem extends StatefulWidget {
   final int model;
@@ -28,8 +25,10 @@ class _LineItemState extends State<LineItem> {
 
   Widget get _addToCartButton {
     return ElevatedButton(
-      style: buttonStyle,
-      onPressed: () => Cart.addToCart(widget.model, dropdownValue),
+      style: CustomTheme.buttonStyle,
+      onPressed: () => {
+        //Cart.addToCart(widget.model, dropdownValue)
+      },
       child: const Icon(Icons.add_shopping_cart),
     );
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../model/cart_query.dart';
-import '../model_view/cart.dart';
-import './custom_theme.dart';
+import '../../custom_theme.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'cart_lineitem.dart';
+import '../cart_line_item.dart';
 
 class CartWidget extends StatefulWidget {
   const CartWidget({super.key});
@@ -15,7 +13,7 @@ class CartWidget extends StatefulWidget {
 class _CartWidgetState extends State<CartWidget> {
   ElevatedButton get _backButton {
     return ElevatedButton(
-      style: buttonStyle,
+      style: CustomTheme.buttonStyle,
       onPressed: () => Modular.to.navigate('/homepage'),
       child: const Icon(Icons.close),
     );
@@ -27,7 +25,7 @@ class _CartWidgetState extends State<CartWidget> {
   Widget build(BuildContext context) {
     List<Row> rows = <Row>[];
     List<Widget> items = [];
-    CartModel userCart = Cart.retrieveCart();
+    /*CartModel userCart = Cart.retrieveCart();
     List<CartProductModel> products = userCart.productList;
     for (int i = 1; i <= products.length; i++) {
       CartProductModel p = products[i - 1];
@@ -39,17 +37,23 @@ class _CartWidgetState extends State<CartWidget> {
         ));
         items = <CartLineItem>[];
       }
+    }*/
+
+    /// Mock items
+    for (int i = 0; i < 10; i++) {
+      items.add(CartLineItem(
+          model: 1, index: i, name: 'T-shirt', price: 19.99, size: 48));
     }
 
     return Scaffold(
         body: Column(
-          children: [
-            Container(child: _backButton),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: rows),
+      children: [
+        Container(child: _backButton),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: rows),
               ),
             ),
           ],

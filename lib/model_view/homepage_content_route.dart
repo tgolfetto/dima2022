@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../view/barcode_scanner_widget.dart';
-import '../view/plp.dart';
+import '../view/widgets/homepage_widgets/barcode_scanner.dart';
+import '../view/widgets/homepage_widgets/plp.dart';
 
 class HomepageContentRoute {
   String _barcodeScanned = '';

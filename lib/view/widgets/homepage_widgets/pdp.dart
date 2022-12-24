@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../model/product_query.dart';
-import '../model_view/cart.dart';
-import '../model_view/product.dart';
-import 'custom_theme.dart';
+import '../../../model/product.dart';
+import '../../custom_theme.dart';
 
 class Pdp extends StatefulWidget {
   final int model;
@@ -19,7 +17,7 @@ class _PdpState extends State<Pdp> {
 
   ElevatedButton get _backButton {
     return ElevatedButton(
-      style: buttonStyle,
+      style: CustomTheme.buttonStyle,
       onPressed: () => Modular.to.navigate('/homepage'),
       child: const Icon(Icons.close),
     );
@@ -27,15 +25,17 @@ class _PdpState extends State<Pdp> {
 
   Widget get _addToCartButton {
     return ElevatedButton(
-      style: buttonStyle,
-      onPressed: () => Cart.addToCart(widget.model, dropdownValue),
+      style: CustomTheme.buttonStyle,
+      onPressed: () => {
+        //Cart.addToCart(widget.model, dropdownValue)
+      } ,
       child: const Icon(Icons.add_shopping_cart),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    ProductModel productModel = Product.retrieveProduct(widget.model);
+    //Product productModel = Product.retrieveProduct(widget.model);
     return Scaffold(
         body: Column(
       children: [
@@ -53,11 +53,11 @@ class _PdpState extends State<Pdp> {
                     child: Image.asset('assets/images/example.png'),
                   ),
                   Text('${widget.model}'),
-                  Text('Product name: ${productModel.name}'),
-                  Text('${productModel.price} €'),
+                  const Text('Product name: T-shirt black'),
+                  const Text('19.99 €'),
                   DropdownButton<int>(
                     value: dropdownValue == 0
-                        ? productModel.sizes[0]
+                        ? 44 //productModel.sizes[0]
                         : dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
@@ -70,7 +70,7 @@ class _PdpState extends State<Pdp> {
                         dropdownValue = value!;
                       });
                     },
-                    items: productModel.sizes
+                    items: [44, 46, 48] //productModel.sizes
                         .map<DropdownMenuItem<int>>((int value) {
                       return DropdownMenuItem<int>(
                         value: value,
