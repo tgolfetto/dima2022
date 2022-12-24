@@ -25,7 +25,7 @@ class _LineItemState extends State<LineItem> {
 
   Widget get _addToCartButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleFill,
       onPressed: () => {
         //Cart.addToCart(widget.model, dropdownValue)
       },

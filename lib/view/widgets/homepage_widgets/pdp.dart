@@ -17,7 +17,7 @@ class _PdpState extends State<Pdp> {
 
   ElevatedButton get _backButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleOutline,
       onPressed: () => Modular.to.navigate('/homepage'),
       child: const Icon(Icons.close),
     );
@@ -25,7 +25,7 @@ class _PdpState extends State<Pdp> {
 
   Widget get _addToCartButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleFill,
       onPressed: () => {
         //Cart.addToCart(widget.model, dropdownValue)
       } ,

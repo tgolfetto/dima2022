@@ -317,22 +317,13 @@ class AuthCardState extends State<AuthCard> {
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: _submit,
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 30.0, vertical: 8.0),
-                          backgroundColor: Theme.of(context).primaryColor,
-                          foregroundColor:
-                              Theme.of(context).primaryTextTheme.button!.color,
-                        ),
+                        style: CustomTheme.buttonStyleFill,
                         child: Text(
                             _authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
                       ),
                 TextButton(
                   onPressed: _switchAuthMode,
-                  style: CustomTheme.buttonStyle,
+                  style: CustomTheme.buttonStyleOutline,
                   child: Text(
                       '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
                 ),

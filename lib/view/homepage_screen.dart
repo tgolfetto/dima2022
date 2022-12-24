@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
   ElevatedButton get _cartButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleOutline,
       onPressed: () => Modular.to.navigate('/cart'),
       child: const Icon(Icons.shopping_cart),
     );

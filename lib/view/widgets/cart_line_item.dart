@@ -12,7 +12,7 @@ class CartLineItem extends StatelessWidget {
 
   Widget get _removeFromCartButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleFill,
       onPressed: () => {
         //Cart.removeFromCart(model, size)
       },

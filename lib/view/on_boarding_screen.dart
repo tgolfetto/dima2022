@@ -61,15 +61,15 @@ class _OnBoardingState extends State<OnBoarding> {
           color: Colors.white,
           child: Center(
             child: Column(
-              children: [
+              children: const [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 45.0,
                     vertical: 90.0,
                   ),
-                  child: Image.asset('assets/images/example.png'),
+                  child: Image(image: AssetImage('assets/images/example.jpg')),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.symmetric(horizontal: 45.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
@@ -79,8 +79,9 @@ class _OnBoardingState extends State<OnBoarding> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -107,7 +108,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     horizontal: 45.0,
                     vertical: 90.0,
                   ),
-                  child: Image.asset('assets/images/example.png'),
+                  child: Image.asset('example.png'),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 45.0),
@@ -145,7 +146,7 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _skipButton({void Function(int)? setIndex}) {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleOutline,
       onPressed: () {
         if (setIndex != null) {
           index = 2;
@@ -158,7 +159,7 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _nextButton({void Function(int)? setIndex}) {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleFill,
       onPressed: () {
         if (setIndex != null) {
           setIndex(++index);
@@ -170,8 +171,9 @@ class _OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton get _signupButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
-      onPressed: () => Navigator.of(context).pushReplacementNamed(AuthScreen.routeName),
+      style: CustomTheme.buttonStyleFill,
+      onPressed: () =>
+          Navigator.of(context).pushReplacementNamed(AuthScreen.routeName),
       child: const Text('Homepage'),
     );
   }
@@ -191,52 +193,37 @@ class _OnBoardingState extends State<OnBoarding> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(top: 30.0),
-                              child:
-                              index != pagesLength - 1
-                                  ? _skipButton(setIndex: setIndex)
-                                  : const SizedBox()
-                          )
-                        ],
-                      ),
-                    ),
+                        flex: 1,
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 30.0),
+                            child: index != pagesLength - 1
+                                ? _skipButton(setIndex: setIndex)
+                                : const SizedBox())),
                     Expanded(
                       flex: 1,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 30.0, right: 30.0),
-                            child: CustomIndicator(
-                              netDragPercent: dragDistance,
-                              pagesLength: pagesLength,
-                              indicator: Indicator(
-                                indicatorDesign: IndicatorDesign.polygon(
-                                  polygonDesign: PolygonDesign(
-                                    polygon: DesignType.polygon_circle,
-                                  ),
-                                ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(bottom: 30.0, right: 30.0),
+                        child: CustomIndicator(
+                          netDragPercent: dragDistance,
+                          pagesLength: pagesLength,
+                          indicator: Indicator(
+                            indicatorDesign: IndicatorDesign.polygon(
+                              polygonDesign: PolygonDesign(
+                                polygon: DesignType.polygon_circle,
                               ),
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     Expanded(
                       flex: 1,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 30.0),
-                            child:
-                            index != pagesLength - 1
-                                ? _nextButton(setIndex: setIndex)
-                                : _signupButton,
-                          )
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: index != pagesLength - 1
+                            ? _nextButton(setIndex: setIndex)
+                            : _signupButton,
                       ),
                     ),
                   ],

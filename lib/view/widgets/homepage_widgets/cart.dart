@@ -13,7 +13,7 @@ class CartWidget extends StatefulWidget {
 class _CartWidgetState extends State<CartWidget> {
   ElevatedButton get _backButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyle,
+      style: CustomTheme.buttonStyleOutline,
       onPressed: () => Modular.to.navigate('/homepage'),
       child: const Icon(Icons.close),
     );

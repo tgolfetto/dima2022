@@ -5,54 +5,56 @@ import '../model_view/size_config.dart';
 class CustomTheme {
   static const String appTitle = 'DIMA App 2022';
 
-  static ButtonStyle buttonStyle =
-      ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+  static double smallPadding = 12.0;
+  static double mediumPadding = 24.0;
+  static double bigPadding = 32.0;
 
-  static Color primaryColor = const Color(0xffea4b4b);
-  static Color primaryLightColor = const Color(0xffebeded);
-  static Color cardBackgroundColor = const Color(0xfff3f4f4);
-  static LinearGradient primaryGradientColor = const LinearGradient(
-    begin: Alignment.topLeft,
-    end: Alignment.bottomRight,
-    colors: [Color(0xFFFFA53E), Color(0xFFFF7643)],
-  );
-  static Color secondaryColor = const Color(0xFF979797);
-  static Color secondaryColorDark = const Color(0xff292929);
+  static ButtonStyle buttonStyleFill = ElevatedButton.styleFrom(
+      backgroundColor: secondaryColor,
+      foregroundColor: backgroundColor,
+      padding: EdgeInsets.all(smallPadding),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: secondaryColor, width: 1, style: BorderStyle.solid),
+          borderRadius: BorderRadius.circular(5)),
+      textStyle: const TextStyle(
+        fontSize: 16,
+        fontFamily: 'Raleway',
+        fontWeight: FontWeight.bold,
+      ));
+
+  static ButtonStyle buttonStyleOutline = ElevatedButton.styleFrom(
+      backgroundColor: backgroundColor,
+      foregroundColor: secondaryColor,
+      padding: EdgeInsets.all(smallPadding),
+      shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: secondaryColor, width: 1, style: BorderStyle.solid),
+          borderRadius: BorderRadius.circular(5)),
+      textStyle: const TextStyle(
+          fontSize: 16, fontFamily: 'Raleway', fontWeight: FontWeight.bold));
+
+  static Color primaryColor = Colors.black;
+  static Color backgroundColor = Colors.white;
+  static Color secondaryColor = Colors.teal;
+  static Color accentColor = Colors.redAccent;
+  static Color secondaryBackgroundColor = Colors.grey;
 
   static TextStyle headingStyle = TextStyle(
     fontSize: getProportionateScreenWidth(28),
     fontWeight: FontWeight.bold,
-    color: secondaryColorDark,
+    color: primaryColor,
     height: 1.5,
   );
 
-  InputDecoration get otpInputDecoration {
-    return InputDecoration(
-      contentPadding:
-          EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
-      border: outlineInputBorder,
-      focusedBorder: outlineInputBorder,
-      enabledBorder: outlineInputBorder,
-    );
-  }
-
-  OutlineInputBorder get outlineInputBorder {
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(getProportionateScreenWidth(2)),
-      borderSide: BorderSide(color: secondaryColorDark),
-    );
-  }
-
   ThemeData get materialTheme {
     return ThemeData(
-      primaryColor: Colors.blueGrey[900],
-      scaffoldBackgroundColor: Colors.white,
-      fontFamily: 'Archivo',
+      primaryColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
+      fontFamily: 'Raleway',
       appBarTheme: const AppBarTheme(
         color: Colors.transparent,
       ),
-      //scaffoldBackgroundColor: Colors.blue[300],
-      primarySwatch: Colors.blue,
     );
   }
 }

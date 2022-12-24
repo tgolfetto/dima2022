@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: CustomTheme.appTitle,
       theme: CustomTheme().materialTheme,
+      debugShowCheckedModeBanner: false,
       home: const Layout(child: OnBoarding()), ///TODO: check if user already saw OnBoarding using shared_preferences
       routes: {
         AuthScreen.routeName: (context) => const AuthScreen()
