@@ -5,6 +5,7 @@ import '../model_view/size_config.dart';
 class CustomTheme {
   static const String appTitle = 'DIMA App 2022';
 
+  static double spacePadding = 8.0;
   static double smallPadding = 12.0;
   static double mediumPadding = 24.0;
   static double bigPadding = 32.0;

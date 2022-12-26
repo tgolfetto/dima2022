@@ -23,15 +23,15 @@ class _OnBoardingState extends State<OnBoarding> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 45.0,
-                    vertical: 90.0,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: CustomTheme.bigPadding,
+                    vertical: CustomTheme.bigPadding,
                   ),
-                  child: Image.asset('assets/images/example.png'),
+                  child: const Image(image: AssetImage('assets/images/onboarding3.png')),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0),
-                  child: Align(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: CustomTheme.bigPadding),
+                  child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'FIRST PAGE',
@@ -39,9 +39,9 @@ class _OnBoardingState extends State<OnBoarding> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
-                  child: Align(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: CustomTheme.bigPadding, vertical: CustomTheme.spacePadding),
+                  child: const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'First page description',
@@ -67,7 +67,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     horizontal: 45.0,
                     vertical: 90.0,
                   ),
-                  child: Image(image: AssetImage('assets/images/example.jpg')),
+                  child: Image(image: AssetImage('assets/images/onboarding1.png')),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 45.0),
@@ -108,7 +108,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     horizontal: 45.0,
                     vertical: 90.0,
                   ),
-                  child: Image.asset('example.png'),
+                  child: Image.asset('assets/images/onboarding2.png'),
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 45.0),
@@ -188,44 +188,46 @@ class _OnBoardingState extends State<OnBoarding> {
             },
             footerBuilder: (context, dragDistance, pagesLength, setIndex) {
               return Padding(
-                padding: const EdgeInsets.all(45.0),
-                child: Row(
+                padding: EdgeInsets.all(CustomTheme.spacePadding),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
-                        flex: 1,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 30.0),
-                            child: index != pagesLength - 1
-                                ? _skipButton(setIndex: setIndex)
-                                : const SizedBox())),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(bottom: 30.0, right: 30.0),
-                        child: CustomIndicator(
-                          netDragPercent: dragDistance,
-                          pagesLength: pagesLength,
-                          indicator: Indicator(
-                            indicatorDesign: IndicatorDesign.polygon(
-                              polygonDesign: PolygonDesign(
-                                polygon: DesignType.polygon_circle,
-                              ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(bottom: CustomTheme.spacePadding),
+                      child: CustomIndicator(
+                        netDragPercent: dragDistance,
+                        pagesLength: pagesLength,
+                        indicator: Indicator(
+                          indicatorDesign: IndicatorDesign.polygon(
+                            polygonDesign: PolygonDesign(
+                              polygon: DesignType.polygon_circle,
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: index != pagesLength - 1
-                            ? _nextButton(setIndex: setIndex)
-                            : _signupButton,
-                      ),
-                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            flex: 1,
+                            child: Padding(
+                                padding: const EdgeInsets.only(top: 0),
+                                child: index != pagesLength - 1
+                                    ? _skipButton(setIndex: setIndex)
+                                    : const SizedBox())),
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 0),
+                            child: index != pagesLength - 1
+                                ? _nextButton(setIndex: setIndex)
+                                : _signupButton,
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               );
