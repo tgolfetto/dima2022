@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../../model/product.dart';
 import '../../custom_theme.dart';
 
 class Pdp extends StatefulWidget {

@@ -1,17 +1,16 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/splash_screen.dart';
+import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
-
-import '../model/auth.dart';
-import '../model/cart.dart';
-import '../model/http_exception.dart';
-import '../model/orders.dart';
-import '../model/products.dart';
 import '../utils/routes.dart';
+import '../view_models/cart_view_models/cart_view_model.dart';
+import '../view_models/product_view_models/products_view_model.dart';
+import '../view_models/user_view_models/auth_view_model.dart';
 import 'homepage_screen.dart';
 
 enum AuthMode { signup, login }
@@ -99,42 +98,25 @@ class AuthScreen extends StatelessWidget {
         child: MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => Auth(),
+          create: (context) => AuthViewModel(),
         ),
-        ChangeNotifierProxyProvider<Auth, Products>(
-          create: (context) => Products(
-            null,
-            null,
-            [],
-          ),
-          update: (context, auth, previousProducts) => Products(
-            auth.token!,
-            auth.userId!,
-            previousProducts == null ? [] : previousProducts.items,
-          ),
-          //create: (ctx) => Products(),
+        ChangeNotifierProxyProvider<AuthViewModel, ProductListViewModel>(
+          create: (context) => ProductListViewModel(),
+          update: (context, auth, previousProducts) => ProductListViewModel.fromAuth(auth.token!, auth.userId!, previousProducts),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => Cart(),
+          create: (ctx) => CartViewModel(),
         ),
-        ChangeNotifierProxyProvider<Auth, Orders>(
-          create: (context) => Orders(
-            null,
-            null,
-            [],
-          ),
-          update: (context, auth, previousOrders) => Orders(
-            auth.token!,
-            auth.userId!,
-            previousOrders == null ? [] : previousOrders.orders,
-          ),
+        ChangeNotifierProxyProvider<AuthViewModel, OrdersViewModel>(
+          create: (context) => OrdersViewModel(),
+          update: (context, auth, previousOrders) => OrdersViewModel.fromAuth(auth.token!, auth.userId!, previousOrders),
         ),
       ],
-      child: Consumer<Auth>(
+      child: Consumer<AuthViewModel>(
         builder: (context, auth, child) => MaterialApp(
           title: CustomTheme.appTitle,
           theme: CustomTheme().materialTheme,
-          home: auth.isAuth
+          home: auth.isAuthenticated
               ? const HomePage()
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
@@ -144,7 +126,7 @@ class AuthScreen extends StatelessWidget {
                           ? const SplashScreen()
                           : authScreenPage(context),
                 ),
-          routes:Routes.routesList,
+          routes:Routes.routeList,
         ),
       ),
     ));
@@ -202,13 +184,13 @@ class AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false).login(
+        await Provider.of<AuthViewModel>(context, listen: false).login(
           _authData['email']!,
           _authData['password']!,
         );
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signup(
+        await Provider.of<AuthViewModel>(context, listen: false).signup(
           _authData['email']!,
           _authData['password']!,
         );

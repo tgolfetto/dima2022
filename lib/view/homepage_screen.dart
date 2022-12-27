@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:layout/layout.dart';
 
-import '../model_view/homepage_content_route.dart';
+import '../view_models/homepage_content_route.dart';
 import 'grid_delegate.dart';
 import './widgets/menu_widget/navigation_bottom_bar.dart';
 import './widgets/menu_widget/navigation_side_bar.dart';

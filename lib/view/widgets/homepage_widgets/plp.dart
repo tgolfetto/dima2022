@@ -2,7 +2,6 @@ import 'package:dima2022/view/grid_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:layout/layout.dart';
-import '../../../model/product.dart';
 
 class Plp extends StatefulWidget {
   const Plp({super.key});

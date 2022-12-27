@@ -1,3 +1,4 @@
+import 'package:dima2022/utils/routes.dart';
 import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -17,9 +18,7 @@ class MyApp extends StatelessWidget {
       theme: CustomTheme().materialTheme,
       debugShowCheckedModeBanner: false,
       home: const Layout(child: OnBoarding()), ///TODO: check if user already saw OnBoarding using shared_preferences
-      routes: {
-        AuthScreen.routeName: (context) => const AuthScreen()
-      },
+      routes: Routes.routeList,
     );
   }
 }

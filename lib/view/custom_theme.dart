@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../model_view/size_config.dart';
+import '../utils/size_config.dart';
 
 class CustomTheme {
   static const String appTitle = 'DIMA App 2022';
