@@ -6,6 +6,8 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - richiesta taglia/colore differente da camerino con notifica sull'app del commesso (Push Notification + Chat)
 - tracciamento reparto in cui è l'utente a fini di business (Location GPS)
 
+![alt text](https://i.imgur.com/JN76OwT.jpeg)
+
 ## Screens
 - SplashScreen
 - OnBoarding
