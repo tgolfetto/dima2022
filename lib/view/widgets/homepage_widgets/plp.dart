@@ -1,3 +1,4 @@
+import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/grid_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/widgets/product_line_item.dart';
@@ -24,20 +25,24 @@ class _PlpState extends State<Plp> {
     }
 
      */
+
     /// Mock products
     for(int i= 0; i < 10 ; i++){
       items.add(const LineItem(model: 1, name: 'T-shirt', price: 19.99, sizes: [44, 46, 48],));
     }
 
-    final double spacing = const BreakpointValue(xs: 0.0, sm: 10.0).resolve(context);
+    final double spacing = BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
     return Scrollbar(
       child: CustomScrollView(
         slivers: [
           const SliverGutter(),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Margin(
-              child: Text('Section Title'),
+              child: Text(
+                'Product list',
+                style: CustomTheme.headingStyle,
+              ),
             ),
           ),
           const SliverGutter(),
@@ -48,15 +53,15 @@ class _PlpState extends State<Plp> {
             sliver: SliverGrid(
               delegate: SliverChildListDelegate.fixed(items),
               gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCountAndMainAxisExtent(
+              SliverGridDelegateWithFixedCrossAxisCountAndMainAxisExtent(
                 crossAxisCount: context.layout.value(
-                  xs: 1,
+                  xs: 2,
                   sm: 2,
                   md: 2,
                   lg: 3,
                   xl: 4,
                 ),
-                mainAxisExtent: 60,
+                mainAxisExtent: 485,
                 mainAxisSpacing: spacing,
                 crossAxisSpacing: spacing,
               ),

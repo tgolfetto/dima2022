@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/splash_screen.dart';
 import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
@@ -20,21 +21,9 @@ class AuthScreen extends StatelessWidget {
 
   Widget authScreenPage(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return Stack(
+    return Scaffold(
+        body: Stack(
       children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                const Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-                const Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              stops: const [0, 1],
-            ),
-          ),
-        ),
         SingleChildScrollView(
           child: SizedBox(
             height: deviceSize.height,
@@ -44,40 +33,22 @@ class AuthScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Flexible(
-                  child: Container(
-                    margin: const EdgeInsets.only(bottom: 20.0),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 94.0),
-
-                    // IT ALLOWS TO TRANSFORM HOW THE CONTAINER IS PRESENTED
-                    transform: Matrix4.rotationZ(-8 * pi / 180)
-                      ..translate(-10.0),
-                    // ..translate(-10.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.deepOrange.shade900,
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 8,
-                          color: Colors.black26,
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                    ),
-                    child: Text(
-                      'MyShop',
-                      style: TextStyle(
-                        color: Theme.of(context)
-                            .accentTextTheme
-                            .titleMedium!
-                            .color,
-                        fontSize: 50,
-                        fontFamily: 'Anton',
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
+                    child: Padding(
+                  padding: EdgeInsets.all(
+                      getProportionateScreenHeight(CustomTheme.smallPadding)),
+                  child: Text(
+                    'MyShop',
+                    style: CustomTheme.headingStyle,
                   ),
-                ),
+                )),
+                Flexible(
+                    child: Padding(
+                        padding: EdgeInsets.all(getProportionateScreenHeight(
+                            CustomTheme.smallPadding)),
+                        child: Text(
+                          'Gaetano Alessi - Thomas Golfetto',
+                          style: CustomTheme.bodyStyle,
+                        ))),
                 Flexible(
                   flex: deviceSize.width > 600 ? 2 : 1,
                   child: const AuthCard(),
@@ -87,7 +58,7 @@ class AuthScreen extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ));
   }
 
   const AuthScreen({super.key});
@@ -116,6 +87,7 @@ class AuthScreen extends StatelessWidget {
         builder: (context, auth, child) => MaterialApp(
           title: CustomTheme.appTitle,
           theme: CustomTheme().materialTheme,
+          debugShowCheckedModeBanner: false,
           home: auth.isAuthenticated
               ? const HomePage()
               : FutureBuilder(
@@ -236,15 +208,17 @@ class AuthCardState extends State<AuthCard> {
     final deviceSize = MediaQuery.of(context).size;
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(5),
       ),
-      elevation: 8.0,
+      elevation: 2.0,
+      shadowColor: Colors.transparent,
       child: Container(
         height: _authMode == AuthMode.signup ? 320 : 260,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
         width: deviceSize.width * 0.75,
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(
+            getProportionateScreenHeight(CustomTheme.smallPadding)),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -305,9 +279,9 @@ class AuthCardState extends State<AuthCard> {
                       ),
                 TextButton(
                   onPressed: _switchAuthMode,
-                  style: CustomTheme.buttonStyleOutline,
                   child: Text(
-                      '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD'),
+                      '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
+                      style: CustomTheme.bodyStyle),
                 ),
               ],
             ),

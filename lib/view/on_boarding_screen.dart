@@ -1,10 +1,14 @@
 import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 import 'package:onboarding/onboarding.dart';
+import '../utils/routes.dart';
+import '../utils/size_config.dart';
 import './custom_theme.dart';
 
 class OnBoarding extends StatefulWidget {
   static const routeName = '/on_boarding';
+
   const OnBoarding({Key? key}) : super(key: key);
 
   @override
@@ -14,129 +18,169 @@ class OnBoarding extends StatefulWidget {
 class _OnBoardingState extends State<OnBoarding> {
   late int index;
 
-  final onBoardingPagesList = [
-    PageModel(
-      widget: Flexible(
-        child: Container(
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: CustomTheme.bigPadding,
-                    vertical: CustomTheme.bigPadding,
+  List<PageModel> get onBoardingPagesList {
+    return [
+      PageModel(
+        widget: Flexible(
+          child: Container(
+            color: CustomTheme.backgroundColor,
+            child: Center(
+              child: Column(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Image(
+                        image: AssetImage('assets/images/onboarding3.png')),
                   ),
-                  child: const Image(image: AssetImage('assets/images/onboarding3.png')),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: CustomTheme.bigPadding),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'FIRST PAGE',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: CustomTheme.bigPadding, vertical: CustomTheme.spacePadding),
-                  child: const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'First page description',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ],
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(
+                                      CustomTheme.bigPadding)),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Search or scan a product',
+                                  style: CustomTheme.headingStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding),
+                                vertical: getProportionateScreenHeight(
+                                    CustomTheme.bigPadding),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Use the QR Code scanner or search your favorite product in the list to add it into your cart.',
+                                  style: CustomTheme.bodyStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )
+                          ])),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-    PageModel(
-      widget: Flexible(
-        child: Container(
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 45.0,
-                    vertical: 90.0,
+      PageModel(
+        widget: Flexible(
+          child: Container(
+            color: CustomTheme.backgroundColor,
+            child: Center(
+              child: Column(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Image(
+                        image: AssetImage('assets/images/onboarding1.png')),
                   ),
-                  child: Image(image: AssetImage('assets/images/onboarding1.png')),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'SECOND PAGE',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Second page description',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ],
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(
+                                      CustomTheme.bigPadding)),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Seamless shopping experience',
+                                  style: CustomTheme.headingStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding),
+                                vertical: getProportionateScreenHeight(
+                                    CustomTheme.bigPadding),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Checkout directly from the app to skip the queue at the counter, receive the product home or pickup in store.',
+                                  style: CustomTheme.bodyStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )
+                          ])),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-    PageModel(
-      widget: Flexible(
-        child: Container(
-          color: Colors.white,
-          child: Center(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 45.0,
-                    vertical: 90.0,
+      PageModel(
+        widget: Flexible(
+          child: Container(
+            color: CustomTheme.backgroundColor,
+            child: Center(
+              child: Column(
+                children: [
+                  const Expanded(
+                    flex: 1,
+                    child: Image(
+                        image: AssetImage('assets/images/onboarding2.png')),
                   ),
-                  child: Image.asset('assets/images/onboarding2.png'),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'THIRD PAGE',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 45.0, vertical: 10.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Third page description',
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ],
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: getProportionateScreenWidth(
+                                      CustomTheme.bigPadding)),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Easy try on',
+                                  style: CustomTheme.headingStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding),
+                                vertical: getProportionateScreenHeight(
+                                    CustomTheme.bigPadding),
+                              ),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'Communicate with the shopping assistant while trying on your clothes in the dressing room and ask them to bring you a different size!',
+                                  style: CustomTheme.bodyStyle,
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            )
+                          ])),
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ),
-  ];
+    ];
+  }
 
   @override
   void initState() {
@@ -180,57 +224,74 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Onboarding(
-            pages: onBoardingPagesList,
-            onPageChange: (int pageIndex) {
-              index = pageIndex;
-            },
-            footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-              return Padding(
-                padding: EdgeInsets.all(CustomTheme.spacePadding),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(bottom: CustomTheme.spacePadding),
-                      child: CustomIndicator(
-                        netDragPercent: dragDistance,
-                        pagesLength: pagesLength,
-                        indicator: Indicator(
-                          indicatorDesign: IndicatorDesign.polygon(
-                            polygonDesign: PolygonDesign(
-                              polygon: DesignType.polygon_circle,
+    SizeConfig().init(context);
+    return MaterialApp(
+      title: CustomTheme.appTitle,
+      theme: CustomTheme().materialTheme,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+          body: Onboarding(
+              pages: onBoardingPagesList,
+              onPageChange: (int pageIndex) {
+                index = pageIndex;
+              },
+              footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+                return Padding(
+                  padding: EdgeInsets.all(
+                      getProportionateScreenWidth(CustomTheme.spacePadding)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: getProportionateScreenHeight(
+                                CustomTheme.smallPadding),
+                            right: getProportionateScreenWidth(
+                                context.layout.breakpoint < LayoutBreakpoint.md
+                                    ? CustomTheme.bigPadding
+                                    : CustomTheme.smallPadding)),
+                        child: CustomIndicator(
+                          netDragPercent: dragDistance,
+                          pagesLength: pagesLength,
+                          indicator: Indicator(
+                            indicatorDesign: IndicatorDesign.polygon(
+                              polygonDesign: PolygonDesign(
+                                polygon: DesignType.polygon_circle,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
                             flex: 1,
                             child: Padding(
-                                padding: const EdgeInsets.only(top: 0),
+                                padding: EdgeInsets.all(
+                                    getProportionateScreenWidth(
+                                        CustomTheme.spacePadding)),
                                 child: index != pagesLength - 1
                                     ? _skipButton(setIndex: setIndex)
-                                    : const SizedBox())),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 0),
-                            child: index != pagesLength - 1
-                                ? _nextButton(setIndex: setIndex)
-                                : _signupButton,
+                                    : const SizedBox()),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }));
+                          Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: EdgeInsets.all(
+                                    getProportionateScreenWidth(
+                                        CustomTheme.spacePadding)),
+                                child: index != pagesLength - 1
+                                    ? _nextButton(setIndex: setIndex)
+                                    : _signupButton,
+                              )),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              })),
+      routes: Routes.routeList,
+    );
   }
 }

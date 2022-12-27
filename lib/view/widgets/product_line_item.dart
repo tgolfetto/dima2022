@@ -35,20 +35,16 @@ class _LineItemState extends State<LineItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
+    return Card(
+      child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             GestureDetector(
                 onTap: () {
-                  Modular.to.navigate('/pdp', arguments: widget.model);
+                  ///TODO: Open pdp
                 },
-                child: SizedBox(
-                  width: double.maxFinite,
-                  child: Image.asset('assets/images/example.png'),
-                )),
+                child: Image.asset('assets/images/example.jpg'),
+                ),
             Text('${widget.model}'),
             Text('Product name: ${widget.name}'),
             Text('${widget.price} €'),
@@ -75,7 +71,7 @@ class _LineItemState extends State<LineItem> {
             _addToCartButton,
           ],
         ),
-      ),
+
     );
   }
 }

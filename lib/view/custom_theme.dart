@@ -4,21 +4,31 @@ import '../utils/size_config.dart';
 class CustomTheme {
   static const String appTitle = 'DIMA App 2022';
 
+  static Color primaryColor = Colors.black;
+  static Color backgroundColor = Colors.white;
+  static Color secondaryColor = Colors.teal;
+  static Color accentColor = Colors.redAccent;
+  static Color secondaryBackgroundColor = Colors.grey;
+
   static double spacePadding = 8.0;
   static double smallPadding = 12.0;
   static double mediumPadding = 24.0;
   static double bigPadding = 32.0;
+  static double buttonPaddingV = 18.0;
+  static double buttonPaddingH = 21.0;
 
   static ButtonStyle buttonStyleFill = ElevatedButton.styleFrom(
       backgroundColor: secondaryColor,
       foregroundColor: backgroundColor,
-      padding: EdgeInsets.all(smallPadding),
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(buttonPaddingV),
+          horizontal: getProportionateScreenWidth(buttonPaddingH)),
       shape: RoundedRectangleBorder(
           side: BorderSide(
               color: secondaryColor, width: 1, style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(5)),
-      textStyle: const TextStyle(
-        fontSize: 16,
+      textStyle: TextStyle(
+        fontSize: getProportionateScreenHeight(16),
         fontFamily: 'Raleway',
         fontWeight: FontWeight.bold,
       ));
@@ -26,25 +36,32 @@ class CustomTheme {
   static ButtonStyle buttonStyleOutline = ElevatedButton.styleFrom(
       backgroundColor: backgroundColor,
       foregroundColor: secondaryColor,
-      padding: EdgeInsets.all(smallPadding),
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(buttonPaddingV),
+          horizontal: getProportionateScreenWidth(buttonPaddingH)),
       shape: RoundedRectangleBorder(
           side: BorderSide(
               color: secondaryColor, width: 1, style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(5)),
-      textStyle: const TextStyle(
-          fontSize: 16, fontFamily: 'Raleway', fontWeight: FontWeight.bold));
-
-  static Color primaryColor = Colors.black;
-  static Color backgroundColor = Colors.white;
-  static Color secondaryColor = Colors.teal;
-  static Color accentColor = Colors.redAccent;
-  static Color secondaryBackgroundColor = Colors.grey;
+      textStyle: TextStyle(
+          fontSize: getProportionateScreenHeight(16),
+          fontFamily: 'Raleway',
+          fontWeight: FontWeight.bold));
 
   static TextStyle headingStyle = TextStyle(
-    fontSize: getProportionateScreenWidth(28),
+    fontSize: getProportionateScreenHeight(18),
     fontWeight: FontWeight.bold,
     color: primaryColor,
     height: 1.5,
+    letterSpacing: 1.0,
+  );
+
+  static TextStyle bodyStyle = TextStyle(
+    fontSize: getProportionateScreenHeight(16),
+    fontWeight: FontWeight.w100,
+    color: primaryColor,
+    height: 1.0,
+    letterSpacing: 1.0,
   );
 
   ThemeData get materialTheme {

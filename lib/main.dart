@@ -1,4 +1,5 @@
 import 'package:dima2022/utils/routes.dart';
+import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
