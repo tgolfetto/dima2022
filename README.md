@@ -6,27 +6,26 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - richiesta taglia/colore differente da camerino con notifica sull'app del commesso (Push Notification + Chat)
 - tracciamento reparto in cui è l'utente a fini di business (Location GPS)
 
+![alt text](https://i.imgur.com/JN76OwT.jpeg)
+
 ## Screens
 - SplashScreen
 - OnBoarding
 - Login/SignUp
-- Home
+- edit_profile_screen.dart
+- Homepage
+
+## Boxes
 - Settings
 - PDP
 - PLP
-- Cart
+- cart_box.dart - Cart
 - RiepilogoOrdine
 - Camerino
-- Scanner
-- ListaRichieste (Commessa)
+- barcode_scanner_box.dart - Scanner
+- request_list_box.dart - ListaRichieste (Commessa)
 
 ## Da fare:
-- Setup database (firebase?) per login
-- Schermata login front-end (con indicazione se password o utente sbagliata)
-- Schermata post login (ok)
-- Login back-end con chiamata al database
-- Responsive UI
-- Menu in basso
 
 ## WIP:
 

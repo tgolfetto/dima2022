@@ -1,17 +1,21 @@
-import 'package:dima2022/view/on_boarding_screen.dart';
-import 'package:dima2022/view/splash_screen.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-import '../view/auth_screen.dart';
-import '../view/homepage_screen.dart';
+// import '../screens/cart_screen.dart';
+// import '../screens/edit_product_screen.dart';
+// import '../screens/orders_screen.dart';
+// import '../screens/product_detail_screen.dart';
+// import '../screens/request_screen/request_details_screen.dart';
+// import '../screens/request_screen/request_list_screen.dart';
+// import '../screens/request_screen/send_request_screen.dart';
+// import '../screens/user_products_screen.dart';
 
-class Routes{
-  static Map<String, WidgetBuilder> routesList = {
-    OnBoarding.routeName: (context) => const OnBoarding(),
-    SplashScreen.routeName: (context) => const SplashScreen(),
-    AuthScreen.routeName: (context) => const AuthScreen(),
-    HomePage.routeName: (context) => const HomePage(),
-  };
-
-}
-
+// final Map<String, WidgetBuilder> routes = {
+//   ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+//   RequestDetailsScreen.routeName: (context) => RequestDetailsScreen(),
+//   RequestListScreen.routeName: (context) => RequestListScreen(),
+//   SendRequestScreen.routeName: (context) => SendRequestScreen(),
+//   CartScreen.routeName: (context) => CartScreen(),
+//   OrdersScreen.routeName: (context) => OrdersScreen(),
+//   UserProductsScreen.routeName: (context) => UserProductsScreen(),
+//   EditProductScreen.routeName: (context) => EditProductScreen(),
+// };
