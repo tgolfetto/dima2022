@@ -32,7 +32,7 @@ class Product with ChangeNotifier {
   //the color of the product
   String? color;
   //the size of the product
-  String? size;
+  List<int>? sizes;
   //the gender the product is intended for
   String? gender;
   //the country where the product was made
@@ -52,7 +52,7 @@ class Product with ChangeNotifier {
     this.brand,
     this.material,
     this.color,
-    this.size,
+    this.sizes,
     this.gender,
     this.madeIn,
   });
@@ -90,7 +90,7 @@ class Product with ChangeNotifier {
       brand: prodData['brand'],
       material: prodData['material'],
       color: prodData['color'],
-      size: prodData['size'],
+      sizes: prodData['sizes'].split(',').map((e) => int.parse(e)).toList(),
       gender: prodData['gender'],
       madeIn: prodData['madeIn'],
     );
@@ -119,7 +119,7 @@ class Product with ChangeNotifier {
       'brand': brand,
       'material': material,
       'color': color,
-      'size': size,
+      'sizes': sizes,
       'gender': gender,
       'madeIn': madeIn,
     };
@@ -132,7 +132,7 @@ class Product with ChangeNotifier {
   */
   @override
   String toString() {
-    return 'Product{id: $id, title: $title, description: $description, price: $price, imageUrl: $imageUrl, isFavorite: $isFavorite, categories: $categories, type: $type, stock: $stock, rating: $rating, brand: $brand, material: $material, color: $color, size: $size, gender: $gender, madeIn: $madeIn}';
+    return 'Product{id: $id, title: $title, description: $description, price: $price, imageUrl: $imageUrl, isFavorite: $isFavorite, categories: $categories, type: $type, stock: $stock, rating: $rating, brand: $brand, material: $material, color: $color, sizes: $sizes, gender: $gender, madeIn: $madeIn}';
   }
 
   /*

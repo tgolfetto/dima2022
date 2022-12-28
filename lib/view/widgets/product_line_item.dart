@@ -3,18 +3,22 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../custom_theme.dart';
 
 class LineItem extends StatefulWidget {
-  final int model;
-  final String name;
+  final String id;
+  final String title;
+  final String description;
+  final String imageUrl;
   final double price;
   final List<int> sizes;
+  bool isFavorite = false;
 
-  const LineItem({
-    super.key,
-    required this.model,
-    required this.name,
-    required this.price,
-    required this.sizes,
-  });
+  LineItem(
+      {super.key,
+      required this.id,
+      required this.title,
+      required this.description,
+      required this.imageUrl,
+      required this.price,
+      required this.sizes});
 
   @override
   State<LineItem> createState() => _LineItemState();
@@ -27,50 +31,81 @@ class _LineItemState extends State<LineItem> {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
       onPressed: () => {
-        //Cart.addToCart(widget.model, dropdownValue)
+        /// TODO: add to cart
       },
       child: const Icon(Icons.add_shopping_cart),
     );
   }
 
+  ElevatedButton get _addToFavoriteButton {
+    return ElevatedButton(
+      style: CustomTheme.buttonStyleIcon,
+      onPressed: () => {
+        /// TODO: add to fav
+        setState(() {
+          widget.isFavorite = !widget.isFavorite;
+        })
+      },
+      child: widget.isFavorite
+          ? const Icon(Icons.favorite)
+          : const Icon(Icons.favorite_border),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Expanded(
       child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(children: [
             GestureDetector(
-                onTap: () {
-                  ///TODO: Open pdp
-                },
-                child: Image.asset('assets/images/example.jpg'),
-                ),
-            Text('${widget.model}'),
-            Text('Product name: ${widget.name}'),
-            Text('${widget.price} €'),
-            DropdownButton<int>(
-              value: dropdownValue == 0 ? widget.sizes[0] : dropdownValue,
-              icon: const Icon(Icons.arrow_downward),
-              elevation: 16,
-              underline: Container(
-                height: 2,
-                color: Colors.deepPurpleAccent,
-              ),
-              onChanged: (int? value) {
-                setState(() {
-                  dropdownValue = value!;
-                });
+              onTap: () {
+                ///TODO: Open pdp
               },
-              items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
-                return DropdownMenuItem<int>(
-                  value: value,
-                  child: Text("$value"),
-                );
-              }).toList(),
+              child: Image.asset('assets/images/example.jpg'),
             ),
-            _addToCartButton,
-          ],
-        ),
+            Positioned(
+              right: 0.0,
+              top: 0.0,
+              child: _addToFavoriteButton,
+            )
+          ]),
+          Text(
+            widget.title,
+            style: CustomTheme.headingStyle,
+          ),
+          Text('EUR ${widget.price}', style: CustomTheme.bodyStyle),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Size:', style: CustomTheme.bodyStyle),
+              DropdownButton<int>(
+                value: dropdownValue == 0 ? widget.sizes[0] : dropdownValue,
+                icon: const Icon(Icons.arrow_downward),
+                elevation: 1,
+                underline: Container(
+                  height: 2,
+                  color: Colors.deepPurpleAccent,
+                ),
+                onChanged: (int? value) {
+                  setState(() {
+                    dropdownValue = value!;
+                  });
+                },
+                items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
+                  return DropdownMenuItem<int>(
+                    value: value,
+                    child: Text("$value"),
+                  );
+                }).toList(),
+              ),
+              _addToCartButton,
+            ],
+          )
+        ],
+      ),
 
     );
   }

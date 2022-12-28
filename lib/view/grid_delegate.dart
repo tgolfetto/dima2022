@@ -1,5 +1,8 @@
+import 'package:dima2022/view/widgets/product_line_item.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'dart:math' as math;
+import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 
 class SliverGridDelegateWithFixedCrossAxisCountAndMainAxisExtent
     extends SliverGridDelegate {

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import '../utils/size_config.dart';
 
 class CustomTheme {
-  static const String appTitle = 'DIMA App 2022';
+  static const String appTitle = 'My Shop';
 
   static Color primaryColor = Colors.black;
   static Color backgroundColor = Colors.white;
   static Color secondaryColor = Colors.teal;
   static Color accentColor = Colors.redAccent;
-  static Color secondaryBackgroundColor = Colors.grey;
+  static Color secondaryBackgroundColor = Colors.white60;
 
   static double spacePadding = 8.0;
   static double smallPadding = 12.0;
@@ -43,6 +43,24 @@ class CustomTheme {
           side: BorderSide(
               color: secondaryColor, width: 1, style: BorderStyle.solid),
           borderRadius: BorderRadius.circular(5)),
+      textStyle: TextStyle(
+          fontSize: getProportionateScreenHeight(16),
+          fontFamily: 'Raleway',
+          fontWeight: FontWeight.bold));
+
+  static ButtonStyle buttonStyleIcon = ElevatedButton.styleFrom(
+      backgroundColor: Colors.transparent,
+      foregroundColor: secondaryColor,
+      elevation: 0,
+
+      shape: const RoundedRectangleBorder(
+          side: BorderSide(
+              color: Colors.transparent
+          )
+      ),
+      padding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(buttonPaddingV),
+          horizontal: getProportionateScreenWidth(buttonPaddingV)),
       textStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
           fontFamily: 'Raleway',

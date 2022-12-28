@@ -38,6 +38,8 @@ class ProductViewModel extends ChangeNotifier {
   double? get price => _product.price;
   // Returns the image url of the product
   String? get imageUrl => _product.imageUrl;
+  // Returns the sizes of the product
+  List<int>? get sizes => _product.sizes;
 
   // Toggles the favorite status of the product
   // @ensure The favorite status of the product will be updated and the ProductService will be updated with the new status
@@ -158,7 +160,7 @@ class ProductViewModel extends ChangeNotifier {
   }
 
   void setSize(String size) {
-    _product.size = size;
+    _product.sizes = sizes;
     notifyListeners();
   }
 
