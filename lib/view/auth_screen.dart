@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
@@ -114,7 +113,7 @@ class AuthCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  AuthCardState get createState => AuthCardState();
+  AuthCardState createState() => AuthCardState();
 }
 
 class AuthCardState extends State<AuthCard> {

@@ -1,15 +1,11 @@
-import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
-import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:layout/layout.dart';
 
-import '../view_models/homepage_content_route.dart';
-import 'grid_delegate.dart';
+import './widgets/drawer_sheet.dart';
 import './widgets/menu_widget/navigation_bottom_bar.dart';
 import './widgets/menu_widget/navigation_side_bar.dart';
-import './widgets/drawer_sheet.dart';
+import '../view_models/homepage_content_route.dart';
 
 const kAlwaysDisplayDrawer = BreakpointValue(xs: false, md: true);
 
@@ -19,10 +15,10 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState get createState => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   int index = 0;
 
   void onIndexSelect(newIndex) {

@@ -12,10 +12,10 @@ class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
 
   @override
-  _OnBoardingState get createState => _OnBoardingState();
+  OnBoardingState createState() => OnBoardingState();
 }
 
-class _OnBoardingState extends State<OnBoarding> {
+class OnBoardingState extends State<OnBoarding> {
   late int index;
 
   List<PageModel> get onBoardingPagesList {
