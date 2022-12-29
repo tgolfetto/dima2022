@@ -12,7 +12,7 @@ class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
 
   @override
-  State<OnBoarding> createState() => _OnBoardingState();
+  _OnBoardingState get createState => _OnBoardingState();
 }
 
 class _OnBoardingState extends State<OnBoarding> {

@@ -6,10 +6,15 @@ import '../../models/product/category.dart';
 import '../../models/user/user.dart';
 
 class UserViewModel with ChangeNotifier {
-  final UserService _userService;
-  final User _user;
+  late final UserService _userService;
+  late final User _user;
 
-  UserViewModel(this._user, this._userService);
+  UserViewModel() {}
+
+  UserViewModel.fromAuth(String? token, String? userId) {
+    _userService = UserService(token, userId);
+    getUser();
+  }
 
   String get id => _user.id;
   String get name => _user.name;
@@ -21,6 +26,17 @@ class UserViewModel with ChangeNotifier {
   int get shoeSize => _user.shoeSize;
   List<String> get favoriteBrands => _user.favoriteBrands;
   List<ItemCategory> get favoriteCategories => _user.favoriteCategories;
+
+  Future<void> saveChanges() async {
+    await _userService.updateUser(_user);
+    notifyListeners();
+  }
+
+  Future<void> getUser() async {
+    User u = await _userService.getUser();
+    _user = u;
+    notifyListeners();
+  }
 
   set id(String newId) {
     _user.id = newId;

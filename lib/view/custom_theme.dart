@@ -52,12 +52,8 @@ class CustomTheme {
       backgroundColor: Colors.transparent,
       foregroundColor: secondaryColor,
       elevation: 0,
-
       shape: const RoundedRectangleBorder(
-          side: BorderSide(
-              color: Colors.transparent
-          )
-      ),
+          side: BorderSide(color: Colors.transparent)),
       padding: EdgeInsets.symmetric(
           vertical: getProportionateScreenHeight(buttonPaddingV),
           horizontal: getProportionateScreenWidth(buttonPaddingV)),
