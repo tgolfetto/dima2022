@@ -7,8 +7,8 @@ import '../../models/request/request.dart';
 
 class ContentViewModel with ChangeNotifier {
   late int _mainContentIndex = 0;
-  late int _sideBarIndex = 0;
-  late String _productId ;
+  late int _sideBarIndex = 6;
+  late String _productId = '';
 
   ContentViewModel();
 

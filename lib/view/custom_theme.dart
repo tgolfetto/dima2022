@@ -55,8 +55,7 @@ class CustomTheme {
       shape: const RoundedRectangleBorder(
           side: BorderSide(color: Colors.transparent)),
       padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(buttonPaddingV),
-          horizontal: getProportionateScreenWidth(buttonPaddingV)),
+          vertical: buttonPaddingV, horizontal: buttonPaddingH),
       textStyle: TextStyle(
           fontSize: getProportionateScreenHeight(16),
           fontFamily: 'Raleway',

@@ -9,6 +9,7 @@ import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
 
 class Plp extends StatefulWidget {
+  static const routeName = '/plp';
   const Plp({super.key});
 
   @override

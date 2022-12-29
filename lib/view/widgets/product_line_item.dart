@@ -1,8 +1,10 @@
 import 'package:dima2022/view_models/content_view_model.dart';
+import 'package:layout/layout.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import '../custom_theme.dart';
+import 'sidebar_widgets/pdp.dart';
 
 class LineItem extends StatefulWidget {
   final String id;
@@ -59,7 +61,6 @@ class _LineItemState extends State<LineItem> {
   @override
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
-    print(content.mainContentIndex);
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +70,12 @@ class _LineItemState extends State<LineItem> {
             GestureDetector(
               onTap: () {
                 ///TODO: Open pdp
-                content.updateSideBarIndex(100);
+                if(context.layout.breakpoint < LayoutBreakpoint.lg){
+                  // open the widget as popup
+                }else{
+                  content.updateProductId(widget.id);
+                  content.updateSideBarIndex(Pdp.pageIndex);
+                }
               },
               child: Image.asset('assets/images/example.jpg'),
             ),

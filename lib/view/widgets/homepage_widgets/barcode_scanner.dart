@@ -2,6 +2,7 @@ import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
+  static const routeName = '/barcode';
   const BarcodeScannerWidget(this.resultCallback, {super.key});
 
   final void Function(String result) resultCallback;

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
 
+import '../../../view_models/content_view_model.dart';
 import '../../custom_theme.dart';
+import 'filter.dart';
 
 class Pdp extends StatefulWidget {
-  final int model;
+  static const int pageIndex = 5;
 
-  const Pdp({super.key, required this.model});
+  const Pdp({super.key});
 
   @override
   State<Pdp> createState() => _PdpState();
@@ -14,10 +18,16 @@ class Pdp extends StatefulWidget {
 class _PdpState extends State<Pdp> {
   int dropdownValue = 0;
 
-  ElevatedButton get _backButton {
+  ElevatedButton _backButton(ContentViewModel content) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
-      onPressed: () => {},
+      onPressed: (){
+        if(context.layout.breakpoint < LayoutBreakpoint.lg){
+      // close the widget as popup
+      }else{
+        content.updateSideBarIndex(Filter.pageIndex);
+        }
+      },
       child: const Icon(Icons.close),
     );
   }
@@ -34,11 +44,11 @@ class _PdpState extends State<Pdp> {
 
   @override
   Widget build(BuildContext context) {
-    //Product productModel = Product.retrieveProduct(widget.model);
+    final content = context.read<ContentViewModel>();
     return Scaffold(
         body: Column(
       children: [
-        Container(child: _backButton),
+        Container(child: _backButton(content)),
         Expanded(
           child: SingleChildScrollView(
             child: Expanded(
@@ -49,9 +59,9 @@ class _PdpState extends State<Pdp> {
                 children: <Widget>[
                   SizedBox(
                     width: double.maxFinite,
-                    child: Image.asset('assets/images/example.png'),
+                    child: Image.asset('assets/images/example.jpg'),
                   ),
-                  Text('${widget.model}'),
+                  Text(content.productId),
                   const Text('Product name: T-shirt black'),
                   const Text('19.99 €'),
                   DropdownButton<int>(

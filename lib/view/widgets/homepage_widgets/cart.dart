@@ -3,6 +3,8 @@ import '../../custom_theme.dart';
 import '../cart_line_item.dart';
 
 class CartWidget extends StatefulWidget {
+  static const routeName = '/cart';
+
   const CartWidget({super.key});
 
   @override

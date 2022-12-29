@@ -7,7 +7,7 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/content_view_model.dart';
-import './widgets/drawer_sheet.dart';
+import './widgets/side_bar.dart';
 import './widgets/menu_widget/navigation_bottom_bar.dart';
 import './widgets/menu_widget/navigation_side_bar.dart';
 
@@ -82,7 +82,7 @@ class HomePageState extends State<HomePage> {
       ),
       endDrawer: alwaysDisplayDrawer
           ? null
-          : DrawerSheet(key: const ValueKey('Drawer')),
+          : SideBar(key: const ValueKey('Drawer')),
       body: Stack(
         children: <Widget>[
           Container(
@@ -103,7 +103,7 @@ class HomePageState extends State<HomePage> {
                           _maincontent(content.mainContentIndex)),
               ),
               if (alwaysDisplayDrawer)
-                DrawerSheet(
+                SideBar(
                   key: const ValueKey('Drawer'),
                 ),
             ],
