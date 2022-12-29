@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState get createState => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
@@ -48,17 +48,19 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       appBar: AppBar(
         iconTheme: IconThemeData(color: CustomTheme.primaryColor),
-        title: const Text(CustomTheme.appTitle, style: TextStyle(color: Colors.black)),
+        title: const Text(CustomTheme.appTitle,
+            style: TextStyle(color: Colors.black)),
         actions: [_cartButton],
         backgroundColor: CustomTheme.backgroundColor,
       ),
-      endDrawer:
-          alwaysDisplayDrawer ? null : const DrawerSheet(key: ValueKey('Drawer')),
+      endDrawer: alwaysDisplayDrawer
+          ? null
+          : const DrawerSheet(key: ValueKey('Drawer')),
       body: Stack(
         children: <Widget>[
           Container(
             color: CustomTheme.secondaryBackgroundColor,
-              /*gradient: LinearGradient(
+            /*gradient: LinearGradient(
                 colors: [
                   const Color.fromARGB(255, 196, 70, 231).withOpacity(0.5),
                   const Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),

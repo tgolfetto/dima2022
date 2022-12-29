@@ -73,14 +73,17 @@ class AuthScreen extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<AuthViewModel, ProductListViewModel>(
           create: (context) => ProductListViewModel(),
-          update: (context, auth, previousProducts) => ProductListViewModel.fromAuth(auth.token!, auth.userId!, previousProducts),
+          update: (context, auth, previousProducts) =>
+              ProductListViewModel.fromAuth(
+                  auth.token!, auth.userId!, previousProducts),
         ),
         ChangeNotifierProvider(
           create: (ctx) => CartViewModel(),
         ),
         ChangeNotifierProxyProvider<AuthViewModel, OrdersViewModel>(
           create: (context) => OrdersViewModel(),
-          update: (context, auth, previousOrders) => OrdersViewModel.fromAuth(auth.token!, auth.userId!, previousOrders),
+          update: (context, auth, previousOrders) => OrdersViewModel.fromAuth(
+              auth.token!, auth.userId!, previousOrders),
         ),
       ],
       child: Consumer<AuthViewModel>(
@@ -98,7 +101,7 @@ class AuthScreen extends StatelessWidget {
                           ? const SplashScreen()
                           : authScreenPage(context),
                 ),
-          routes:Routes.routeList,
+          routes: Routes.routeList,
         ),
       ),
     ));
@@ -111,7 +114,7 @@ class AuthCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  AuthCardState createState() => AuthCardState();
+  AuthCardState get createState => AuthCardState();
 }
 
 class AuthCardState extends State<AuthCard> {

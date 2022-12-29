@@ -4,13 +4,13 @@ import '../product/category.dart';
 
 class User with ChangeNotifier {
   // id of the user
-  late String _id;
+  late String? _id;
   // name of the user
-  late String _name;
+  late String? _name;
   // email of the user
   late String _email;
   // phone number of the user
-  late String _phone;
+  late String? _phone;
 
   //TODO:
   // whether the user is a clerk or not
@@ -21,9 +21,9 @@ class User with ChangeNotifier {
   // profile image url of the user
   late String? _profileImageUrl;
   // size of the user
-  late String _size;
+  late String? _size;
   // shoe size of the user
-  late int _shoeSize;
+  late int? _shoeSize;
   // reward points of the user
   late int? _rewardPoints;
   // favorite brands of the user
@@ -41,14 +41,14 @@ class User with ChangeNotifier {
   // @param size: size of the user
   // @param shoeSize: shoe size of the user
   User({
-    required String id,
-    required String name,
+    String? id,
+    String? name,
     required String email,
-    required String phone,
+    String? phone,
     String? address,
     String? profileImageUrl,
-    required String size,
-    required int shoeSize,
+    String? size,
+    int? shoeSize,
   }) {
     _id = id;
     _name = name;
@@ -66,7 +66,7 @@ class User with ChangeNotifier {
   // constructs a new User instance from a JSON object
   // @param userData: JSON object containing user data
   User.fromJson(Map<String, dynamic> userData) {
-    _id = userData['name'];
+    _id = userData['id'];
     _name = userData['name'];
     _email = userData['email'];
     _phone = userData['phone'];
@@ -104,16 +104,16 @@ class User with ChangeNotifier {
   }
 
   // id of the user
-  String get id => _id;
+  String get id => _id!;
 
   // name of the user
-  String get name => _name;
+  String get name => _name!;
 
   // email of the user
   String get email => _email;
 
   // phone of the user
-  String get phone => _phone;
+  String get phone => _phone!;
 
   // address of the user
   String get address => _address!;
@@ -122,10 +122,10 @@ class User with ChangeNotifier {
   String get profileImageUrl => _profileImageUrl!;
 
   // size of the user
-  String get size => _size;
+  String get size => _size!;
 
   // shoe size of the user
-  int get shoeSize => _shoeSize;
+  int get shoeSize => _shoeSize!;
 
   // favorite brands of the user
   List<String> get favoriteBrands => _favoriteBrands;
@@ -142,7 +142,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's name to a new value and notifies any listeners of the change
   @param newName the new name for the user
   */
@@ -151,7 +151,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's email to a new value and notifies any listeners of the change
   @param newEmail the new email for the user
   */
@@ -160,7 +160,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's phone number to a new value and notifies any listeners of the change
   @param newPhone the new phone number for the user
   */
@@ -169,7 +169,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's address to a new value and notifies any listeners of the change
   @param newAddress the new address for the user
   */
@@ -178,7 +178,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the URL of the user's profile image to a new value and notifies any listeners of the change
   @param newProfileImageUrl the new URL for the user's profile image
   */
@@ -187,7 +187,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's size to a new value and notifies any listeners of the change
   @param newSize the new size for the user (e.g. "S", "M", "L")
   */
@@ -196,7 +196,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Sets the user's shoe size to a new value and notifies any listeners of the change
   @param newShoeSize the new shoe size for the user
   */
@@ -205,7 +205,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Adds a brand to the list of favorite brands for the user.
   @param brand the brand to add
   @requires brand != null
@@ -217,7 +217,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Removes a brand from the list of favorite brands for the user.
   @param brand the brand to remove
   @requires brand != null
@@ -229,7 +229,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Adds a category to the list of favorite categories for the user.
   @param category the category to add
   @requires category != null
@@ -241,7 +241,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /*
+  /**
   Removes a category from the list of favorite categories for the user.
   @param category the category to remove
   @requires category != null
