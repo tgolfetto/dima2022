@@ -1,25 +1,24 @@
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../view_models/content_view_model.dart';
 import './glass_rounded_container.dart';
 import './menu_bar_item.dart';
 
 class NavigationBottomBar extends StatelessWidget {
   final int selectedIndex;
-  final Function(int) onIndexSelect;
 
   const NavigationBottomBar({
     Key? key,
     required this.selectedIndex,
-    required this.onIndexSelect,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Menu(
       currentIndex: selectedIndex,
-      onTap: onIndexSelect,
       items: items,
     );
   }
@@ -30,7 +29,6 @@ class Menu extends StatelessWidget {
     Key? key,
     required this.items,
     this.currentIndex = 0,
-    this.onTap,
     this.selectedItemColor,
     this.unselectedItemColor,
     this.selectedColorOpacity,
@@ -43,7 +41,6 @@ class Menu extends StatelessWidget {
 
   final List<MenuBarItem> items;
   final int currentIndex;
-  final Function(int)? onTap;
   final Color? selectedItemColor;
   final Color? unselectedItemColor;
   final double? selectedColorOpacity;
@@ -58,7 +55,7 @@ class Menu extends StatelessWidget {
     final theme = Theme.of(context);
     double width = MediaQuery.of(context).size.width;
     double yourMargin = (width * 0.1);
-
+    final content = context.read<ContentViewModel>();
     return GlassRoundedContainer(
       margin: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(CustomTheme.smallPadding), horizontal: yourMargin),
       itemPadding:
@@ -93,7 +90,10 @@ class Menu extends StatelessWidget {
                       t),
                   shape: itemShape,
                   child: InkWell(
-                    onTap: () => onTap?.call(items.indexOf(item)),
+                    onTap: (){
+                      print('click');
+                      content.updateMainContentIndex(items.indexOf(item));
+                    },
                     customBorder: itemShape,
                     focusColor: _selectedColor.withOpacity(0.1),
                     highlightColor: _selectedColor.withOpacity(0.1),
@@ -121,7 +121,7 @@ class Menu extends StatelessWidget {
                             child: SizedBox(
                               height: 20,
                               child: Align(
-                                alignment: Alignment(-0.2, 0.0),
+                                alignment: const Alignment(-0.2, 0.0),
                                 widthFactor: t,
                                 child: Padding(
                                   padding: Directionality.of(context) ==

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../custom_theme.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import '../cart_line_item.dart';
 
 class CartWidget extends StatefulWidget {
@@ -14,7 +13,7 @@ class _CartWidgetState extends State<CartWidget> {
   ElevatedButton get _backButton {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
-      onPressed: () => Modular.to.navigate('/homepage'),
+      onPressed: () => {},
       child: const Icon(Icons.close),
     );
   }

@@ -1,5 +1,7 @@
+import 'package:dima2022/view_models/content_view_model.dart';
+
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import '../custom_theme.dart';
 
 class LineItem extends StatefulWidget {
@@ -26,10 +28,11 @@ class LineItem extends StatefulWidget {
 
 class _LineItemState extends State<LineItem> {
   int dropdownValue = 0;
+  int productId = 0;
 
   Widget get _addToCartButton {
     return ElevatedButton(
-      style: CustomTheme.buttonStyleFill,
+      style: CustomTheme.buttonStyleIcon,
       onPressed: () => {
         /// TODO: add to cart
       },
@@ -52,8 +55,11 @@ class _LineItemState extends State<LineItem> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
+    final content = context.read<ContentViewModel>();
+    print(content.mainContentIndex);
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -63,6 +69,7 @@ class _LineItemState extends State<LineItem> {
             GestureDetector(
               onTap: () {
                 ///TODO: Open pdp
+                content.updateSideBarIndex(100);
               },
               child: Image.asset('assets/images/example.jpg'),
             ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/splash_screen.dart';
+import 'package:dima2022/view_models/content_view_model.dart';
 import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -84,6 +85,9 @@ class AuthScreen extends StatelessWidget {
           update: (context, auth, previousOrders) => OrdersViewModel.fromAuth(
               auth.token!, auth.userId!, previousOrders),
         ),
+        ChangeNotifierProvider(
+            create: (ctx) => ContentViewModel(),
+        )
       ],
       child: Consumer<AuthViewModel>(
         builder: (context, auth, child) => MaterialApp(

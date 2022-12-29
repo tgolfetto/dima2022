@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+
 import '../../custom_theme.dart';
 
 class Pdp extends StatefulWidget {
@@ -17,7 +17,7 @@ class _PdpState extends State<Pdp> {
   ElevatedButton get _backButton {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
-      onPressed: () => Modular.to.navigate('/homepage'),
+      onPressed: () => {},
       child: const Icon(Icons.close),
     );
   }

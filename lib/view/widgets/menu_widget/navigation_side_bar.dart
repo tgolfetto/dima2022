@@ -2,25 +2,24 @@ import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
 
 import './glass_rounded_container.dart';
 import './menu_bar_item.dart';
+import '../../../view_models/content_view_model.dart';
 
 class NavigationSideBar extends StatelessWidget {
   final int selectedIndex;
-  final Function(int) onIndexSelect;
 
   const NavigationSideBar({
     Key? key,
     required this.selectedIndex,
-    required this.onIndexSelect,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MenuSide(
       currentIndex: selectedIndex,
-      onTap: onIndexSelect,
       items: items,
     );
   }
@@ -31,7 +30,6 @@ class MenuSide extends StatelessWidget {
     Key? key,
     required this.items,
     this.currentIndex = 0,
-    this.onTap,
     this.selectedItemColor,
     this.unselectedItemColor,
     this.selectedColorOpacity,
@@ -44,7 +42,6 @@ class MenuSide extends StatelessWidget {
 
   final List<MenuBarItem> items;
   final int currentIndex;
-  final Function(int)? onTap;
   final Color? selectedItemColor;
   final Color? unselectedItemColor;
   final double? selectedColorOpacity;
@@ -57,7 +54,7 @@ class MenuSide extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final content = context.read<ContentViewModel>();
     return GlassRoundedContainer(
       margin: margin,
       itemPadding: itemPadding,
@@ -90,7 +87,7 @@ class MenuSide extends StatelessWidget {
                       t),
                   shape: itemShape,
                   child: InkWell(
-                    onTap: () => onTap?.call(items.indexOf(item)),
+                    onTap: () => content.updateMainContentIndex(items.indexOf(item)),
                     customBorder: itemShape,
                     focusColor: _selectedColor.withOpacity(0.1),
                     highlightColor: _selectedColor.withOpacity(0.1),
@@ -98,8 +95,8 @@ class MenuSide extends StatelessWidget {
                     hoverColor: _selectedColor.withOpacity(0.1),
                     child: Container(
                       width: context.layout.breakpoint < LayoutBreakpoint.lg
-                          ? getProportionateScreenWidth(27)
-                          : getProportionateScreenWidth(60),
+                          ? getProportionateScreenWidth(30)
+                          : getProportionateScreenWidth(65),
                       padding: EdgeInsets.symmetric(
                           horizontal: getProportionateScreenWidth(
                               CustomTheme.spacePadding),

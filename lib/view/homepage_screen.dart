@@ -1,11 +1,15 @@
 import 'package:dima2022/view/custom_theme.dart';
+import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
+import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
 
+import '../view_models/content_view_model.dart';
 import './widgets/drawer_sheet.dart';
 import './widgets/menu_widget/navigation_bottom_bar.dart';
 import './widgets/menu_widget/navigation_side_bar.dart';
-import '../view_models/homepage_content_route.dart';
 
 const kAlwaysDisplayDrawer = BreakpointValue(xs: false, md: true);
 
@@ -19,12 +23,38 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  int index = 0;
+  late String _barcodeScanned;
 
-  void onIndexSelect(newIndex) {
-    setState(() {
-      index = newIndex;
-    });
+  Widget _maincontent(int index){
+    switch (index) {
+      case 1:
+        {
+          return BarcodeScannerWidget((String code) {
+            _barcodeScanned = code;
+            if (kDebugMode) {
+              print(_barcodeScanned);
+            }
+            /// @TODO: show the product of the related barcode
+          });
+        }
+      case 2:
+        {
+          return const Text('Dressing room');
+
+          /// @TODO: show dressing room widget
+        }
+      case 3:
+        {
+          return const Text('Profile');
+
+          /// @TODO: show profile widget
+        }
+      default:
+        {
+          return const Plp();
+          /// @TODO: show list of products
+        }
+    }
   }
 
   ElevatedButton get _cartButton {
@@ -39,6 +69,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final content = context.read<ContentViewModel>();
     final alwaysDisplayDrawer = context.layout.breakpoint > LayoutBreakpoint.sm;
     return Scaffold(
       extendBody: true,
@@ -51,36 +82,29 @@ class HomePageState extends State<HomePage> {
       ),
       endDrawer: alwaysDisplayDrawer
           ? null
-          : const DrawerSheet(key: ValueKey('Drawer')),
+          : DrawerSheet(key: const ValueKey('Drawer')),
       body: Stack(
         children: <Widget>[
           Container(
             color: CustomTheme.secondaryBackgroundColor,
-            /*gradient: LinearGradient(
-                colors: [
-                  const Color.fromARGB(255, 196, 70, 231).withOpacity(0.5),
-                  const Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
-                ],
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                stops: const [0, 1],
-              ),*/
           ),
           Row(
             children: [
               if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
                 NavigationSideBar(
-                  selectedIndex: index,
-                  onIndexSelect: onIndexSelect,
+                  selectedIndex: content.mainContentIndex,
                 ),
                 const VerticalDivider(width: 5),
               ],
               Expanded(
                   key: const ValueKey('HomePageBody'),
-                  child: HomepageContentRoute().mainContent(index)),
+                  child: Consumer<ContentViewModel>(
+                      builder: (context, content, _) =>
+                          _maincontent(content.mainContentIndex)),
+              ),
               if (alwaysDisplayDrawer)
-                const DrawerSheet(
-                  key: ValueKey('Drawer'),
+                DrawerSheet(
+                  key: const ValueKey('Drawer'),
                 ),
             ],
           ),
@@ -88,15 +112,9 @@ class HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md
           ? NavigationBottomBar(
-              selectedIndex: index,
-              onIndexSelect: onIndexSelect,
+              selectedIndex: content.mainContentIndex,
             )
           : null,
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: index < 2 ? _incrementCounter : null,
-      //   tooltip: 'Increment',
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
