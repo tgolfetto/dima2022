@@ -1,4 +1,7 @@
+import 'package:dima2022/utils/size_config.dart';
+import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 
 import './glass_rounded_container.dart';
 import './menu_bar_item.dart';
@@ -12,6 +15,7 @@ class NavigationSideBar extends StatelessWidget {
     required this.selectedIndex,
     required this.onIndexSelect,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MenuSide(
@@ -32,8 +36,8 @@ class MenuSide extends StatelessWidget {
     this.unselectedItemColor,
     this.selectedColorOpacity,
     this.itemShape = const StadiumBorder(),
-    this.margin = const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
-    this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    this.margin = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+    this.itemPadding = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
     this.duration = const Duration(milliseconds: 400),
     this.curve = Curves.linear,
   }) : super(key: key);
@@ -93,42 +97,51 @@ class MenuSide extends StatelessWidget {
                     splashColor: _selectedColor.withOpacity(0.1),
                     hoverColor: _selectedColor.withOpacity(0.1),
                     child: Container(
-                      width: 100,
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconTheme(
-                            data: IconThemeData(
-                              color: Color.lerp(
-                                  _unselectedColor, _selectedColor, t),
-                              size: 40,
-                            ),
-                            child: items.indexOf(item) == currentIndex
-                                ? item.activeIcon ?? item.icon
-                                : item.icon,
-                          ),
-                          SizedBox(
-                            child: Align(
-                              alignment: Alignment.center,
-                              widthFactor: t,
-                              child: DefaultTextStyle(
-                                style: TextStyle(
-                                  color: Color.lerp(
-                                      _selectedColor.withOpacity(0.0),
-                                      _selectedColor,
-                                      t),
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                ),
-                                child: item.title,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      width: context.layout.breakpoint < LayoutBreakpoint.lg
+                          ? getProportionateScreenWidth(27)
+                          : getProportionateScreenWidth(60),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenWidth(
+                              CustomTheme.spacePadding),
+                          vertical: getProportionateScreenHeight(
+                              CustomTheme.spacePadding)),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                      IconTheme(
+                      data: IconThemeData(
+                      color: Color.lerp(
+                          _unselectedColor, _selectedColor, t),
+                      size: getProportionateScreenHeight(40),
                     ),
+                    child: items.indexOf(item) == currentIndex
+                        ? item.activeIcon ?? item.icon
+                        : item.icon,
                   ),
+                  context.layout.breakpoint < LayoutBreakpoint.lg
+                      ? const Spacer()
+                      : Align(
+                      alignment: Alignment.center,
+                      widthFactor: t,
+                      child: Padding(
+                          padding: EdgeInsets.only(
+                              left: CustomTheme.spacePadding),
+                          child: DefaultTextStyle(
+                      style: TextStyle(
+                      color: Color.lerp(
+                          _selectedColor.withOpacity(0.0),
+                      _selectedColor,
+                      t),
+                  fontWeight: FontWeight.bold,
+                  fontSize: getProportionateScreenHeight(16),
+                ),
+                child: item.title,
+                )),
+                ),
+                ],
+                ),
+                ),
+                ),
                 );
               },
             ),

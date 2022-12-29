@@ -1,3 +1,5 @@
+import 'package:dima2022/utils/size_config.dart';
+import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 
 import './glass_rounded_container.dart';
@@ -55,12 +57,12 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     double width = MediaQuery.of(context).size.width;
-    double yourMargin = (width * 0.15);
+    double yourMargin = (width * 0.1);
 
     return GlassRoundedContainer(
-      margin: EdgeInsets.symmetric(vertical: 20, horizontal: yourMargin),
+      margin: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(CustomTheme.smallPadding), horizontal: yourMargin),
       itemPadding:
-          EdgeInsets.symmetric(vertical: 8, horizontal: yourMargin * 0.5),
+          EdgeInsets.symmetric(vertical: getProportionateScreenHeight(CustomTheme.spacePadding), horizontal: yourMargin * 0.5),
       radius: BorderRadius.circular(30.0),
       opacity: 0.5,
       child: Row(

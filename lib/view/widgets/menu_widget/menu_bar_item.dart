@@ -13,7 +13,7 @@ List<MenuBarItem> items = [
   ),
   MenuBarItem(
     icon: Icon(Icons.switch_access_shortcut),
-    title: Text("Search"),
+    title: Text("Dressing Room"),
     selectedColor: Colors.orange,
   ),
   MenuBarItem(
