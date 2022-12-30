@@ -66,7 +66,7 @@ class _PdpState extends State<Pdp> {
                 children: <Widget>[
                   SizedBox(
                     width: double.maxFinite,
-                    child: Image.asset(loadedProduct.imageUrl!),
+                    child: Image.network(loadedProduct.imageUrl!),
                   ),
                   Text(loadedProduct.id!),
                   Text(loadedProduct.title!),
