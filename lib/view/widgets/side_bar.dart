@@ -1,4 +1,5 @@
 import 'package:dima2022/view/homepage_screen.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:dima2022/view_models/content_view_model.dart';
@@ -19,6 +20,10 @@ class SideBarState extends State<SideBar> {
       case Pdp.pageIndex:
         {
           return const Pdp();
+        }
+      case CartWidget.pageIndex:
+        {
+          return const CartWidget();
         }
       default:
         {

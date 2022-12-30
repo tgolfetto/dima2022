@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
+import '../../../view_models/content_view_model.dart';
 import '../../custom_theme.dart';
 import '../cart_line_item.dart';
+import '../homepage_widgets/plp.dart';
+import 'filter.dart';
 
 class CartWidget extends StatefulWidget {
-  static const routeName = '/cart';
+  static const pageIndex = 7;
 
   const CartWidget({super.key});
 
@@ -12,10 +17,17 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
-  ElevatedButton get _backButton {
+  Widget _backButton(BuildContext content) {
+    final content = context.read<ContentViewModel>();
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
-      onPressed: () => {},
+      onPressed: () {
+        if (context.layout.breakpoint < LayoutBreakpoint.md) {
+          content.updateMainContentIndex(Plp.pageIndex);
+        } else {
+          content.updateSideBarIndex(Filter.pageIndex);
+        }
+      },
       child: const Icon(Icons.close),
     );
   }
@@ -49,7 +61,7 @@ class _CartWidgetState extends State<CartWidget> {
     return Scaffold(
         body: Column(
       children: [
-        Container(child: _backButton),
+        Container(child: _backButton(context)),
         Expanded(
           child: SingleChildScrollView(
             child: Column(

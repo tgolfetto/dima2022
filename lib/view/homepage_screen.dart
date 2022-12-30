@@ -1,6 +1,9 @@
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -25,16 +28,22 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   late String _barcodeScanned;
 
-  Widget _maincontent(int index){
+  Widget _maincontent(BuildContext context, int index) {
     switch (index) {
-      case 1:
+      case BarcodeScannerWidget.pageIndex:
         {
           return BarcodeScannerWidget((String code) {
             _barcodeScanned = code;
             if (kDebugMode) {
               print(_barcodeScanned);
             }
-            /// @TODO: show the product of the related barcode
+            final content = context.read<ContentViewModel>();
+            content.updateProductId(code);
+            if (context.layout.breakpoint < LayoutBreakpoint.lg) {
+              content.updateMainContentIndex(Pdp.pageIndex);
+            } else {
+              content.updateSideBarIndex(Pdp.pageIndex);
+            }
           });
         }
       case 2:
@@ -49,19 +58,35 @@ class HomePageState extends State<HomePage> {
 
           /// @TODO: show profile widget
         }
+      case Filter.pageIndex:
+        {
+          return const Filter();
+        }
+      case Pdp.pageIndex:
+        {
+          return const Pdp();
+        }
+      case CartWidget.pageIndex:
+        {
+          return const CartWidget();
+        }
       default:
         {
           return const Plp();
-          /// @TODO: show list of products
         }
     }
   }
 
-  ElevatedButton get _cartButton {
+  ElevatedButton _cartButton(BuildContext context) {
+    final content = context.read<ContentViewModel>();
     return ElevatedButton(
       style: CustomTheme.buttonStyleIcon,
-      onPressed: () => {
-        /// TODO: Open cart
+      onPressed: () {
+        if (context.layout.breakpoint < LayoutBreakpoint.md) {
+          content.updateMainContentIndex(CartWidget.pageIndex);
+        } else {
+          content.updateSideBarIndex(CartWidget.pageIndex);
+        }
       },
       child: const Icon(Icons.shopping_cart),
     );
@@ -77,7 +102,7 @@ class HomePageState extends State<HomePage> {
         iconTheme: IconThemeData(color: CustomTheme.primaryColor),
         title: const Text(CustomTheme.appTitle,
             style: TextStyle(color: Colors.black)),
-        actions: [_cartButton],
+        actions: [_cartButton(context)],
         backgroundColor: CustomTheme.backgroundColor,
       ),
       endDrawer: alwaysDisplayDrawer
@@ -97,10 +122,10 @@ class HomePageState extends State<HomePage> {
                 const VerticalDivider(width: 5),
               ],
               Expanded(
-                  key: const ValueKey('HomePageBody'),
-                  child: Consumer<ContentViewModel>(
-                      builder: (context, content, _) =>
-                          _maincontent(content.mainContentIndex)),
+                key: const ValueKey('HomePageBody'),
+                child: Consumer<ContentViewModel>(
+                    builder: (context, content, _) =>
+                        _maincontent(context, content.mainContentIndex)),
               ),
               if (alwaysDisplayDrawer)
                 SideBar(

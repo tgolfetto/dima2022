@@ -69,11 +69,10 @@ class _LineItemState extends State<LineItem> {
           Stack(children: [
             GestureDetector(
               onTap: () {
-                ///TODO: Open pdp
+                content.updateProductId(widget.id);
                 if(context.layout.breakpoint < LayoutBreakpoint.lg){
-                  // open the widget as popup
+                  content.updateMainContentIndex(Pdp.pageIndex);
                 }else{
-                  content.updateProductId(widget.id);
                   content.updateSideBarIndex(Pdp.pageIndex);
                 }
               },

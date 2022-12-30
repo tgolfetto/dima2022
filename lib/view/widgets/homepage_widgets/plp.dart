@@ -4,12 +4,17 @@ import 'package:dima2022/view/grid_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
 
+import '../../../view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
+import '../sidebar_widgets/filter.dart';
 
 class Plp extends StatefulWidget {
   static const routeName = '/plp';
+  static const pageIndex = 0;
+
   const Plp({super.key});
 
   @override
@@ -17,16 +22,15 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
-  Widget get _filterButton {
-    return context.layout.breakpoint >= LayoutBreakpoint.lg
-        ? const Spacer()
-        : ElevatedButton(
+  Widget _filterButton(BuildContext context) {
+    final content = context.read<ContentViewModel>();
+    return context.layout.breakpoint < LayoutBreakpoint.md
+        ? ElevatedButton(
             style: CustomTheme.buttonStyleIcon,
-            onPressed: () => {
-              /// TODO: Open filter
-            },
+            onPressed: () => {content.updateMainContentIndex(Filter.pageIndex)},
             child: const Icon(Icons.filter_list),
-          );
+          )
+        : const Spacer();
   }
 
   @override
@@ -80,7 +84,7 @@ class _PlpState extends State<Plp> {
                         'Product list',
                         style: CustomTheme.headingStyle,
                       ),
-                      _filterButton
+                      _filterButton(context)
                     ]),
               )),
           const SliverGutter(),

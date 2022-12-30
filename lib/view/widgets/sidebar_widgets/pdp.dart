@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../view_models/content_view_model.dart';
 import '../../custom_theme.dart';
+import '../homepage_widgets/plp.dart';
 import 'filter.dart';
 
 class Pdp extends StatefulWidget {
@@ -22,10 +23,10 @@ class _PdpState extends State<Pdp> {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
       onPressed: (){
-        if(context.layout.breakpoint < LayoutBreakpoint.lg){
-      // close the widget as popup
-      }else{
-        content.updateSideBarIndex(Filter.pageIndex);
+        if(context.layout.breakpoint < LayoutBreakpoint.md){
+          content.updateMainContentIndex(Plp.pageIndex);
+        }else{
+          content.updateSideBarIndex(Filter.pageIndex);
         }
       },
       child: const Icon(Icons.close),
