@@ -76,7 +76,7 @@ class _LineItemState extends State<LineItem> {
                   content.updateSideBarIndex(Pdp.pageIndex);
                 }
               },
-              child: Image.asset('assets/images/example.jpg'),
+              child: Image.asset(widget.imageUrl),
             ),
             Positioned(
               right: 0.0,

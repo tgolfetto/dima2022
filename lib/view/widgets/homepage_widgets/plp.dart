@@ -6,6 +6,7 @@ import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/product/products.dart';
 import '../../../view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
@@ -22,6 +23,34 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
+
+  var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    //Provider.of<Products>(context).fetchAndSetProducts(); /THIS WON'T WORK HERE --> WE HAVE TO MOVE IT IN didChangeDependencies
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductListViewModel>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
   Widget _filterButton(BuildContext context) {
     final content = context.read<ContentViewModel>();
     return context.layout.breakpoint < LayoutBreakpoint.md
@@ -36,29 +65,20 @@ class _PlpState extends State<Plp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-
-    List<ProductViewModel> productsVM = ProductListViewModel().items;
-    for (ProductViewModel p in productsVM) {
-      items.add(LineItem(
-        id: p.id!,
-        title: p.title!,
-        description: p.description!,
-        price: p.price!,
-        sizes: p.sizes!,
-        imageUrl: p.imageUrl!,
-      ));
-    }
-
-    /// Mock products
-    for (int i = 0; i < 10; i++) {
-      items.add(LineItem(
-        id: '-NEPxPT8F5BFAZbWokNb',
-        title: 'Blue T-Shirt',
-        description: 'These are blue jeans made of 99% cotton and 1% spandex',
-        price: 29.99,
-        sizes: const [32, 34, 36],
-        imageUrl: 'https://i.pravatar.cc/150?img=4',
-      ));
+    if(_isLoading){
+      items.add(const Text('Loading products...'))
+    }else {
+      final products = context.read<ProductListViewModel>();
+      for (ProductViewModel p in products.items) {
+        items.add(LineItem(
+          id: p.id!,
+          title: p.title!,
+          description: p.description!,
+          price: p.price!,
+          sizes: p.sizes!,
+          imageUrl: p.imageUrl!,
+        ));
+      }
     }
 
     final double spacing =
@@ -115,10 +135,5 @@ class _PlpState extends State<Plp> {
         ],
       ),
     );
-
-    // return SingleChildScrollView(
-    //   child: Column(
-    //       mainAxisAlignment: MainAxisAlignment.spaceAround, children: rows),
-    // );
   }
 }
