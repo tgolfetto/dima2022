@@ -3,6 +3,8 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/content_view_model.dart';
+import '../../../view_models/product_view_models/product_view_model.dart';
+import '../../../view_models/product_view_models/products_view_model.dart';
 import '../../custom_theme.dart';
 import '../homepage_widgets/plp.dart';
 import 'filter.dart';
@@ -46,6 +48,10 @@ class _PdpState extends State<Pdp> {
   @override
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
+    ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
+      context,
+      listen: false,
+    ).findById(content.productId);
     return Scaffold(
         body: Column(
       children: [
@@ -60,14 +66,14 @@ class _PdpState extends State<Pdp> {
                 children: <Widget>[
                   SizedBox(
                     width: double.maxFinite,
-                    child: Image.asset('assets/images/example.jpg'),
+                    child: Image.asset(loadedProduct.imageUrl!),
                   ),
-                  Text(content.productId),
-                  const Text('Product name: T-shirt black'),
-                  const Text('19.99 €'),
+                  Text(loadedProduct.id!),
+                  Text(loadedProduct.title!),
+                  Text('EUR ${loadedProduct.price}'),
                   DropdownButton<int>(
                     value: dropdownValue == 0
-                        ? 44 //productModel.sizes[0]
+                        ? loadedProduct.sizes![0] //productModel.sizes[0]
                         : dropdownValue,
                     icon: const Icon(Icons.arrow_downward),
                     elevation: 16,
@@ -80,7 +86,7 @@ class _PdpState extends State<Pdp> {
                         dropdownValue = value!;
                       });
                     },
-                    items: [44, 46, 48] //productModel.sizes
+                    items: loadedProduct.sizes! //productModel.sizes
                         .map<DropdownMenuItem<int>>((int value) {
                       return DropdownMenuItem<int>(
                         value: value,

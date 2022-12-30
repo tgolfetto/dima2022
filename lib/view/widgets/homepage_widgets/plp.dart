@@ -1,12 +1,10 @@
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
-import 'package:dima2022/view/grid_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/product/products.dart';
 import '../../../view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
@@ -41,7 +39,7 @@ class _PlpState extends State<Plp> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<ProductListViewModel>(context).fetchAndSetProducts().then((_) {
+      Provider.of<ProductListViewModel>(context, listen: false).fetchAndSetProducts().then((_) {
         setState(() {
           _isLoading = false;
         });

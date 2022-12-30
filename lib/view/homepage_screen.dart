@@ -116,30 +116,31 @@ class HomePageState extends State<HomePage> {
           Row(
             children: [
               if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
-                NavigationSideBar(
-                  selectedIndex: content.mainContentIndex,
-                ),
-                const VerticalDivider(width: 5),
-              ],
+                  Consumer<ContentViewModel>(
+                      builder: (context, content, _) => NavigationSideBar(
+                            selectedIndex: content.mainContentIndex,
+                          )),
+                  const VerticalDivider(width: 5),
+                ],
               Expanded(
                 key: const ValueKey('HomePageBody'),
                 child: Consumer<ContentViewModel>(
                     builder: (context, content, _) =>
                         _maincontent(context, content.mainContentIndex)),
-              ),
-              if (alwaysDisplayDrawer)
-                SideBar(
-                  key: const ValueKey('Drawer'),
                 ),
-            ],
-          ),
-        ],
-      ),
-      bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md
-          ? NavigationBottomBar(
-              selectedIndex: content.mainContentIndex,
-            )
-          : null,
-    );
+                if (alwaysDisplayDrawer)
+                  SideBar(
+                    key: const ValueKey('Drawer'),
+                  ),
+              ],
+            ),
+          ],
+        ),
+        bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md
+            ? Consumer<ContentViewModel>(
+                builder: (context, content, _) => NavigationBottomBar(
+                      selectedIndex: content.mainContentIndex,
+                    ))
+            : null);
   }
 }
