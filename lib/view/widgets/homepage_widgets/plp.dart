@@ -66,7 +66,7 @@ class _PlpState extends State<Plp> {
   Widget build(BuildContext context) {
     List<Widget> items = [];
     if(_isLoading){
-      items.add(const Text('Loading products...'))
+      items.add(const Text('Loading products...'));
     }else {
       final products = context.read<ProductListViewModel>();
       for (ProductViewModel p in products.items) {
