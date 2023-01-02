@@ -1,3 +1,4 @@
+import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
@@ -23,25 +24,47 @@ class _PdpState extends State<Pdp> {
 
   ElevatedButton _backButton(ContentViewModel content) {
     return ElevatedButton(
-      style: CustomTheme.buttonStyleOutline,
-      onPressed: (){
-        if(context.layout.breakpoint < LayoutBreakpoint.md){
+      style: CustomTheme.buttonStyleIcon,
+      onPressed: () {
+        if (context.layout.breakpoint < LayoutBreakpoint.md) {
           content.updateMainContentIndex(Plp.pageIndex);
-        }else{
+        } else {
           content.updateSideBarIndex(Filter.pageIndex);
         }
       },
-      child: const Icon(Icons.close),
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const Icon(Icons.close),
+        Text('Close', style: CustomTheme.bodyStyle)
+      ]),
     );
   }
 
-  Widget get _addToCartButton {
+  Widget _requestButton(productId) {
+    return ElevatedButton(
+      style: CustomTheme.buttonStyleOutline,
+      onPressed: () => {
+        ///TODO: request this productId
+      },
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const Icon(Icons.try_sms_star),
+        Text('Request', style: CustomTheme.bodyStyle)
+      ]),
+    );
+  }
+
+  Widget _addToCartButton(productId) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
       onPressed: () => {
-        //Cart.addToCart(widget.model, dropdownValue)
-      } ,
-      child: const Icon(Icons.add_shopping_cart),
+        Provider.of<CartViewModel>(
+          context,
+          listen: false,
+        ).addSingleItem(productId)
+      },
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const Icon(Icons.add_shopping_cart),
+        Text('Add to cart', style: CustomTheme.bodyStyle)
+      ]),
     );
   }
 
@@ -55,7 +78,7 @@ class _PdpState extends State<Pdp> {
     return Scaffold(
         body: Column(
       children: [
-        Container(child: _backButton(content)),
+        Container(alignment: Alignment.centerLeft, child: _backButton(content)),
         Expanded(
           child: SingleChildScrollView(
             child: Expanded(
@@ -64,41 +87,71 @@ class _PdpState extends State<Pdp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  SizedBox(
-                    width: double.maxFinite,
-                    child: Image.network(loadedProduct.imageUrl!),
+                  Padding(
+                      padding: EdgeInsets.all(CustomTheme.smallPadding),
+                      child: SizedBox(
+                        width: double.maxFinite,
+                        child: Image.network(loadedProduct.imageUrl!),
+                      )),
+                  Text(
+                    'ID: ${loadedProduct.id}',
+                    style: CustomTheme.bodyStyle,
                   ),
-                  Text(loadedProduct.id!),
-                  Text(loadedProduct.title!),
-                  Text('EUR ${loadedProduct.price}'),
-                  DropdownButton<int>(
-                    value: dropdownValue == 0
-                        ? loadedProduct.sizes![0] //productModel.sizes[0]
-                        : dropdownValue,
-                    icon: const Icon(Icons.arrow_downward),
-                    elevation: 16,
-                    underline: Container(
-                      height: 2,
-                      color: Colors.deepPurpleAccent,
-                    ),
-                    onChanged: (int? value) {
-                      setState(() {
-                        dropdownValue = value!;
-                      });
-                    },
-                    items: loadedProduct.sizes! //productModel.sizes
-                        .map<DropdownMenuItem<int>>((int value) {
-                      return DropdownMenuItem<int>(
-                        value: value,
-                        child: Text("$value"),
-                      );
-                    }).toList(),
+                  Padding(
+                      padding:
+                          EdgeInsets.only(bottom: CustomTheme.spacePadding),
+                      child: Text(
+                        loadedProduct.title!,
+                        style: CustomTheme.headingStyle,
+                      )),
+                  Text(loadedProduct.description!,
+                      style: CustomTheme.bodyStyle),
+                  Text('EUR ${loadedProduct.price}',
+                      style: CustomTheme.bodyStyle),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text('Size: ', style: CustomTheme.bodyStyle),
+                        DropdownButton<int>(
+                          value: dropdownValue == 0
+                              ? loadedProduct.sizes![0] //productModel.sizes[0]
+                              : dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent,
+                          ),
+                          onChanged: (int? value) {
+                            setState(() {
+                              dropdownValue = value!;
+                            });
+                          },
+                          items: loadedProduct.sizes! //productModel.sizes
+                              .map<DropdownMenuItem<int>>((int value) {
+                            return DropdownMenuItem<int>(
+                              value: value,
+                              child:
+                                  Text("$value", style: CustomTheme.bodyStyle),
+                            );
+                          }).toList(),
+                        ),
+                      ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _requestButton(loadedProduct.id),
+                      _addToCartButton(loadedProduct.id)
+                    ],
                   ),
-                  _addToCartButton,
                 ],
               ),
             )),
           ),
+        ),
+        Margin(
+          margin: EdgeInsets.only(bottom: CustomTheme.bigPadding),
+          child: const Spacer(),
         ),
       ],
     ));

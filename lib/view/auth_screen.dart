@@ -5,12 +5,14 @@ import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/splash_screen.dart';
 import 'package:dima2022/view_models/content_view_model.dart';
 import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
+import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 import '../utils/routes.dart';
 import '../view_models/cart_view_models/cart_view_model.dart';
 import '../view_models/product_view_models/products_view_model.dart';
+import '../view_models/request_view_models/request_view_model.dart';
 import '../view_models/user_view_models/auth_view_model.dart';
 import 'homepage_screen.dart';
 
@@ -86,8 +88,14 @@ class AuthScreen extends StatelessWidget {
               auth.token!, auth.userId!, previousOrders),
         ),
         ChangeNotifierProvider(
-            create: (ctx) => ContentViewModel(),
-        )
+          create: (ctx) => ContentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => RequestListViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => RequestViewModel(),
+        ),
       ],
       child: Consumer<AuthViewModel>(
         builder: (context, auth, child) => MaterialApp(

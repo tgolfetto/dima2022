@@ -1,5 +1,6 @@
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
+import 'package:dima2022/view/widgets/homepage_widgets/requests.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
@@ -51,9 +52,7 @@ class HomePageState extends State<HomePage> {
         }
       case 2:
         {
-          return const Text('Dressing room');
-
-          /// @TODO: show dressing room widget
+          return const RequestPage();
         }
       case 3:
         {

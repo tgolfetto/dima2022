@@ -83,7 +83,7 @@ class _PlpState extends State<Plp> {
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
     return Scrollbar(
-      child: CustomScrollView(
+        child: CustomScrollView(
         slivers: [
           const SliverGutter(),
           SliverMargin(
@@ -94,33 +94,33 @@ class _PlpState extends State<Plp> {
                   : EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(
                           CustomTheme.mediumPadding)),
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Product list',
-                        style: CustomTheme.headingStyle,
-                      ),
-                      _filterButton(context)
-                    ]),
-              )),
-          const SliverGutter(),
-          SliverMargin(
-            margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                ? EdgeInsets.symmetric(
+                  sliver: SliverToBoxAdapter(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Product list',
+                            style: CustomTheme.headingStyle,
+                          ),
+                          _filterButton(context)
+                        ]),
+                  )),
+              const SliverGutter(),
+              SliverMargin(
+                margin: context.layout.breakpoint == LayoutBreakpoint.xs
+                    ? EdgeInsets.symmetric(
                     horizontal:
-                        getProportionateScreenWidth(CustomTheme.spacePadding))
-                : EdgeInsets.symmetric(
+                    getProportionateScreenWidth(CustomTheme.spacePadding))
+                    : EdgeInsets.symmetric(
                     horizontal:
-                        getProportionateScreenWidth(CustomTheme.mediumPadding)),
-            sliver: SliverGrid(
-              delegate: SliverChildListDelegate.fixed(items),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: context.layout.value(
-                  xs: 2,
-                  sm: 2,
-                  md: 2,
+                    getProportionateScreenWidth(CustomTheme.mediumPadding)),
+                sliver: SliverGrid(
+                  delegate: SliverChildListDelegate.fixed(items),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: context.layout.value(
+                      xs: 2,
+                      sm: 2,
+                      md: 2,
                   lg: 3,
                   xl: 4,
                 ),
