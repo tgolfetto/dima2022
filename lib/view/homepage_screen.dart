@@ -34,15 +34,18 @@ class HomePageState extends State<HomePage> {
         {
           return BarcodeScannerWidget((String code) {
             _barcodeScanned = code;
-            if (kDebugMode) {
-              print(_barcodeScanned);
-            }
-            final content = context.read<ContentViewModel>();
-            content.updateProductId(code);
-            if (context.layout.breakpoint < LayoutBreakpoint.lg) {
-              content.updateMainContentIndex(Pdp.pageIndex);
-            } else {
-              content.updateSideBarIndex(Pdp.pageIndex);
+            try {
+              final content = context.read<ContentViewModel>();
+              content.updateProductId(code);
+              if (context.layout.breakpoint < LayoutBreakpoint.lg) {
+                content.updateMainContentIndex(Pdp.pageIndex);
+              } else {
+                content.updateSideBarIndex(Pdp.pageIndex);
+              }
+            }catch(e){
+              if (kDebugMode) {
+              print('$e \n No item with barcode $_barcodeScanned found');
+              }
             }
           });
         }
