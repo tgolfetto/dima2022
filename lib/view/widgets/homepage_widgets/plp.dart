@@ -21,7 +21,6 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
-
   var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = false;
@@ -39,7 +38,9 @@ class _PlpState extends State<Plp> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<ProductListViewModel>(context, listen: false).fetchAndSetProducts().then((_) {
+      Provider.of<ProductListViewModel>(context, listen: false)
+          .fetchAndSetProducts()
+          .then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -63,19 +64,12 @@ class _PlpState extends State<Plp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    if(_isLoading){
+    if (_isLoading) {
       items.add(const Text('Loading products...'));
-    }else {
+    } else {
       final products = context.read<ProductListViewModel>();
       for (ProductViewModel p in products.items) {
-        items.add(LineItem(
-          id: p.id!,
-          title: p.title!,
-          description: p.description!,
-          price: p.price!,
-          sizes: p.sizes!,
-          imageUrl: p.imageUrl!,
-        ));
+        items.add(LineItem(productViewModel: p));
       }
     }
 
@@ -83,7 +77,7 @@ class _PlpState extends State<Plp> {
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
     return Scrollbar(
-        child: CustomScrollView(
+      child: CustomScrollView(
         slivers: [
           const SliverGutter(),
           SliverMargin(
@@ -94,33 +88,33 @@ class _PlpState extends State<Plp> {
                   : EdgeInsets.symmetric(
                       horizontal: getProportionateScreenWidth(
                           CustomTheme.mediumPadding)),
-                  sliver: SliverToBoxAdapter(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Product list',
-                            style: CustomTheme.headingStyle,
-                          ),
-                          _filterButton(context)
-                        ]),
-                  )),
-              const SliverGutter(),
-              SliverMargin(
-                margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                    ? EdgeInsets.symmetric(
+              sliver: SliverToBoxAdapter(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Product list',
+                        style: CustomTheme.headingStyle,
+                      ),
+                      _filterButton(context)
+                    ]),
+              )),
+          const SliverGutter(),
+          SliverMargin(
+            margin: context.layout.breakpoint == LayoutBreakpoint.xs
+                ? EdgeInsets.symmetric(
                     horizontal:
-                    getProportionateScreenWidth(CustomTheme.spacePadding))
-                    : EdgeInsets.symmetric(
+                        getProportionateScreenWidth(CustomTheme.spacePadding))
+                : EdgeInsets.symmetric(
                     horizontal:
-                    getProportionateScreenWidth(CustomTheme.mediumPadding)),
-                sliver: SliverGrid(
-                  delegate: SliverChildListDelegate.fixed(items),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: context.layout.value(
-                      xs: 2,
-                      sm: 2,
-                      md: 2,
+                        getProportionateScreenWidth(CustomTheme.mediumPadding)),
+            sliver: SliverGrid(
+              delegate: SliverChildListDelegate.fixed(items),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: context.layout.value(
+                  xs: 2,
+                  sm: 2,
+                  md: 2,
                   lg: 3,
                   xl: 4,
                 ),

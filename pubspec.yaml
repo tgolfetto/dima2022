@@ -46,6 +46,9 @@ dependencies:
   intl: ^0.18.0
   flutter_svg: ^1.1.6
   flutter_layout_grid: ^2.0.1
+  image_picker: ^0.8.6 
+  lottie: ^2.0.0
+
     
 
 
@@ -116,4 +119,6 @@ flutter:
           style: italic
         - asset: assets/fonts/Raleway-Medium.ttf
           weight: 700
+        - asset: assets/fonts/Raleway-Bold.ttf
+          weight: 900
 

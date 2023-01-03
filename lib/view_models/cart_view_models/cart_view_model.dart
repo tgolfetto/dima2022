@@ -4,6 +4,7 @@ import '../../services/cart_service.dart';
 
 import '../../models/cart/cart.dart';
 import '../../models/cart/cart_item.dart';
+import 'cart_item_view_model.dart';
 
 class CartViewModel with ChangeNotifier {
   // The Cart instance
@@ -28,6 +29,10 @@ class CartViewModel with ChangeNotifier {
     return _cart.items;
   }
 
+  List<CartItemViewModel> get cartItems {
+    return _cart.items.entries.map((e) => CartItemViewModel(e.value)).toList();
+  }
+
   // Returns the number of items in the cart
   int get itemCount {
     return _cart.itemCount;
@@ -48,10 +53,10 @@ class CartViewModel with ChangeNotifier {
   }
 
   // Adds an item to the cart
-  // @require The productId, price, and title arguments must not be null
+  // @require The productId, imageUrl, price, and title arguments must not be null
   // @ensure The item will be added to the cart and the CartService will be updated with the new cart
-  void addItem(String productId, double price, String title) {
-    _cart.addItem(productId, price, title);
+  void addItem(String productId, String imageUrl, double price, String title) {
+    _cart.addItem(productId, imageUrl, price, title);
     _cartService.updateCart(_cart);
     notifyListeners();
   }

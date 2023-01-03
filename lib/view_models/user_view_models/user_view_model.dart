@@ -7,9 +7,9 @@ import '../../models/user/user.dart';
 
 class UserViewModel with ChangeNotifier {
   late final UserService _userService;
-  late final User _user;
+  late User _user;
 
-  UserViewModel() {}
+  UserViewModel();
 
   UserViewModel.fromAuth(String? token, String? userId) {
     _userService = UserService(token, userId);
@@ -23,7 +23,8 @@ class UserViewModel with ChangeNotifier {
   String get address => _user.address;
   String get profileImageUrl => _user.profileImageUrl;
   String get size => _user.size;
-  int get shoeSize => _user.shoeSize;
+  String get shoeSizeString =>
+      _user.shoeSize != 0 ? _user.shoeSize.toString() : '';
   List<String> get favoriteBrands => _user.favoriteBrands;
   List<ItemCategory> get favoriteCategories => _user.favoriteCategories;
 
@@ -33,7 +34,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    User u = await _userService.getUser();
+    final u = await _userService.getUser();
     _user = u;
     notifyListeners();
   }

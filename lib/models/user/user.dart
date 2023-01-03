@@ -78,11 +78,12 @@ class User with ChangeNotifier {
     _favoriteBrands = userData['favorite_brands'] != null
         ? List<String>.from(userData['favorite_brands'])
         : [];
-    _favoriteCategories = userData['favorite_categories'] != null
-        ? (userData['favorite_categories'])
-            .map((e) => categoryFromString(e))
-            .toList()
-        : [];
+    _favoriteCategories = [];
+    if (userData['favorite_categories'] != null) {
+      for (var cat in userData['favorite_categories']) {
+        _favoriteCategories.add(categoryFromString(cat));
+      }
+    }
   }
 
   // returns a JSON object representation of the User instance
@@ -99,7 +100,7 @@ class User with ChangeNotifier {
       'reward_points': _rewardPoints,
       'favorite_brands': _favoriteBrands,
       'favorite_categories':
-          _favoriteCategories.map((e) => e.toString()).toList()
+          _favoriteCategories.map((e) => e.toString().split('.')[1]).toList()
     };
   }
 
@@ -107,25 +108,25 @@ class User with ChangeNotifier {
   String get id => _id!;
 
   // name of the user
-  String get name => _name!;
+  String get name => _name ?? '';
 
   // email of the user
   String get email => _email;
 
   // phone of the user
-  String get phone => _phone!;
+  String get phone => _phone ?? '';
 
   // address of the user
-  String get address => _address!;
+  String get address => _address ?? '';
 
   // URL of the profile image of the user
-  String get profileImageUrl => _profileImageUrl!;
+  String get profileImageUrl => _profileImageUrl ?? '';
 
   // size of the user
-  String get size => _size!;
+  String get size => _size ?? '';
 
   // shoe size of the user
-  int get shoeSize => _shoeSize!;
+  int get shoeSize => _shoeSize ?? 0;
 
   // favorite brands of the user
   List<String> get favoriteBrands => _favoriteBrands;

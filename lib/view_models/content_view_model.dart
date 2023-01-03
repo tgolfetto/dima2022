@@ -12,12 +12,12 @@ class ContentViewModel with ChangeNotifier {
 
   ContentViewModel();
 
-  ContentViewModel.fromExistingContent(int mainContentIndex, int sideBarIndex, String productId) {
+  ContentViewModel.fromExistingContent(
+      int mainContentIndex, int sideBarIndex, String productId) {
     _mainContentIndex = mainContentIndex;
     _sideBarIndex = sideBarIndex;
     _productId = productId;
   }
-
 
   int get mainContentIndex => _mainContentIndex;
   int get sideBarIndex => _sideBarIndex;
@@ -33,9 +33,9 @@ class ContentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // ???
   void updateProductId(String id) {
     _productId = id;
     notifyListeners();
   }
-
 }

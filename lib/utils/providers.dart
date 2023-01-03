@@ -1,5 +1,6 @@
 import 'package:provider/provider.dart';
 
+import '../view_models/content_view_model.dart';
 import '../view_models/user_view_models/auth_view_model.dart';
 import '../view_models/cart_view_models/cart_view_model.dart';
 import '../view_models/order_view_models/orders_view_model.dart';
@@ -47,5 +48,10 @@ var authProviders = [
     create: (context) => UserViewModel(),
     update: (context, auth, previousRequests) =>
         UserViewModel.fromAuth(auth.token, auth.userId),
+  ),
+
+// ChangeNotifierProxyProvider for the ContentViewModel
+  ChangeNotifierProvider(
+    create: (ctx) => ContentViewModel(),
   ),
 ];

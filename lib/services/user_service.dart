@@ -84,7 +84,7 @@ class UserService {
     }
   }
 
-  /**
+  /*
   Function to get a single user from the database
   @param userId the id of the user to be retrieved
   @require userId != null

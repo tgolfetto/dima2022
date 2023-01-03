@@ -1,12 +1,10 @@
-import 'package:dima2022/utils/size_config.dart';
-import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
-import './glass_rounded_container.dart';
+import '../../../../utils/size_config.dart';
+import '../../../../view_models/content_view_model.dart';
+import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';
-import '../../../view_models/content_view_model.dart';
 
 class NavigationSideBar extends StatelessWidget {
   final int selectedIndex;
@@ -33,9 +31,8 @@ class MenuSide extends StatelessWidget {
     this.selectedItemColor,
     this.unselectedItemColor,
     this.selectedColorOpacity,
-    this.itemShape = const StadiumBorder(),
-    this.margin = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-    this.itemPadding = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+    this.margin = const EdgeInsets.symmetric(vertical: 100, horizontal: 30),
+    this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
     this.duration = const Duration(milliseconds: 400),
     this.curve = Curves.linear,
   }) : super(key: key);
@@ -45,7 +42,9 @@ class MenuSide extends StatelessWidget {
   final Color? selectedItemColor;
   final Color? unselectedItemColor;
   final double? selectedColorOpacity;
-  final ShapeBorder itemShape;
+  final ShapeBorder itemShape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(22),
+  );
   final EdgeInsets margin;
   final EdgeInsets itemPadding;
   final Duration duration;
@@ -55,11 +54,22 @@ class MenuSide extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final content = context.read<ContentViewModel>();
+    SizeConfig()..init(context);
+    double marginWidth = getProportionateScreenWidth(30) > 30.0
+        ? 30.0
+        : getProportionateScreenWidth(30);
+    double marginHeight = getProportionateScreenHeight(90) > 90.0
+        ? 90.0
+        : getProportionateScreenHeight(90);
+
     return GlassRoundedContainer(
-      margin: margin,
+      margin:
+          EdgeInsets.symmetric(vertical: marginHeight, horizontal: marginWidth),
       itemPadding: itemPadding,
       radius: BorderRadius.circular(30.0),
       opacity: 0.25,
+      enableBorder: true,
+      enableShadow: false,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,58 +97,54 @@ class MenuSide extends StatelessWidget {
                       t),
                   shape: itemShape,
                   child: InkWell(
-                    onTap: () => content.updateMainContentIndex(items.indexOf(item)),
+                    onTap: () =>
+                        content.updateMainContentIndex(items.indexOf(item)),
                     customBorder: itemShape,
                     focusColor: _selectedColor.withOpacity(0.1),
                     highlightColor: _selectedColor.withOpacity(0.1),
                     splashColor: _selectedColor.withOpacity(0.1),
                     hoverColor: _selectedColor.withOpacity(0.1),
                     child: Container(
-                      width: context.layout.breakpoint < LayoutBreakpoint.lg
-                          ? getProportionateScreenWidth(30)
-                          : getProportionateScreenWidth(65),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(
-                              CustomTheme.spacePadding),
-                          vertical: getProportionateScreenHeight(
-                              CustomTheme.spacePadding)),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                      IconTheme(
-                      data: IconThemeData(
-                      color: Color.lerp(
-                          _unselectedColor, _selectedColor, t),
-                      size: getProportionateScreenHeight(40),
+                      width: 100,
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconTheme(
+                            data: IconThemeData(
+                              color: Color.lerp(
+                                  _unselectedColor, _selectedColor, t),
+                              size: 40 * marginHeight * 0.01 > 40
+                                  ? 40
+                                  : 40 * marginHeight * 0.01,
+                            ),
+                            child: items.indexOf(item) == currentIndex
+                                ? item.activeIcon ?? item.icon
+                                : item.icon,
+                          ),
+                          SizedBox(
+                            child: Align(
+                              alignment: Alignment.center,
+                              widthFactor: t,
+                              child: DefaultTextStyle(
+                                style: TextStyle(
+                                  color: Color.lerp(
+                                      _selectedColor.withOpacity(0.0),
+                                      _selectedColor,
+                                      t),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15 * marginHeight * 0.01 > 15
+                                      ? 15
+                                      : 15 * marginHeight * 0.01,
+                                ),
+                                child: item.title,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    child: items.indexOf(item) == currentIndex
-                        ? item.activeIcon ?? item.icon
-                        : item.icon,
                   ),
-                  context.layout.breakpoint < LayoutBreakpoint.lg
-                      ? const Spacer()
-                      : Align(
-                      alignment: Alignment.center,
-                      widthFactor: t,
-                      child: Padding(
-                          padding: EdgeInsets.only(
-                              left: CustomTheme.spacePadding),
-                          child: DefaultTextStyle(
-                      style: TextStyle(
-                      color: Color.lerp(
-                          _selectedColor.withOpacity(0.0),
-                      _selectedColor,
-                      t),
-                  fontWeight: FontWeight.bold,
-                  fontSize: getProportionateScreenHeight(16),
-                ),
-                child: item.title,
-                )),
-                ),
-                ],
-                ),
-                ),
-                ),
                 );
               },
             ),

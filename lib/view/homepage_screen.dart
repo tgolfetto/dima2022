@@ -3,17 +3,21 @@ import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/requests.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/content_view_model.dart';
-import './widgets/side_bar.dart';
-import './widgets/menu_widget/navigation_bottom_bar.dart';
-import './widgets/menu_widget/navigation_side_bar.dart';
+import 'widgets/sidebar_widgets/side_bar.dart';
+
+import 'widgets/ui_widgets/appbar_widget/windows_bar.dart';
+import 'widgets/ui_widgets/menu_widget/navigation_bottom_bar.dart';
+import 'widgets/ui_widgets/menu_widget/navigation_side_bar.dart';
 
 const kAlwaysDisplayDrawer = BreakpointValue(xs: false, md: true);
 
@@ -38,14 +42,14 @@ class HomePageState extends State<HomePage> {
             try {
               final content = context.read<ContentViewModel>();
               content.updateProductId(code);
-              if (context.layout.breakpoint < LayoutBreakpoint.lg) {
+              if (context.layout.breakpoint < LayoutBreakpoint.md) {
                 content.updateMainContentIndex(Pdp.pageIndex);
               } else {
                 content.updateSideBarIndex(Pdp.pageIndex);
               }
-            }catch(e){
+            } catch (e) {
               if (kDebugMode) {
-              print('$e \n No item with barcode $_barcodeScanned found');
+                print('$e \n No item with barcode $_barcodeScanned found');
               }
             }
           });
@@ -68,9 +72,9 @@ class HomePageState extends State<HomePage> {
         {
           return const Pdp();
         }
-      case CartWidget.pageIndex:
+      case CartSide.pageIndex:
         {
-          return const CartWidget();
+          return CartSide();
         }
       default:
         {
@@ -85,9 +89,9 @@ class HomePageState extends State<HomePage> {
       style: CustomTheme.buttonStyleIcon,
       onPressed: () {
         if (context.layout.breakpoint < LayoutBreakpoint.md) {
-          content.updateMainContentIndex(CartWidget.pageIndex);
+          content.updateMainContentIndex(CartSide.pageIndex);
         } else {
-          content.updateSideBarIndex(CartWidget.pageIndex);
+          content.updateSideBarIndex(CartSide.pageIndex);
         }
       },
       child: const Icon(Icons.shopping_cart),
@@ -99,43 +103,73 @@ class HomePageState extends State<HomePage> {
     final content = context.read<ContentViewModel>();
     final alwaysDisplayDrawer = context.layout.breakpoint > LayoutBreakpoint.sm;
     return Scaffold(
-      extendBody: true,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: CustomTheme.primaryColor),
-        title: const Text(CustomTheme.appTitle,
-            style: TextStyle(color: Colors.black)),
-        actions: [_cartButton(context)],
-        backgroundColor: CustomTheme.backgroundColor,
-      ),
-      endDrawer: alwaysDisplayDrawer
-          ? null
-          : SideBar(key: const ValueKey('Drawer')),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            color: CustomTheme.secondaryBackgroundColor,
-          ),
-          Row(
-            children: [
-              if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
-                  Consumer<ContentViewModel>(
-                      builder: (context, content, _) => NavigationSideBar(
-                            selectedIndex: content.mainContentIndex,
-                          )),
-                  const VerticalDivider(width: 5),
-                ],
-              Expanded(
-                key: const ValueKey('HomePageBody'),
-                child: Consumer<ContentViewModel>(
-                    builder: (context, content, _) =>
-                        _maincontent(context, content.mainContentIndex)),
-                ),
-                if (alwaysDisplayDrawer)
-                  SideBar(
-                    key: const ValueKey('Drawer'),
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: null,
+
+        // AppBar(
+        //   iconTheme: IconThemeData(color: CustomTheme.primaryColor),
+        //   title: const Text(CustomTheme.appTitle,
+        //       style: TextStyle(color: Colors.black)),
+        //   actions: [_cartButton(context)],
+        //   backgroundColor: CustomTheme.backgroundColor,
+        // ),
+
+        endDrawer:
+            alwaysDisplayDrawer ? null : SideBar(key: const ValueKey('Drawer')),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              color: CustomTheme.secondaryBackgroundColor,
+            ),
+            Column(
+              children: [
+                WindowBar(),
+                Flexible(
+                  child: Row(
+                    children: [
+                      if (context.layout.breakpoint > LayoutBreakpoint.sm) ...[
+                        Consumer<ContentViewModel>(
+                            builder: (context, content, _) => NavigationSideBar(
+                                  selectedIndex: content.mainContentIndex,
+                                )),
+                        //const VerticalDivider(width: 5),
+                      ],
+                      Expanded(
+                        key: const ValueKey('HomePageBody'),
+                        child: Consumer<ContentViewModel>(
+                            builder: (context, content, _) => _maincontent(
+                                context, content.mainContentIndex)),
+                      ),
+                      if (alwaysDisplayDrawer) SideBar(),
+                      // SideBar(
+                      //   key: const ValueKey('Drawer'),
+                      // ),
+                    ],
                   ),
+                ),
               ],
             ),
+            // Add the vignette container here
+            if (context.layout.breakpoint < LayoutBreakpoint.md)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 100,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Color.fromARGB(255, 106, 106, 106).withOpacity(0.2),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
         bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md

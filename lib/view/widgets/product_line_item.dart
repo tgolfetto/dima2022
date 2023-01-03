@@ -16,22 +16,9 @@ import '../custom_theme.dart';
 import 'sidebar_widgets/pdp.dart';
 
 class LineItem extends StatefulWidget {
-  final String id;
-  final String title;
-  final String description;
-  final String imageUrl;
-  final double price;
-  final List<int> sizes;
-  bool isFavorite = false;
+  ProductViewModel productViewModel;
 
-  LineItem(
-      {super.key,
-      required this.id,
-      required this.title,
-      required this.description,
-      required this.imageUrl,
-      required this.price,
-      required this.sizes});
+  LineItem({super.key, required this.productViewModel});
 
   @override
   State<LineItem> createState() => _LineItemState();
@@ -50,10 +37,11 @@ class _LineItemState extends State<LineItem> {
           listen: false,
         ).requests;
 
-        ProductViewModel product = Provider.of<ProductListViewModel>(
-          context,
-          listen: false,
-        ).findById(productId);
+        ProductViewModel product = widget.productViewModel;
+        // Provider.of<ProductListViewModel>(
+        //   context,
+        //   listen: false,
+        // ).findById(productId);
 
         String email = Provider.of<UserViewModel>(
           context,
@@ -90,14 +78,15 @@ class _LineItemState extends State<LineItem> {
     );
   }
 
-  Widget _addToCartButton(productId) {
+  Widget _addToCartButton(ProductViewModel productViewModel) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
       onPressed: () => {
         Provider.of<CartViewModel>(
           context,
           listen: false,
-        ).addSingleItem(productId)
+        ).addItem(productViewModel.id!, productViewModel.imageUrl!,
+            productViewModel.price!, productViewModel.title!)
       },
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         const Icon(Icons.add_shopping_cart),
@@ -111,20 +100,14 @@ class _LineItemState extends State<LineItem> {
       style: CustomTheme.buttonStyleIcon,
       onPressed: () {
         setState(() {
-          ProductViewModel product = Provider.of<ProductListViewModel>(
-            context,
-            listen: false,
-          ).findById(productId);
-          product.toggleFavoriteStatus();
-          widget.isFavorite = !widget.isFavorite;
+          widget.productViewModel.toggleFavoriteStatus();
         });
       },
-      child: widget.isFavorite
+      child: widget.productViewModel.isFavorite
           ? const Icon(Icons.favorite)
           : const Icon(Icons.favorite_border),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -137,32 +120,35 @@ class _LineItemState extends State<LineItem> {
           Stack(children: [
             GestureDetector(
               onTap: () {
-                content.updateProductId(widget.id);
-                if(context.layout.breakpoint < LayoutBreakpoint.lg){
+                content.updateProductId(widget.productViewModel.id!);
+                if (context.layout.breakpoint < LayoutBreakpoint.lg) {
                   content.updateMainContentIndex(Pdp.pageIndex);
-                }else{
+                } else {
                   content.updateSideBarIndex(Pdp.pageIndex);
                 }
               },
-              child: Image.network(widget.imageUrl),
+              child: Image.network(widget.productViewModel.imageUrl!),
             ),
             Positioned(
               right: 0.0,
               top: 0.0,
-              child: _addToFavoriteButton(widget.id),
+              child: _addToFavoriteButton(widget.productViewModel.id),
             )
           ]),
           Text(
-            widget.title,
+            widget.productViewModel.title!,
             style: CustomTheme.headingStyle,
           ),
-          Text('EUR ${widget.price}', style: CustomTheme.bodyStyle),
+          Text('EUR ${widget.productViewModel.price}',
+              style: CustomTheme.bodyStyle),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Size: ', style: CustomTheme.bodyStyle),
               DropdownButton<int>(
-                value: dropdownValue == 0 ? widget.sizes[0] : dropdownValue,
+                value: dropdownValue == 0
+                    ? widget.productViewModel.sizes![0]
+                    : dropdownValue,
                 icon: const Icon(Icons.arrow_downward),
                 elevation: 1,
                 underline: Container(
@@ -174,7 +160,8 @@ class _LineItemState extends State<LineItem> {
                     dropdownValue = value!;
                   });
                 },
-                items: widget.sizes.map<DropdownMenuItem<int>>((int value) {
+                items: widget.productViewModel.sizes!
+                    .map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
                     child: Text("$value"),
@@ -185,11 +172,10 @@ class _LineItemState extends State<LineItem> {
           ),
           Margin(
               margin: EdgeInsets.symmetric(vertical: CustomTheme.spacePadding),
-              child: _requestButton(widget.id)),
-          _addToCartButton(widget.id),
+              child: _requestButton(widget.productViewModel.id)),
+          _addToCartButton(widget.productViewModel),
         ],
       ),
-
     );
   }
 }

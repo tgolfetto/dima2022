@@ -68,52 +68,22 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-        child: MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => AuthViewModel(),
-        ),
-        ChangeNotifierProxyProvider<AuthViewModel, ProductListViewModel>(
-          create: (context) => ProductListViewModel(),
-          update: (context, auth, previousProducts) =>
-              ProductListViewModel.fromAuth(
-                  auth.token!, auth.userId!, previousProducts),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => CartViewModel(),
-        ),
-        ChangeNotifierProxyProvider<AuthViewModel, OrdersViewModel>(
-          create: (context) => OrdersViewModel(),
-          update: (context, auth, previousOrders) => OrdersViewModel.fromAuth(
-              auth.token!, auth.userId!, previousOrders),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => ContentViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => RequestListViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (ctx) => RequestViewModel(),
-        ),
-      ],
-      child: Consumer<AuthViewModel>(
-        builder: (context, auth, child) => MaterialApp(
-          title: CustomTheme.appTitle,
-          theme: CustomTheme().materialTheme,
-          debugShowCheckedModeBanner: false,
-          home: auth.isAuthenticated
-              ? const HomePage()
-              : FutureBuilder(
-                  future: auth.tryAutoLogin(),
-                  builder: (context, authResultSnapshot) =>
-                      authResultSnapshot.connectionState ==
-                              ConnectionState.waiting
-                          ? const SplashScreen()
-                          : authScreenPage(context),
-                ),
-          routes: Routes.routeList,
-        ),
+        child: Consumer<AuthViewModel>(
+      builder: (context, auth, child) => MaterialApp(
+        title: CustomTheme.appTitle,
+        theme: CustomTheme().materialTheme,
+        debugShowCheckedModeBanner: false,
+        home: auth.isAuthenticated
+            ? const HomePage()
+            : FutureBuilder(
+                future: auth.tryAutoLogin(),
+                builder: (context, authResultSnapshot) =>
+                    authResultSnapshot.connectionState ==
+                            ConnectionState.waiting
+                        ? const SplashScreen()
+                        : authScreenPage(context),
+              ),
+        routes: Routes.routeList,
       ),
     ));
   }

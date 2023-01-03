@@ -7,6 +7,8 @@ class GlassRoundedContainer extends StatelessWidget {
   final EdgeInsets itemPadding;
   final BorderRadius radius;
   final double opacity;
+  final bool enableShadow;
+  final bool enableBorder;
 
   GlassRoundedContainer({
     Key? key,
@@ -15,11 +17,32 @@ class GlassRoundedContainer extends StatelessWidget {
     required this.itemPadding,
     required this.radius,
     required this.opacity,
+    required this.enableShadow,
+    required this.enableBorder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        border: enableBorder
+            ? Border.all(
+                color: Color.fromARGB(60, 150, 150, 150),
+              )
+            : null,
+        borderRadius: radius,
+        boxShadow: !enableShadow
+            ? null
+            : [
+                BoxShadow(
+                  color: Color.fromARGB(255, 119, 119, 119).withOpacity(0.2),
+                  blurRadius: 8.0,
+                  spreadRadius: 4.0,
+                  offset: Offset(4, 4),
+                )
+              ],
+      ),
       margin: margin,
       child: ClipRRect(
         borderRadius: radius,

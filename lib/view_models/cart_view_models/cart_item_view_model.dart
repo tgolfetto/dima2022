@@ -28,6 +28,16 @@ class CartItemViewModel with ChangeNotifier {
     return _cartItem.price;
   }
 
+  // The image url of the product to diplay
+  String get imageUrl {
+    return _cartItem.imageUrl;
+  }
+
+  // Returns the unique product identifier
+  String get productId {
+    return _cartItem.productId;
+  }
+
   // Increment the quantity of the cart item
   // @require  The current quantity of the cart item is not at the maximum allowed value
   // @ensure   The quantity of the cart item is increased by 1

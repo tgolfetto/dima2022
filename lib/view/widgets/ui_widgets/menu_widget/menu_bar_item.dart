@@ -2,23 +2,35 @@ import 'package:flutter/material.dart';
 
 List<MenuBarItem> items = [
   MenuBarItem(
-    icon: Icon(Icons.home),
-    title: Text("Home"),
+    icon: const Icon(Icons.home),
+    title: const Text(
+      "Home",
+      textAlign: TextAlign.center,
+    ),
     selectedColor: Colors.purple,
   ),
   MenuBarItem(
-    icon: Icon(Icons.qr_code_scanner),
-    title: Text("Scan"),
+    icon: const Icon(Icons.qr_code_scanner),
+    title: const Text(
+      "Scan",
+      textAlign: TextAlign.center,
+    ),
     selectedColor: Colors.pink,
   ),
   MenuBarItem(
-    icon: Icon(Icons.switch_access_shortcut),
-    title: Text("Dressing Room"),
+    icon: const Icon(Icons.switch_access_shortcut),
+    title: const Text(
+      "Dressing Room",
+      textAlign: TextAlign.center,
+    ),
     selectedColor: Colors.orange,
   ),
   MenuBarItem(
-    icon: Icon(Icons.person),
-    title: Text("Profile"),
+    icon: const Icon(Icons.add_card),
+    title: const Text(
+      "Orders",
+      textAlign: TextAlign.center,
+    ),
     selectedColor: Colors.teal,
   ),
 ];

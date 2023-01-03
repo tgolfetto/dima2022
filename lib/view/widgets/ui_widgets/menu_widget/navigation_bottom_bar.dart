@@ -3,8 +3,8 @@ import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_models/content_view_model.dart';
-import './glass_rounded_container.dart';
+import '../../../../view_models/content_view_model.dart';
+import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';
 
 class NavigationBottomBar extends StatelessWidget {
@@ -57,11 +57,16 @@ class Menu extends StatelessWidget {
     double yourMargin = (width * 0.1);
     final content = context.read<ContentViewModel>();
     return GlassRoundedContainer(
-      margin: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(CustomTheme.smallPadding), horizontal: yourMargin),
-      itemPadding:
-          EdgeInsets.symmetric(vertical: getProportionateScreenHeight(CustomTheme.spacePadding), horizontal: yourMargin * 0.5),
+      margin: EdgeInsets.symmetric(
+          vertical: getProportionateScreenWidth(CustomTheme.smallPadding),
+          horizontal: yourMargin),
+      itemPadding: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(CustomTheme.spacePadding),
+          horizontal: yourMargin * 0.5),
       radius: BorderRadius.circular(30.0),
       opacity: 0.5,
+      enableBorder: false,
+      enableShadow: true,
       child: Row(
         mainAxisAlignment: items.length <= 2
             ? MainAxisAlignment.spaceEvenly
@@ -90,8 +95,7 @@ class Menu extends StatelessWidget {
                       t),
                   shape: itemShape,
                   child: InkWell(
-                    onTap: (){
-                      print('click');
+                    onTap: () {
                       content.updateMainContentIndex(items.indexOf(item));
                     },
                     customBorder: itemShape,

@@ -66,15 +66,17 @@ class Cart with ChangeNotifier {
   // @param title the title of the product
   // @require productId, price, and title are not null
   // @ensure adds a new item to the cart or increments the quantity of an existing item, and notify listeners
-  void addItem(String productId, double price, String title) {
+  void addItem(String productId, String imageUrl, double price, String title) {
     if (cartItems.containsKey(productId)) {
       cartItems[productId]!.incrementQuantity();
     } else {
       cartItems[productId] = CartItem(
           id: DateTime.now().toString(),
+          productId: productId,
           title: title,
           quantity: 1,
-          price: price);
+          price: price,
+          imageUrl: imageUrl);
     }
     notifyListeners();
   }
