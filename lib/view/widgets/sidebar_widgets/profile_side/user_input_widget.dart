@@ -191,11 +191,12 @@ class _UserInputFormState extends State<UserInputForm> {
                                     CardHeader(
                                       formKey: _formKey,
                                       pageController: pageController,
-                                      backButton: false,
+                                      backButton: true,
                                       nextButton: true,
                                       textTitle: 'Your Profile',
                                       textSubtitle: 'Step 1 of 3',
                                       nextButtonText: 'Next',
+                                      backIcon: Icons.close,
                                     ),
                                     Expanded(
                                       flex: 2,
