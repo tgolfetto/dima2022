@@ -7,7 +7,7 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - tracciamento reparto in cui è l'utente a fini di business (Location GPS)
 
 ![alt text](https://i.imgur.com/JN76OwT.jpeg)
-![alt text] (https://i.imgur.com/9ZXhrxH.png)
+![alt text](https://i.imgur.com/9ZXhrxH.png)
 
 ## Screens
 - SplashScreen
