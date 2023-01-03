@@ -102,11 +102,12 @@ class HomePageState extends State<HomePage> {
       extendBody: true,
       appBar: AppBar(
         iconTheme: IconThemeData(color: CustomTheme.primaryColor),
-        title: const Text(CustomTheme.appTitle,
-            style: TextStyle(color: Colors.black)),
-        actions: [_cartButton(context)],
-        backgroundColor: CustomTheme.backgroundColor,
-      ),
+          title: Text(CustomTheme.appTitle,
+              style: TextStyle(
+                  color: CustomTheme.primaryColor, fontFamily: 'Archivo')),
+          actions: [_cartButton(context)],
+          backgroundColor: CustomTheme.backgroundColor,
+        ),
       endDrawer: alwaysDisplayDrawer
           ? null
           : SideBar(key: const ValueKey('Drawer')),

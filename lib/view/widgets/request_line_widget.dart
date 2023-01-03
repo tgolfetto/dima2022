@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 
 import '../../models/request/request.dart';
 import '../custom_theme.dart';
@@ -16,28 +17,32 @@ class _RequestLineItemState extends State<RequestLineItem> {
   @override
   Widget build(BuildContext context) {
     Request request = widget.rq;
-    return Container(
-      color: CustomTheme.backgroundColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'Status: ${request.status}',
-            style: CustomTheme.bodyStyle,
+    return Margin(
+      margin: EdgeInsets.all(CustomTheme.mediumPadding),
+      child: Container(
+          decoration: BoxDecoration(
+            color: CustomTheme.secondaryColor,
+            borderRadius: BorderRadius.circular(10),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Padding(
+            padding: EdgeInsets.all(CustomTheme.smallPadding),
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('${request.id}', style: CustomTheme.bodyStyle),
-              Text('${request.message}', style: CustomTheme.bodyStyle),
+              Text(
+                'Status: ${request.status}',
+                style: CustomTheme.bodySecondStyle,
+              ),
+              Text('ID: ${request.id} - ${request.message}',
+                  style: CustomTheme.bodySecondStyle),
+              Text(
+                'Product: ${request.products[0].title} - Size: ${request
+                    .products[0].sizes}',
+                style: CustomTheme.bodySecondStyle,
+              )
             ],
-          ),
-          Text(
-            'Product: ${request.products}',
-            style: CustomTheme.bodyStyle,
-          )
-        ],
-      ),
-    );
+          )),
+    ));
   }
 }

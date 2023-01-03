@@ -9,19 +9,22 @@ class ContentViewModel with ChangeNotifier {
   late int _mainContentIndex = 0;
   late int _sideBarIndex = 6;
   late String _productId = '';
+  late bool _filterFavorites = false;
 
   ContentViewModel();
 
-  ContentViewModel.fromExistingContent(int mainContentIndex, int sideBarIndex, String productId) {
+  ContentViewModel.fromExistingContent(int mainContentIndex, int sideBarIndex, String productId, bool filterFavorites) {
     _mainContentIndex = mainContentIndex;
     _sideBarIndex = sideBarIndex;
     _productId = productId;
+    _filterFavorites = filterFavorites;
   }
 
 
   int get mainContentIndex => _mainContentIndex;
   int get sideBarIndex => _sideBarIndex;
   String get productId => _productId;
+  bool get filterFavorites => _filterFavorites;
 
   void updateMainContentIndex(int index) {
     _mainContentIndex = index;
@@ -35,6 +38,11 @@ class ContentViewModel with ChangeNotifier {
 
   void updateProductId(String id) {
     _productId = id;
+    notifyListeners();
+  }
+
+  void toggleFilterFavorites() {
+    _filterFavorites = !_filterFavorites;
     notifyListeners();
   }
 

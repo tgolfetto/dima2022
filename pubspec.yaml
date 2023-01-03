@@ -81,6 +81,7 @@ flutter:
     - assets/images/onboarding3.png
     - assets/images/example.jpg
     - assets/images/loading.jpg
+    - assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -116,4 +117,7 @@ flutter:
           style: italic
         - asset: assets/fonts/Raleway-Medium.ttf
           weight: 700
+    - family: Archivo
+      fonts:
+        - asset: assets/fonts/ArchivoBlack-Regular.ttf
 

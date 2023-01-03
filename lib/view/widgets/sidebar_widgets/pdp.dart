@@ -1,3 +1,4 @@
+import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -32,10 +33,13 @@ class _PdpState extends State<Pdp> {
           content.updateSideBarIndex(Filter.pageIndex);
         }
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const Icon(Icons.close),
-        Text('Close', style: CustomTheme.bodyStyle)
-      ]),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.close),
+            Text('Close', style: CustomTheme.bodyStyle)
+          ]),
     );
   }
 
@@ -47,7 +51,10 @@ class _PdpState extends State<Pdp> {
       },
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         const Icon(Icons.try_sms_star),
-        Text('Request', style: CustomTheme.bodyStyle)
+        Padding(
+          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
+          child: Text('Request', style: CustomTheme.bodyStyle),
+        )
       ]),
     );
   }
@@ -61,9 +68,14 @@ class _PdpState extends State<Pdp> {
           listen: false,
         ).addSingleItem(productId)
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.start,
+
+          children: [
         const Icon(Icons.add_shopping_cart),
-        Text('Add to cart', style: CustomTheme.bodyStyle)
+        Padding(
+          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
+          child: Text('Add to cart', style: CustomTheme.bodySecondStyle),
+        )
       ]),
     );
   }
@@ -109,7 +121,7 @@ class _PdpState extends State<Pdp> {
                   Text('EUR ${loadedProduct.price}',
                       style: CustomTheme.bodyStyle),
                   Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('Size: ', style: CustomTheme.bodyStyle),
                         DropdownButton<int>(
@@ -140,18 +152,20 @@ class _PdpState extends State<Pdp> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _requestButton(loadedProduct.id),
+                      Margin(
+                        margin: EdgeInsets.only(right: CustomTheme.spacePadding),
+                        child: _requestButton(loadedProduct.id),
+                      ),
                       _addToCartButton(loadedProduct.id)
                     ],
                   ),
+                  const SizedBox(
+                    height: 120,
+                  )
                 ],
               ),
             )),
           ),
-        ),
-        Margin(
-          margin: EdgeInsets.only(bottom: CustomTheme.bigPadding),
-          child: const Spacer(),
         ),
       ],
     ));
