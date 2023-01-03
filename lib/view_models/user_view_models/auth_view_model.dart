@@ -16,7 +16,7 @@ class AuthViewModel extends ChangeNotifier {
   // The current authentication state of the user
   late Auth _auth;
 
-  /**
+  /*
   Initializes the authentication view model and sets the authentication service
   to use and the initial state of the user's authentication
   */
@@ -24,23 +24,23 @@ class AuthViewModel extends ChangeNotifier {
     _auth = Auth();
     _authService = AuthService();
   }
-  /**
+  /*
   The token for the authenticated user
   @ensure The token for the authenticated user will be returned
   */
   get token => _auth.token;
-  /**
+  /*
   The id of the authenticated user
   @ensure The id of the authenticated user will be returned
   */
   get userId => _auth.userId;
-  /**
+  /*
   Whether the user is currently authenticated
   @ensure The authentication status of the user will be returned
   */
   get isAuthenticated => _auth.isAuth;
 
-  /**
+  /*
   Signs up a user with the given email and password
   @require The email argument must not be null and must be a valid email address
   @require The password argument must not be null
@@ -53,7 +53,7 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Logs in a user with the given email and password
   @require The email argument must not be null and must be a valid email address
   @require The password argument must not be null 
@@ -64,7 +64,7 @@ class AuthViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Attempts to log in the user automatically if their authentication data is stored in shared preferences
   @ensure The user will be logged in and the authentication state will be updated if their data is stored
   in shared preferences and the data is not expired, otherwise the user will not be logged in and the
@@ -90,7 +90,7 @@ class AuthViewModel extends ChangeNotifier {
     return true;
   }
 
-  /**
+  /*
   Logs out the current user
   @ensure The user will be logged out and the authentication state will be updated
   */

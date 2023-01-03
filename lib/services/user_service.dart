@@ -13,7 +13,7 @@ class UserService {
   String? _userId;
 
   UserService(this._authToken, this._userId);
-  /**
+  /*
   Function to create a new user in the database
   @param user the user to be created
   @require user != null
@@ -23,7 +23,7 @@ class UserService {
     final _params = {
       'auth': _authToken,
     };
-    final url = Uri.https(baseUrl, '/users/${_userId}.json', _params);
+    final url = Uri.https(baseUrl, '/users/$_userId.json', _params);
 
     final response = await http.post(
       url,
@@ -33,6 +33,7 @@ class UserService {
     User newUser = User(
       id: _userId,
       email: email,
+      profileImageUrl: userAvatar,
     );
 
     updateUser(newUser);
@@ -42,7 +43,7 @@ class UserService {
     }
   }
 
-  /**
+  /*
   Function to update an existing user in the database
   @param user the user to be updated
   @require user != null
@@ -64,7 +65,7 @@ class UserService {
     }
   }
 
-  /**
+  /*
   Function to delete a user from the database
   @param userId the id of the user to be deleted
   @require userId != null

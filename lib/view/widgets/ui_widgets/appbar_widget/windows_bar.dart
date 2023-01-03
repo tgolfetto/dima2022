@@ -1,4 +1,3 @@
-import 'package:dima2022/utils/constants.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -15,7 +14,19 @@ import '../glass_rounded_container.dart';
 import 'badge.dart';
 import 'user_avatar.dart';
 
-class WindowBar extends StatelessWidget with PreferredSizeWidget {
+class WindowBar extends StatefulWidget with PreferredSizeWidget {
+  final UserViewModel userViewModel;
+
+  const WindowBar({super.key, required this.userViewModel});
+
+  @override
+  State<WindowBar> createState() => _WindowBarState();
+
+  @override
+  Size get preferredSize => throw UnimplementedError();
+}
+
+class _WindowBarState extends State<WindowBar> {
   @override
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
@@ -72,18 +83,18 @@ class WindowBar extends StatelessWidget with PreferredSizeWidget {
                         ),
                         const Gutter(),
                         UserAvatar(
-                            onPressed: () {
-                              if (context.layout.breakpoint <
-                                  LayoutBreakpoint.md) {
-                                content.updateMainContentIndex(
-                                    UserInputForm.pageIndex);
-                              } else {
-                                content.updateSideBarIndex(
-                                    UserInputForm.pageIndex);
-                              }
-                            },
-                            avatarUrl: Provider.of<UserViewModel>(context)
-                                .profileImageUrl),
+                          onPressed: () {
+                            if (context.layout.breakpoint <
+                                LayoutBreakpoint.md) {
+                              content.updateMainContentIndex(
+                                  UserInputForm.pageIndex);
+                            } else {
+                              content
+                                  .updateSideBarIndex(UserInputForm.pageIndex);
+                            }
+                          },
+                          avatarUrl: widget.userViewModel.profileImageUrl,
+                        ),
                       ],
                     ),
                   ),

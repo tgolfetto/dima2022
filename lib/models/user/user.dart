@@ -56,6 +56,7 @@ class User with ChangeNotifier {
     _phone = phone;
     _address = address;
     _profileImageUrl = profileImageUrl;
+    _isClerk = false;
     _size = size;
     _shoeSize = shoeSize;
     _rewardPoints = 0;
@@ -72,6 +73,7 @@ class User with ChangeNotifier {
     _phone = userData['phone'];
     _address = userData['address'];
     _profileImageUrl = userData['profile_image_url'];
+    _isClerk = userData['is_clerk'];
     _size = userData['size'];
     _shoeSize = userData['shoe_size'];
     _rewardPoints = userData['reward_points'];
@@ -95,6 +97,7 @@ class User with ChangeNotifier {
       'phone': _phone,
       'address': _address,
       'profile_image_url': _profileImageUrl,
+      'is_clerk': _isClerk,
       'size': _size,
       'shoe_size': _shoeSize,
       'reward_points': _rewardPoints,
@@ -122,6 +125,9 @@ class User with ChangeNotifier {
   // URL of the profile image of the user
   String get profileImageUrl => _profileImageUrl ?? '';
 
+  // flag to identify the logged user
+  bool get isClerk => _isClerk;
+
   // size of the user
   String get size => _size ?? '';
 
@@ -143,7 +149,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's name to a new value and notifies any listeners of the change
   @param newName the new name for the user
   */
@@ -152,7 +158,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's email to a new value and notifies any listeners of the change
   @param newEmail the new email for the user
   */
@@ -161,7 +167,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's phone number to a new value and notifies any listeners of the change
   @param newPhone the new phone number for the user
   */
@@ -170,7 +176,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's address to a new value and notifies any listeners of the change
   @param newAddress the new address for the user
   */
@@ -179,7 +185,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the URL of the user's profile image to a new value and notifies any listeners of the change
   @param newProfileImageUrl the new URL for the user's profile image
   */
@@ -188,7 +194,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's size to a new value and notifies any listeners of the change
   @param newSize the new size for the user (e.g. "S", "M", "L")
   */
@@ -197,7 +203,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Sets the user's shoe size to a new value and notifies any listeners of the change
   @param newShoeSize the new shoe size for the user
   */
@@ -206,7 +212,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Adds a brand to the list of favorite brands for the user.
   @param brand the brand to add
   @requires brand != null
@@ -218,7 +224,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Removes a brand from the list of favorite brands for the user.
   @param brand the brand to remove
   @requires brand != null
@@ -230,7 +236,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Adds a category to the list of favorite categories for the user.
   @param category the category to add
   @requires category != null
@@ -242,7 +248,7 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  /**
+  /*
   Removes a category from the list of favorite categories for the user.
   @param category the category to remove
   @requires category != null

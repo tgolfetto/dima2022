@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 
 import '../../../utils/size_config.dart';
 
@@ -61,7 +62,7 @@ class CustomButton extends StatelessWidget {
                   if (text != null)
                     Text(
                       text!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromARGB(255, 46, 46, 46),
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -87,14 +88,14 @@ class CustomButton extends StatelessWidget {
                 ),
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (child != null) child!,
                   if (text != null)
                     Text(
                       text!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,

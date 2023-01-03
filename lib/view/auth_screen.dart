@@ -15,6 +15,7 @@ import '../view_models/product_view_models/products_view_model.dart';
 import '../view_models/request_view_models/request_view_model.dart';
 import '../view_models/user_view_models/auth_view_model.dart';
 import 'homepage_screen.dart';
+import 'widgets/common/animated_circular_progress_indicator.dart';
 
 enum AuthMode { signup, login }
 
@@ -254,7 +255,7 @@ class AuthCardState extends State<AuthCard> {
                   height: 20,
                 ),
                 _isLoading
-                    ? const CircularProgressIndicator()
+                    ? const AnimateCircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: _submit,
                         style: CustomTheme.buttonStyleFill,

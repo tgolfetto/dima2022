@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
+import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';
 import '../../common/custom_text_field.dart';
 import '../../common/title_text.dart';
@@ -157,7 +158,7 @@ class _UserInputFormState extends State<UserInputForm> {
 
         return _isLoading
             ? const Center(
-                child: CircularProgressIndicator(),
+                child: AnimateCircularProgressIndicator(),
               )
             : Container(
                 margin: EdgeInsets.only(
@@ -195,7 +196,6 @@ class _UserInputFormState extends State<UserInputForm> {
                                       textTitle: 'Your Profile',
                                       textSubtitle: 'Step 1 of 3',
                                       nextButtonText: 'Next',
-                                      backIcon: Icons.arrow_back_ios,
                                     ),
                                     Expanded(
                                       flex: 2,
@@ -437,7 +437,7 @@ class CardHeader extends StatelessWidget {
                     onPressed: () {
                       // Move to the next page
                       _pageController.previousPage(
-                        duration: const Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 350),
                         curve: Curves.easeIn,
                       );
                     },
@@ -460,7 +460,7 @@ class CardHeader extends StatelessWidget {
                     } else {
                       // Move to the next page
                       _pageController.nextPage(
-                        duration: const Duration(milliseconds: 400),
+                        duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn,
                       );
                     }
