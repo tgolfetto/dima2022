@@ -1,5 +1,10 @@
 import 'package:flutter/foundation.dart';
 
+import '../../models/product/product.dart';
+import '../../models/request/request_status.dart';
+import '../../models/user/user.dart';
+import '../../models/request/request.dart';
+
 class ContentViewModel with ChangeNotifier {
   late int _mainContentIndex = 0;
   late int _sideBarIndex = 6;
@@ -8,8 +13,8 @@ class ContentViewModel with ChangeNotifier {
 
   ContentViewModel();
 
-  ContentViewModel.fromExistingContent(
-      int mainContentIndex, int sideBarIndex, String productId) {
+  ContentViewModel.fromExistingContent(int mainContentIndex, int sideBarIndex,
+      String productId, bool filterFavorites) {
     _mainContentIndex = mainContentIndex;
     _sideBarIndex = sideBarIndex;
     _productId = productId;
@@ -31,9 +36,13 @@ class ContentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  // ???
   void updateProductId(String id) {
     _productId = id;
+    notifyListeners();
+  }
+
+  void toggleFilterFavorites() {
+    _filterFavorites = !_filterFavorites;
     notifyListeners();
   }
 }
