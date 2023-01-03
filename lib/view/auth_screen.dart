@@ -39,10 +39,7 @@ class AuthScreen extends StatelessWidget {
                     child: Padding(
                   padding: EdgeInsets.all(
                       getProportionateScreenHeight(CustomTheme.smallPadding)),
-                  child: Text(
-                    'MyShop',
-                    style: CustomTheme.headingStyle,
-                  ),
+                  child: Image.asset('assets/images/logo.png'),
                 )),
                 Flexible(
                     child: Padding(

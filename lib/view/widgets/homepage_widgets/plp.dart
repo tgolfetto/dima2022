@@ -1,4 +1,3 @@
-import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:dima2022/view/widgets/product_line_item.dart';
@@ -21,7 +20,6 @@ class Plp extends StatefulWidget {
 }
 
 class _PlpState extends State<Plp> {
-  var _showOnlyFavorites = false;
   var _isInit = true;
   var _isLoading = false;
 
@@ -64,12 +62,16 @@ class _PlpState extends State<Plp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
+    bool favFilter =
+        Provider.of<ContentViewModel>(context, listen: false).filterFavorites;
     if (_isLoading) {
       items.add(const Text('Loading products...'));
     } else {
       final products = context.read<ProductListViewModel>();
       for (ProductViewModel p in products.items) {
-        items.add(LineItem(productViewModel: p));
+        if (!favFilter || p.isFavorite) {
+          items.add(LineItem(productViewModel: p));
+        }
       }
     }
 
@@ -82,12 +84,8 @@ class _PlpState extends State<Plp> {
           const SliverGutter(),
           SliverMargin(
               margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                  ? EdgeInsets.symmetric(
-                      horizontal:
-                          getProportionateScreenWidth(CustomTheme.spacePadding))
-                  : EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(
-                          CustomTheme.mediumPadding)),
+                  ? EdgeInsets.symmetric(horizontal: (CustomTheme.spacePadding))
+                  : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
               sliver: SliverToBoxAdapter(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,12 +100,8 @@ class _PlpState extends State<Plp> {
           const SliverGutter(),
           SliverMargin(
             margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                ? EdgeInsets.symmetric(
-                    horizontal:
-                        getProportionateScreenWidth(CustomTheme.spacePadding))
-                : EdgeInsets.symmetric(
-                    horizontal:
-                        getProportionateScreenWidth(CustomTheme.mediumPadding)),
+                ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
+                : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
             sliver: SliverGrid(
               delegate: SliverChildListDelegate.fixed(items),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

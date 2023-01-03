@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/size_config.dart';
 
 class CustomTheme {
-  static const String appTitle = 'My Shop';
+  static const String appTitle = 'My Shop App.';
 
   static Color primaryColor = Colors.black;
   static Color backgroundColor = Colors.white;
@@ -73,6 +73,14 @@ class CustomTheme {
     fontSize: getProportionateScreenHeight(16),
     fontWeight: FontWeight.w100,
     color: primaryColor,
+    height: 1.0,
+    letterSpacing: 1.0,
+  );
+
+  static TextStyle bodySecondStyle = TextStyle(
+    fontSize: getProportionateScreenHeight(16),
+    fontWeight: FontWeight.w100,
+    color: backgroundColor,
     height: 1.0,
     letterSpacing: 1.0,
   );

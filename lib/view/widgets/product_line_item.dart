@@ -28,7 +28,7 @@ class _LineItemState extends State<LineItem> {
   int dropdownValue = 0;
   int productId = 0;
 
-  Widget _requestButton(productId) {
+  Widget _requestButton(ProductViewModel product) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
@@ -73,7 +73,10 @@ class _LineItemState extends State<LineItem> {
       },
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         const Icon(Icons.try_sms_star),
-        Text('Request', style: CustomTheme.bodyStyle)
+        Padding(
+          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
+          child: Text('Request', style: CustomTheme.bodyStyle),
+        )
       ]),
     );
   }
@@ -90,28 +93,34 @@ class _LineItemState extends State<LineItem> {
       },
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         const Icon(Icons.add_shopping_cart),
-        Text('Add to cart', style: CustomTheme.bodyStyle)
+        Padding(
+          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
+          child: Text('Add to cart', style: CustomTheme.bodySecondStyle),
+        )
       ]),
     );
   }
 
-  ElevatedButton _addToFavoriteButton(productId) {
-    return ElevatedButton(
-      style: CustomTheme.buttonStyleIcon,
-      onPressed: () {
-        setState(() {
-          widget.productViewModel.toggleFavoriteStatus();
-        });
-      },
-      child: widget.productViewModel.isFavorite
-          ? const Icon(Icons.favorite)
-          : const Icon(Icons.favorite_border),
-    );
+  Widget _addToFavoriteButton(ProductViewModel product) {
+    return Consumer<ProductListViewModel>(
+        builder: (context, content, _) => ElevatedButton(
+              style: CustomTheme.buttonStyleIcon,
+              onPressed: () {
+                setState(() {
+                  product.toggleFavoriteStatus();
+                });
+              },
+              child: product.isFavorite
+                  ? const Icon(Icons.favorite)
+                  : const Icon(Icons.favorite_border),
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
+    ProductViewModel product = widget.productViewModel;
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -120,35 +129,32 @@ class _LineItemState extends State<LineItem> {
           Stack(children: [
             GestureDetector(
               onTap: () {
-                content.updateProductId(widget.productViewModel.id!);
+                content.updateProductId(product.id!);
                 if (context.layout.breakpoint < LayoutBreakpoint.lg) {
                   content.updateMainContentIndex(Pdp.pageIndex);
                 } else {
                   content.updateSideBarIndex(Pdp.pageIndex);
                 }
               },
-              child: Image.network(widget.productViewModel.imageUrl!),
+              child: Image.network(product.imageUrl!),
             ),
             Positioned(
               right: 0.0,
               top: 0.0,
-              child: _addToFavoriteButton(widget.productViewModel.id),
+              child: _addToFavoriteButton(product),
             )
           ]),
           Text(
-            widget.productViewModel.title!,
+            product.title!,
             style: CustomTheme.headingStyle,
           ),
-          Text('EUR ${widget.productViewModel.price}',
-              style: CustomTheme.bodyStyle),
+          Text('EUR ${product.price}', style: CustomTheme.bodyStyle),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text('Size: ', style: CustomTheme.bodyStyle),
               DropdownButton<int>(
-                value: dropdownValue == 0
-                    ? widget.productViewModel.sizes![0]
-                    : dropdownValue,
+                value: dropdownValue == 0 ? product.sizes![0] : dropdownValue,
                 icon: const Icon(Icons.arrow_downward),
                 elevation: 1,
                 underline: Container(
@@ -160,8 +166,7 @@ class _LineItemState extends State<LineItem> {
                     dropdownValue = value!;
                   });
                 },
-                items: widget.productViewModel.sizes!
-                    .map<DropdownMenuItem<int>>((int value) {
+                items: product.sizes!.map<DropdownMenuItem<int>>((int value) {
                   return DropdownMenuItem<int>(
                     value: value,
                     child: Text("$value"),
@@ -172,8 +177,8 @@ class _LineItemState extends State<LineItem> {
           ),
           Margin(
               margin: EdgeInsets.symmetric(vertical: CustomTheme.spacePadding),
-              child: _requestButton(widget.productViewModel.id)),
-          _addToCartButton(widget.productViewModel),
+              child: _requestButton(product)),
+          _addToCartButton(product),
         ],
       ),
     );
