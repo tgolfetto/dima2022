@@ -54,7 +54,7 @@ class MenuSide extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final content = context.read<ContentViewModel>();
-    SizeConfig()..init(context);
+    SizeConfig().init(context);
     double marginWidth = getProportionateScreenWidth(30) > 30.0
         ? 30.0
         : getProportionateScreenWidth(30);

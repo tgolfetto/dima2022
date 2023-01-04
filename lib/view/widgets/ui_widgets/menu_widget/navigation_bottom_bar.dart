@@ -55,6 +55,7 @@ class Menu extends StatelessWidget {
     final theme = Theme.of(context);
     double width = MediaQuery.of(context).size.width;
     double yourMargin = (width * 0.1);
+    SizeConfig().init(context);
     final content = context.read<ContentViewModel>();
     return GlassRoundedContainer(
       margin: EdgeInsets.symmetric(
