@@ -6,7 +6,7 @@ class CartItemViewModel with ChangeNotifier {
   // The cart item this view model is based on
   late final CartItem _cartItem;
 
-  CartItemViewModel(this._cartItem);
+  CartItemViewModel();
 
   CartItemViewModel.fromExistingCartItem(CartItem existingCartItem) {
     _cartItem = existingCartItem;
