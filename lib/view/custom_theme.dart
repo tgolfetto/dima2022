@@ -48,18 +48,20 @@ class CustomTheme {
           fontFamily: 'Raleway',
           fontWeight: FontWeight.bold));
 
-  static ButtonStyle buttonStyleIcon = ElevatedButton.styleFrom(
-      backgroundColor: Colors.transparent,
-      foregroundColor: secondaryColor,
-      elevation: 0,
-      shape: const RoundedRectangleBorder(
-          side: BorderSide(color: Colors.transparent)),
-      padding: EdgeInsets.symmetric(
-          vertical: buttonPaddingV, horizontal: buttonPaddingH),
-      textStyle: TextStyle(
-          fontSize: getProportionateScreenHeight(16),
-          fontFamily: 'Raleway',
-          fontWeight: FontWeight.bold));
+  static ButtonStyle buttonStyleIcon = TextButton.styleFrom(
+    backgroundColor: Colors.transparent,
+    foregroundColor: secondaryColor,
+    elevation: 0,
+
+    // shape: const RoundedRectangleBorder(
+    //     side: BorderSide(color: Colors.transparent)),
+    padding: EdgeInsets.symmetric(
+        vertical: buttonPaddingV, horizontal: buttonPaddingH),
+    textStyle: TextStyle(
+        fontSize: getProportionateScreenHeight(16),
+        fontFamily: 'Raleway',
+        fontWeight: FontWeight.bold),
+  );
 
   static TextStyle headingStyle = TextStyle(
     fontSize: getProportionateScreenHeight(18),

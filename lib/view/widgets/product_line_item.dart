@@ -105,6 +105,7 @@ class _LineItemState extends State<LineItem> {
     return Consumer<ProductListViewModel>(
         builder: (context, content, _) => ElevatedButton(
               style: CustomTheme.buttonStyleIcon,
+              onHover: (_) {},
               onPressed: () {
                 setState(() {
                   product.toggleFavoriteStatus();

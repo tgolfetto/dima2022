@@ -91,8 +91,11 @@ class Product with ChangeNotifier {
       material: prodData['material'],
       color: prodData['color'],
       sizes: prodData['sizes'] == null
-          ? [0]
-          : prodData['sizes'].split(',').map((e) => int.parse(e)).toList(),
+          ? []
+          : List<String>.from(prodData['sizes'])
+              .map((e) => int.parse(e))
+              .toList(),
+
       gender: prodData['gender'],
       madeIn: prodData['madeIn'],
     );
