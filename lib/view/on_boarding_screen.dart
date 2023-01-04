@@ -2,6 +2,7 @@ import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:onboarding/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/routes.dart';
 import '../utils/size_config.dart';
 import './custom_theme.dart';
@@ -216,8 +217,11 @@ class OnBoardingState extends State<OnBoarding> {
   ElevatedButton get _signupButton {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
-      onPressed: () =>
-          Navigator.of(context).pushReplacementNamed(AuthScreen.routeName),
+      onPressed: () async {
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('onboarding_seen', true);
+        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
+      },
       child: const Text('Homepage'),
     );
   }
@@ -230,67 +234,67 @@ class OnBoardingState extends State<OnBoarding> {
       theme: CustomTheme().materialTheme,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          body: Onboarding(
-              pages: onBoardingPagesList,
-              onPageChange: (int pageIndex) {
-                index = pageIndex;
-              },
-              footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-                return Padding(
-                  padding: EdgeInsets.all(
-                      getProportionateScreenWidth(CustomTheme.spacePadding)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                            bottom: getProportionateScreenHeight(
-                                CustomTheme.smallPadding),
-                            right: getProportionateScreenWidth(
-                                context.layout.breakpoint < LayoutBreakpoint.md
-                                    ? CustomTheme.bigPadding
-                                    : CustomTheme.smallPadding)),
-                        child: CustomIndicator(
-                          netDragPercent: dragDistance,
-                          pagesLength: pagesLength,
-                          indicator: Indicator(
-                            indicatorDesign: IndicatorDesign.polygon(
-                              polygonDesign: PolygonDesign(
-                                polygon: DesignType.polygon_circle,
-                              ),
-                            ),
+        body: Onboarding(
+          pages: onBoardingPagesList,
+          onPageChange: (int pageIndex) {
+            index = pageIndex;
+          },
+          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+            return Padding(
+              padding: EdgeInsets.all(
+                  getProportionateScreenWidth(CustomTheme.spacePadding)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: getProportionateScreenHeight(
+                            CustomTheme.smallPadding),
+                        right: getProportionateScreenWidth(
+                            context.layout.breakpoint < LayoutBreakpoint.md
+                                ? CustomTheme.bigPadding
+                                : CustomTheme.smallPadding)),
+                    child: CustomIndicator(
+                      netDragPercent: dragDistance,
+                      pagesLength: pagesLength,
+                      indicator: Indicator(
+                        indicatorDesign: IndicatorDesign.polygon(
+                          polygonDesign: PolygonDesign(
+                            polygon: DesignType.polygon_circle,
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                                padding: EdgeInsets.all(
-                                    getProportionateScreenWidth(
-                                        CustomTheme.spacePadding)),
-                                child: index != pagesLength - 1
-                                    ? _skipButton(setIndex: setIndex)
-                                    : const SizedBox()),
-                          ),
-                          Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: EdgeInsets.all(
-                                    getProportionateScreenWidth(
-                                        CustomTheme.spacePadding)),
-                                child: index != pagesLength - 1
-                                    ? _nextButton(setIndex: setIndex)
-                                    : _signupButton,
-                              )),
-                        ],
-                      )
-                    ],
+                    ),
                   ),
-                );
-              })),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                            padding: EdgeInsets.all(getProportionateScreenWidth(
+                                CustomTheme.spacePadding)),
+                            child: index != pagesLength - 1
+                                ? _skipButton(setIndex: setIndex)
+                                : const SizedBox()),
+                      ),
+                      Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.all(getProportionateScreenWidth(
+                                CustomTheme.spacePadding)),
+                            child: index != pagesLength - 1
+                                ? _nextButton(setIndex: setIndex)
+                                : _signupButton,
+                          )),
+                    ],
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
       routes: Routes.routeList,
     );
   }

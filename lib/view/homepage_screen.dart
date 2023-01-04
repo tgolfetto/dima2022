@@ -195,7 +195,8 @@ class HomePageState extends State<HomePage> {
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
-                            Color.fromARGB(255, 106, 106, 106).withOpacity(0.2),
+                            const Color.fromARGB(255, 106, 106, 106)
+                                .withOpacity(0.2),
                           ],
                         ),
                       ),
@@ -206,8 +207,10 @@ class HomePageState extends State<HomePage> {
             bottomNavigationBar: context.layout.breakpoint < LayoutBreakpoint.md
                 ? Consumer<ContentViewModel>(
                     builder: (context, content, _) => NavigationBottomBar(
-                          selectedIndex: content.mainContentIndex,
-                        ))
-                : null);
+                      selectedIndex: content.mainContentIndex,
+                    ),
+                  )
+                : null,
+          );
   }
 }

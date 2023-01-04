@@ -1,7 +1,10 @@
 import 'package:dima2022/utils/routes.dart';
+import 'package:dima2022/view/auth_screen.dart';
+import 'package:dima2022/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/providers.dart';
 import 'view/custom_theme.dart';
@@ -9,20 +12,40 @@ import 'view/on_boarding_screen.dart';
 
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _onboardingSeen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkOnboardingSeen();
+  }
+
+  void _checkOnboardingSeen() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _onboardingSeen = prefs.getBool('onboarding_seen') ?? false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool ciao;
     return MultiProvider(
       providers: authProviders,
       child: MaterialApp(
         title: CustomTheme.appTitle,
         theme: CustomTheme().materialTheme,
         debugShowCheckedModeBanner: false,
-        home: const Layout(child: OnBoarding()),
-
-        ///TODO: check if user already saw OnBoarding using shared_preferences
+        home: Layout(
+            child: _onboardingSeen ? const AuthScreen() : const OnBoarding()),
         routes: Routes.routeList,
       ),
     );

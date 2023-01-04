@@ -1,9 +1,9 @@
-import 'package:dima2022/utils/size_config.dart';
-import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../utils/size_config.dart';
 import '../../../../view_models/content_view_model.dart';
+import '../../../custom_theme.dart';
 import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';
 
@@ -25,7 +25,7 @@ class NavigationBottomBar extends StatelessWidget {
 }
 
 class Menu extends StatelessWidget {
-  Menu({
+  const Menu({
     Key? key,
     required this.items,
     this.currentIndex = 0,

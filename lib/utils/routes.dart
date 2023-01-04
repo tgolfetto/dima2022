@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import '../view/auth_screen.dart';
 import '../view/widgets/homepage_widgets/plp.dart';
 
-class Routes{
-  static Map<String, Widget Function(BuildContext)> routeList = {
+class Routes {
+  static final Map<String, WidgetBuilder> routeList = {
     AuthScreen.routeName: (context) => const AuthScreen(),
     OnBoarding.routeName: (context) => const OnBoarding(),
     SplashScreen.routeName: (context) => const SplashScreen(),
   };
-
 }
