@@ -71,7 +71,7 @@ class _LineItemState extends State<LineItem> {
 
         ///TODO: ?????
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Icon(Icons.try_sms_star),
         Padding(
           padding: EdgeInsets.only(left: CustomTheme.smallPadding),
@@ -91,7 +91,7 @@ class _LineItemState extends State<LineItem> {
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
             productViewModel.price!, productViewModel.title!)
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         const Icon(Icons.add_shopping_cart),
         Padding(
           padding: EdgeInsets.only(left: CustomTheme.smallPadding),

@@ -114,7 +114,7 @@ class _PlpState extends State<Plp> {
                 ),
                 mainAxisSpacing: spacing,
                 crossAxisSpacing: spacing,
-                childAspectRatio: 0.54,
+                childAspectRatio: 0.5,
               ),
             ),
           ),

@@ -14,8 +14,8 @@ class CustomTheme {
   static double smallPadding = 12.0;
   static double mediumPadding = 24.0;
   static double bigPadding = 32.0;
-  static double buttonPaddingV = 18.0;
-  static double buttonPaddingH = 21.0;
+  static double buttonPaddingV = 16.0;
+  static double buttonPaddingH = 9.0;
 
   static ButtonStyle buttonStyleFill = ElevatedButton.styleFrom(
       backgroundColor: secondaryColor,
