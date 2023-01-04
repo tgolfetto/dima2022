@@ -4,9 +4,13 @@ import '../../models/cart/cart_item.dart';
 
 class CartItemViewModel with ChangeNotifier {
   // The cart item this view model is based on
-  final CartItem _cartItem;
+  late final CartItem _cartItem;
 
   CartItemViewModel(this._cartItem);
+
+  CartItemViewModel.fromExistingCartItem(CartItem existingCartItem) {
+    _cartItem = existingCartItem;
+  }
 
   // The ID of the cart item
   String get id {

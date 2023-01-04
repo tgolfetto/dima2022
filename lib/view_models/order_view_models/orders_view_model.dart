@@ -1,3 +1,4 @@
+import 'package:dima2022/view_models/order_view_models/order_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,10 @@ class OrdersViewModel extends ChangeNotifier {
   }
 
   // Returns the items in the orders
-  List<OrderItem> get items => _orders.items;
+  List<OrderViewModel> get items => _orders.items
+      .map<OrderViewModel>(
+          (cartItem) => OrderViewModel.fromExistingCartItem(cartItem))
+      .toList();
 
   // Fetches the orders from the OrdersService and updates the orders instance
   // @require The OrdersService instance must be initialized

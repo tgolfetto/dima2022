@@ -1,7 +1,7 @@
-import 'package:dima2022/view_models/size_config.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/product/category.dart';
+import '../../../../utils/size_config.dart';
 
 class CategoryGrid extends StatefulWidget {
   @override
@@ -69,8 +69,7 @@ class _CategoryGridState extends State<CategoryGrid> {
               setState(() {
                 !widget._selectedCategories.contains(category)
                     ? widget._selectedCategories.add(category)
-                    : widget._selectedCategories
-                        .remove(category); // = category;
+                    : widget._selectedCategories.remove(category);
               });
             },
             child: Center(

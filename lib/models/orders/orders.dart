@@ -14,7 +14,7 @@ class Orders with ChangeNotifier {
   Returns the list of OrderItem instances
   @ensures \result == _orders;
   */
-  get items => _orders;
+  List<OrderItem> get items => _orders;
 
   /*
   Sets the list of OrderItem instances to the given list
