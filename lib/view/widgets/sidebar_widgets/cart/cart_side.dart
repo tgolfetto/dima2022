@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/cart_view_models/cart_view_model.dart';
+import '../../../../view_models/content_view_model.dart';
 import '../../../../view_models/order_view_models/orders_view_model.dart';
 import '../../common/custom_button.dart';
 import '../../common/title_text.dart';
+import '../filter.dart';
 import '../profile_side/user_input_widget.dart';
 import 'cart_item.dart';
 
@@ -71,12 +74,22 @@ class CartSide extends StatelessWidget {
                 ? Column(
                     children: <Widget>[
                       CardHeader(
-                          formKey: GlobalKey(),
-                          pageController: PageController(),
-                          nextButton: false,
-                          backButton: false,
-                          textTitle: 'Cart',
-                          textSubtitle: '${cartViewModel!.itemCount} Items'),
+                        formKey: GlobalKey(),
+                        pageController: PageController(),
+                        nextButton: false,
+                        textTitle: 'Cart',
+                        textSubtitle: '${cartViewModel!.itemCount} Items',
+                        backButton: true,
+                        backIcon: Icons.close,
+                        onPressedBack: () {
+                          final content = context.read<ContentViewModel>();
+                          if (context.layout.breakpoint < LayoutBreakpoint.md) {
+                            content.updateMainContentIndex(Filter.pageIndex);
+                          } else {
+                            content.updateSideBarIndex(Filter.pageIndex);
+                          }
+                        },
+                      ),
                       _cartItems(),
                       const Divider(
                         thickness: 1,
@@ -97,19 +110,25 @@ class CartSide extends StatelessWidget {
                     ],
                   )
                 : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
+                      CardHeader(
+                        formKey: GlobalKey(),
+                        pageController: PageController(),
+                        nextButton: false,
+                        textTitle: 'Add something ...',
+                        textSubtitle: '',
+                        backButton: true,
+                        backIcon: Icons.close,
+                        onPressedBack: () {
+                          final content = context.read<ContentViewModel>();
+                          if (context.layout.breakpoint < LayoutBreakpoint.md) {
+                            content.updateMainContentIndex(Filter.pageIndex);
+                          } else {
+                            content.updateSideBarIndex(Filter.pageIndex);
+                          }
+                        },
+                      ),
                       Lottie.asset('../assets/animated/empty_cart_1.json'),
-                      Text(
-                        'Add something ...',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 15,
-                          color:
-                              Color.fromARGB(255, 59, 59, 59).withOpacity(0.6),
-                        ),
-                      )
                     ],
                   ),
           ),

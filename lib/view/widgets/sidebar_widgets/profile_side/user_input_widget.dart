@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
+import '../../../../view_models/content_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
 import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';
 import '../../common/custom_text_field.dart';
 import '../../common/title_text.dart';
+import '../filter.dart';
 import 'category_grid.dart';
 import 'selfie_card_widget.dart';
 
@@ -24,6 +27,7 @@ class _UserInputFormState extends State<UserInputForm> {
 
   var _isInit = true;
   var _isLoading = false;
+  var _isDone = false;
   var results;
 
   // controllers for the text fields
@@ -62,6 +66,7 @@ class _UserInputFormState extends State<UserInputForm> {
   void didChangeDependencies() {
     if (_isInit) {
       setState(() {
+        _isDone = false;
         _isLoading = true;
       });
       Provider.of<UserViewModel>(context).getUser().then((_) {
@@ -139,6 +144,7 @@ class _UserInputFormState extends State<UserInputForm> {
     }
     setState(() {
       _isLoading = false;
+      _isDone = true;
     });
   }
 
@@ -156,258 +162,318 @@ class _UserInputFormState extends State<UserInputForm> {
             ? MediaQuery.of(context).viewInsets.bottom + 20
             : MediaQuery.of(context).padding.bottom * 1.5;
 
-        return _isLoading
-            ? const Center(
-                child: AnimateCircularProgressIndicator(),
-              )
-            : Container(
-                margin: EdgeInsets.only(
-                    bottom: getProportionateScreenHeight(bottomPadding)),
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 10,
-                      child: Form(
-                        key: _formKey,
-                        child: PageView(
-                          pageSnapping: true,
-                          physics:
-                              const NeverScrollableScrollPhysics(), // disable
-                          controller: pageController, // Set the PageController
-                          onPageChanged: (int page) {
-                            setState(() {
-                              var _currentPage = page;
-                            });
-                          },
-                          children: [
-                            // First card
-                            Card(
-                              elevation: 0,
-                              color: Colors.transparent,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    CardHeader(
-                                      formKey: _formKey,
-                                      pageController: pageController,
-                                      backButton: true,
-                                      nextButton: true,
-                                      textTitle: 'Your Profile',
-                                      textSubtitle: 'Step 1 of 3',
-                                      nextButtonText: 'Next',
-                                      backIcon: Icons.close,
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            CustomTextField(
-                                              hintText: 'Name',
-                                              prefixIcon: Icons.person,
-                                              controller: _nameController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.name =
-                                                      value ?? '';
-                                                });
-                                              },
-                                              validateString:
-                                                  'Please provide a correct name.',
-                                              focusNextNode: _emailFocusNode,
-                                            ),
-                                            const Gutter(),
-                                            CustomTextField(
-                                              hintText: 'Email',
-                                              prefixIcon: Icons.email,
-                                              controller: _emailController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.email =
-                                                      value ?? '';
-                                                });
-                                              },
-                                              validateString:
-                                                  'Please provide a correct email.',
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              focusNode: _emailFocusNode,
-                                              focusNextNode: _phoneFocusNode,
-                                            ),
-                                            const Gutter(),
-                                            CustomTextField(
-                                              hintText: 'Phone',
-                                              prefixIcon: Icons.phone,
-                                              controller: _phoneController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.phone =
-                                                      value ?? '';
-                                                });
-                                              },
-                                              validateString:
-                                                  'Please provide a correct phone number.',
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              focusNode: _phoneFocusNode,
-                                              focusNextNode: _addressFocusNode,
-                                            ),
-                                            const Gutter(),
-                                            CustomTextField(
-                                              hintText: 'Address',
-                                              prefixIcon: Icons.location_on,
-                                              controller: _addressController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.address =
-                                                      value ?? '';
-                                                });
-                                              },
-                                              validateString:
-                                                  'Please provide a correct address.',
-                                              keyboardType: TextInputType.text,
-                                              focusNode: _addressFocusNode,
-                                              focusNextNode: _sizeFocusNode,
-                                            ),
-                                            const Gutter(),
-                                            CustomTextField(
-                                              hintText: 'Size',
-                                              prefixIcon: Icons.format_size,
-                                              controller: _sizeController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.size =
-                                                      value ?? '';
-                                                });
-                                              },
-                                              validateString:
-                                                  'Please provide a correct size.',
-                                              focusNode: _sizeFocusNode,
-                                            ),
-                                            const Gutter(),
-                                            CustomTextField(
-                                              hintText: 'Shoe size',
-                                              prefixIcon: Icons.sort,
-                                              controller: _shoeSizeController,
-                                              onSaved: (value) {
-                                                setState(() {
-                                                  userViewModel.shoeSize =
-                                                      int.parse(value ?? '0');
-                                                });
-                                              },
-                                              validator: (value) {
-                                                if (value!.isEmpty) {
-                                                  return 'Please enter a size.';
-                                                }
-                                                if (double.tryParse(value) ==
-                                                    null) {
-                                                  return 'Please enter a valid number.';
-                                                }
-                                                if (double.parse(value) <= 0) {
-                                                  return 'Please enter a number greater than zero.';
-                                                }
-                                                return null;
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            // Second card
-                            Card(
-                              elevation: 0,
-                              color: Colors.transparent,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    CardHeader(
-                                      formKey: _formKey,
-                                      pageController: pageController,
-                                      backButton: true,
-                                      nextButton: true,
-                                      textTitle: "Add a profile picture",
-                                      textSubtitle: 'Step 2 of 3',
-                                      nextButtonText: 'Next',
-                                      backIcon: Icons.arrow_back_ios,
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: SingleChildScrollView(
-                                        child: SelfieCard(
-                                          userImageUrl:
-                                              userViewModel.profileImageUrl,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-
-                            // Third card
-                            Card(
-                              elevation: 0,
-                              color: Colors.transparent,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  children: [
-                                    CardHeader(
-                                      formKey: _formKey,
-                                      pageController: pageController,
-                                      backButton: true,
-                                      nextButton: true,
-                                      textTitle: "Your categories are",
-                                      textSubtitle: 'Step 3 of 3',
-                                      nextButtonText: 'Done',
-                                      submit: () {
-                                        saveForm();
-                                      },
-                                      nextIcon: Icons.done,
-                                      backIcon: Icons.arrow_back_ios,
-                                    ),
-                                    Expanded(
-                                      flex: 3,
-                                      child: categoryGrid,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+        return _isDone
+            ?
+            // Fourth card
+            Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      CardHeader(
+                        formKey: GlobalKey(),
+                        pageController: PageController(),
+                        nextButton: false,
+                        textTitle: 'Done!',
+                        textSubtitle: '',
+                        backButton: true,
+                        backIcon: Icons.close,
+                        onPressedBack: () {
+                          final content = context.read<ContentViewModel>();
+                          if (context.layout.breakpoint < LayoutBreakpoint.md) {
+                            content.updateMainContentIndex(Filter.pageIndex);
+                          } else {
+                            content.updateSideBarIndex(Filter.pageIndex);
+                          }
+                        },
                       ),
-                    ),
-                  ],
+                      Lottie.asset(
+                        '../assets/animated/success.json',
+                        animate: true,
+                        repeat: false,
+                      ),
+                    ],
+                  ),
                 ),
-              );
+              )
+            : _isLoading
+                ? const Center(
+                    child: AnimateCircularProgressIndicator(),
+                  )
+                : Container(
+                    margin: EdgeInsets.only(
+                        bottom: getProportionateScreenHeight(bottomPadding)),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: Form(
+                            key: _formKey,
+                            child: PageView(
+                              pageSnapping: true,
+                              physics:
+                                  const NeverScrollableScrollPhysics(), // disable
+                              controller:
+                                  pageController, // Set the PageController
+                              onPageChanged: (int page) {
+                                setState(() {
+                                  var _currentPage = page;
+                                });
+                              },
+                              children: [
+                                // First card
+                                Card(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        CardHeader(
+                                          formKey: _formKey,
+                                          pageController: pageController,
+                                          nextButton: true,
+                                          textTitle: 'Your Profile',
+                                          textSubtitle: 'Step 1 of 3',
+                                          nextButtonText: 'Next',
+                                          backButton: true,
+                                          backIcon: Icons.close,
+                                          onPressedBack: () {
+                                            final content = context
+                                                .read<ContentViewModel>();
+                                            if (context.layout.breakpoint <
+                                                LayoutBreakpoint.md) {
+                                              content.updateMainContentIndex(
+                                                  Filter.pageIndex);
+                                            } else {
+                                              content.updateSideBarIndex(
+                                                  Filter.pageIndex);
+                                            }
+                                          },
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                CustomTextField(
+                                                  hintText: 'Name',
+                                                  prefixIcon: Icons.person,
+                                                  controller: _nameController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.name =
+                                                          value ?? '';
+                                                    });
+                                                  },
+                                                  validateString:
+                                                      'Please provide a correct name.',
+                                                  focusNextNode:
+                                                      _emailFocusNode,
+                                                ),
+                                                const Gutter(),
+                                                CustomTextField(
+                                                  hintText: 'Email',
+                                                  prefixIcon: Icons.email,
+                                                  controller: _emailController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.email =
+                                                          value ?? '';
+                                                    });
+                                                  },
+                                                  validateString:
+                                                      'Please provide a correct email.',
+                                                  keyboardType: TextInputType
+                                                      .emailAddress,
+                                                  focusNode: _emailFocusNode,
+                                                  focusNextNode:
+                                                      _phoneFocusNode,
+                                                ),
+                                                const Gutter(),
+                                                CustomTextField(
+                                                  hintText: 'Phone',
+                                                  prefixIcon: Icons.phone,
+                                                  controller: _phoneController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.phone =
+                                                          value ?? '';
+                                                    });
+                                                  },
+                                                  validateString:
+                                                      'Please provide a correct phone number.',
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  focusNode: _phoneFocusNode,
+                                                  focusNextNode:
+                                                      _addressFocusNode,
+                                                ),
+                                                const Gutter(),
+                                                CustomTextField(
+                                                  hintText: 'Address',
+                                                  prefixIcon: Icons.location_on,
+                                                  controller:
+                                                      _addressController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.address =
+                                                          value ?? '';
+                                                    });
+                                                  },
+                                                  validateString:
+                                                      'Please provide a correct address.',
+                                                  keyboardType:
+                                                      TextInputType.text,
+                                                  focusNode: _addressFocusNode,
+                                                  focusNextNode: _sizeFocusNode,
+                                                ),
+                                                const Gutter(),
+                                                CustomTextField(
+                                                  hintText: 'Size',
+                                                  prefixIcon: Icons.format_size,
+                                                  controller: _sizeController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.size =
+                                                          value ?? '';
+                                                    });
+                                                  },
+                                                  validateString:
+                                                      'Please provide a correct size.',
+                                                  focusNode: _sizeFocusNode,
+                                                ),
+                                                const Gutter(),
+                                                CustomTextField(
+                                                  hintText: 'Shoe size',
+                                                  prefixIcon: Icons.sort,
+                                                  controller:
+                                                      _shoeSizeController,
+                                                  onSaved: (value) {
+                                                    setState(() {
+                                                      userViewModel.shoeSize =
+                                                          int.parse(
+                                                              value ?? '0');
+                                                    });
+                                                  },
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'Please enter a size.';
+                                                    }
+                                                    if (double.tryParse(
+                                                            value) ==
+                                                        null) {
+                                                      return 'Please enter a valid number.';
+                                                    }
+                                                    if (double.parse(value) <=
+                                                        0) {
+                                                      return 'Please enter a number greater than zero.';
+                                                    }
+                                                    return null;
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                // Second card
+                                Card(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        CardHeader(
+                                          formKey: _formKey,
+                                          pageController: pageController,
+                                          backButton: true,
+                                          nextButton: true,
+                                          textTitle: "Add a profile picture",
+                                          textSubtitle: 'Step 2 of 3',
+                                          nextButtonText: 'Next',
+                                          backIcon: Icons.arrow_back_ios,
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: SingleChildScrollView(
+                                            child: SelfieCard(
+                                              userImageUrl:
+                                                  userViewModel.profileImageUrl,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+
+                                // Third card
+                                Card(
+                                  elevation: 0,
+                                  color: Colors.transparent,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      children: [
+                                        CardHeader(
+                                          formKey: _formKey,
+                                          pageController: pageController,
+                                          backButton: true,
+                                          nextButton: true,
+                                          textTitle: "Your categories are",
+                                          textSubtitle: 'Step 3 of 3',
+                                          nextButtonText: 'Done',
+                                          submit: () {
+                                            saveForm();
+                                          },
+                                          nextIcon: Icons.done,
+                                          backIcon: Icons.arrow_back_ios,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: categoryGrid,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
       },
     );
   }
 }
 
 class CardHeader extends StatelessWidget {
-  const CardHeader(
-      {Key? key,
-      required GlobalKey<FormState> formKey,
-      required PageController pageController,
-      required this.nextButton,
-      required this.backButton,
-      this.submit,
-      required this.textTitle,
-      required this.textSubtitle,
-      this.prevButtonText,
-      this.nextButtonText,
-      this.backIcon,
-      this.nextIcon})
-      : _formKey = formKey,
+  const CardHeader({
+    Key? key,
+    required GlobalKey<FormState> formKey,
+    required PageController pageController,
+    required this.nextButton,
+    required this.backButton,
+    this.submit,
+    required this.textTitle,
+    required this.textSubtitle,
+    this.prevButtonText,
+    this.nextButtonText,
+    this.backIcon,
+    this.nextIcon,
+    this.onPressedBack,
+    this.onPressedNext,
+  })  : _formKey = formKey,
         _pageController = pageController,
         super(key: key);
 
@@ -423,6 +489,8 @@ class CardHeader extends StatelessWidget {
   final IconData? nextIcon;
   final String? prevButtonText;
   final String? nextButtonText;
+  final VoidCallback? onPressedBack;
+  final VoidCallback? onPressedNext;
 
   @override
   Widget build(BuildContext context) {
@@ -435,13 +503,14 @@ class CardHeader extends StatelessWidget {
             backButton
                 ? CustomButton(
                     transparent: true,
-                    onPressed: () {
-                      // Move to the next page
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeIn,
-                      );
-                    },
+                    onPressed: onPressedBack ??
+                        () {
+                          // Move to the next page
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.easeIn,
+                          );
+                        },
                     text: prevButtonText != null ? prevButtonText! : null,
                     icon: backIcon,
                   )
