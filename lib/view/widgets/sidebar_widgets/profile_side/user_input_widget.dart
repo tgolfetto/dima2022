@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
-import '../../../../view_models/content_view_model.dart';
+import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
 import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';

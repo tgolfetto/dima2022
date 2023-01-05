@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/splash_screen.dart';
-import 'package:dima2022/view_models/content_view_model.dart';
+import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
 import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
 import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
 import 'package:flutter/material.dart';

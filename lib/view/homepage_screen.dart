@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/orders_page.dart';
@@ -8,12 +10,15 @@ import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
+import 'package:dima2022/view_models/user_view_models/auth_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
-import '../view_models/content_view_model.dart';
+import '../view_models/content_view_models/content_view_model.dart';
+import '../view_models/position_view_models/position_view_model.dart';
 import '../view_models/user_view_models/user_view_model.dart';
 import 'widgets/common/animated_circular_progress_indicator.dart';
 import 'widgets/sidebar_widgets/side_bar.dart';
@@ -126,6 +131,11 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
     final alwaysDisplayDrawer = context.layout.breakpoint > LayoutBreakpoint.sm;
+
+    Provider.of<PositionViewModel>(context, listen: false)
+        .listenLocation(context);
+
+
     return _isLoading
         ? const Center(
             child: AnimateCircularProgressIndicator(),

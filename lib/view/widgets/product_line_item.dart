@@ -1,4 +1,4 @@
-import 'package:dima2022/view_models/content_view_model.dart';
+import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
 import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
 import 'package:dima2022/view_models/product_view_models/products_view_model.dart';
 import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';

@@ -4,7 +4,8 @@ import 'package:dima2022/view/widgets/product_line_item.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_models/content_view_model.dart';
+import '../../../view_models/content_view_models/content_view_model.dart';
+import '../../../view_models/position_view_models/position_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
 import '../sidebar_widgets/filter.dart';

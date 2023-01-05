@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 
-import '../../models/product/product.dart';
-import '../../models/request/request_status.dart';
-import '../../models/user/user.dart';
-import '../../models/request/request.dart';
+import '../../../models/product/product.dart';
+import '../../../models/request/request_status.dart';
+import '../../../models/user/user.dart';
+import '../../../models/request/request.dart';
 
 class ContentViewModel with ChangeNotifier {
   late int _mainContentIndex = 0;

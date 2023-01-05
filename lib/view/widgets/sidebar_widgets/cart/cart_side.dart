@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/cart_view_models/cart_view_model.dart';
-import '../../../../view_models/content_view_model.dart';
+import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/order_view_models/orders_view_model.dart';
 import '../../common/custom_button.dart';
 import '../../common/title_text.dart';
