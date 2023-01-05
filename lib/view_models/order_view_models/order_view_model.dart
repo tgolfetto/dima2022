@@ -18,6 +18,10 @@ class OrderViewModel extends ChangeNotifier {
       .toList();
   DateTime get dateTime => _order.dateTime;
 
+  int getSingleItems() {
+    return _order.products.map((e) => e.quantity).reduce((a, b) => a + b);
+  }
+
   void updateOrder(OrderItem order) {
     _order = order;
     notifyListeners();

@@ -1,12 +1,14 @@
+import 'dart:collection';
+
 import 'package:dima2022/view_models/order_view_models/order_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../services/orders_service.dart';
 
 import '../../models/cart/cart_item.dart';
 import '../../models/orders/orders.dart';
-import '../../models/orders/order_item.dart';
 
 class OrdersViewModel extends ChangeNotifier {
   // The OrdersService instance
@@ -32,6 +34,74 @@ class OrdersViewModel extends ChangeNotifier {
           (cartItem) => OrderViewModel.fromExistingCartItem(cartItem))
       .toList();
 
+  int getTotalCount() {
+    if (_orders.items.isEmpty) return 0;
+    return _orders.items.map((e) => 1).reduce((a, b) => a + b);
+  }
+
+  double getAverageAmount() {
+    if (_orders.items.isEmpty) return 0;
+    final sum =
+        _orders.items.map((order) => order.amount).reduce((a, b) => a + b);
+    return sum / _orders.items.length;
+  }
+
+  double getMaxAmount() {
+    if (_orders.items.isEmpty) return 0;
+    return _orders.items
+        .map((order) => order.amount)
+        .reduce((a, b) => a > b ? a : b);
+  }
+
+  double getMinAmount() {
+    if (_orders.items.isEmpty) return 0;
+    return _orders.items
+        .map((order) => order.amount)
+        .reduce((a, b) => a < b ? a : b);
+  }
+
+  Map<String, List<OrderViewModel>> groupOrdersByMonth() {
+    final monthFormat = DateFormat.MMMM();
+    final result = <String, List<OrderViewModel>>{};
+    for (var order in items) {
+      final month = monthFormat.format(order.dateTime);
+      result[month] ??= [];
+      result[month]?.add(order);
+    }
+    return result;
+  }
+
+  Map<String, double> getOrdersPerMonthData() {
+    final monthFormat = DateFormat.MMMM();
+    final result = Map<String, double>();
+    final monthGroups = groupOrdersByMonth();
+    for (var month in monthGroups.keys) {
+      final monthAmount = monthGroups[month]!
+          .map((order) => order.amount)
+          .reduce((a, b) => a + b);
+      result.putIfAbsent(month, () => monthAmount);
+      // .add(OrdersPerMonth(month, monthAmount));
+    }
+    return result;
+  }
+
+  String computeExpensiveMonth() {
+    final monthGroups = groupOrdersByMonth();
+    String highestMonth = '';
+
+    double highestAmount = 0;
+    for (var month in monthGroups.keys) {
+      final monthAmount = monthGroups[month]!
+          .map((order) => order.amount)
+          .reduce((a, b) => a + b);
+      if (monthAmount > highestAmount) {
+        highestMonth = month;
+        highestAmount = monthAmount;
+      }
+    }
+    return highestMonth;
+  }
+
   // Fetches the orders from the OrdersService and updates the orders instance
   // @require The OrdersService instance must be initialized
   // @ensure The _orders instance will be updated with the fetched orders
@@ -51,3 +121,9 @@ class OrdersViewModel extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+// class OrdersPerMonth {
+//   final String month;
+//   final double amount;
+//   OrdersPerMonth(this.month, this.amount);
+//}

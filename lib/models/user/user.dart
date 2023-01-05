@@ -11,11 +11,8 @@ class User with ChangeNotifier {
   late String _email;
   // phone number of the user
   late String? _phone;
-
-  //TODO:
   // whether the user is a clerk or not
   late bool _isClerk;
-
   // address of the user
   late String? _address;
   // profile image url of the user

@@ -14,25 +14,25 @@ class Auth with ChangeNotifier {
   Timer? _authTimer;
 
   // sets the token and notifies listeners
-  void set token(String? token) {
+  set token(String? token) {
     _token = token;
     notifyListeners();
   }
 
   // sets the userId and notifies listeners
-  void set userId(String? userId) {
+  set userId(String? userId) {
     _userId = userId;
     notifyListeners();
   }
 
   // sets the expiryDate and notifies listeners
-  void set expiryDate(DateTime? expiryDate) {
+  set expiryDate(DateTime? expiryDate) {
     _expiryDate = expiryDate;
     notifyListeners();
   }
 
   // sets the authTimer and notifies listeners
-  void set authTimer(Timer? authTimer) {
+  set authTimer(Timer? authTimer) {
     _authTimer = authTimer;
     notifyListeners();
   }

@@ -1,6 +1,5 @@
 import 'package:dima2022/utils/routes.dart';
 import 'package:dima2022/view/auth_screen.dart';
-import 'package:dima2022/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +36,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    bool ciao;
     return MultiProvider(
       providers: authProviders,
       child: MaterialApp(

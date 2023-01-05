@@ -200,7 +200,7 @@ class _UserInputFormState extends State<UserInputForm> {
               )
             : _isLoading
                 ? const Center(
-                    child: AnimateCircularProgressIndicator(),
+                    child: AnimatedCircularProgressIndicator(),
                   )
                 : Container(
                     margin: EdgeInsets.only(

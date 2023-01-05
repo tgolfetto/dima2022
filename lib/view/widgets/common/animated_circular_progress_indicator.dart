@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class AnimateCircularProgressIndicator extends StatefulWidget {
-  const AnimateCircularProgressIndicator({super.key});
+class AnimatedCircularProgressIndicator extends StatefulWidget {
+  const AnimatedCircularProgressIndicator({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _AnimateCircularProgressIndicatorState createState() =>
-      _AnimateCircularProgressIndicatorState();
+  _AnimatedCircularProgressIndicatorState createState() =>
+      _AnimatedCircularProgressIndicatorState();
 }
 
-class _AnimateCircularProgressIndicatorState
-    extends State<AnimateCircularProgressIndicator>
+class _AnimatedCircularProgressIndicatorState
+    extends State<AnimatedCircularProgressIndicator>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;

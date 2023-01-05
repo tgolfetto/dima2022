@@ -128,7 +128,7 @@ class HomePageState extends State<HomePage> {
     final alwaysDisplayDrawer = context.layout.breakpoint > LayoutBreakpoint.sm;
     return _isLoading
         ? const Center(
-            child: AnimateCircularProgressIndicator(),
+            child: AnimatedCircularProgressIndicator(),
           )
         : Scaffold(
             extendBody: true,

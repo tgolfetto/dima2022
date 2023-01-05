@@ -14,7 +14,7 @@ class ProductViewModel extends ChangeNotifier {
 
   // Initializes a ProductViewModel with a new Product instance
   ProductViewModel() {
-    _product = new Product();
+    _product = Product();
   }
 
   // Initializes a ProductViewModel with an existing Product instance

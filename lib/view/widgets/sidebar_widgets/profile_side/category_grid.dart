@@ -63,13 +63,14 @@ class _CategoryGridState extends State<CategoryGrid> {
                   ],
                 ),
           margin: const EdgeInsets.all(6),
-          padding: EdgeInsets.all(getProportionateScreenWidth(10)),
+          padding: EdgeInsets.all(getProportionateScreenWidth(6)),
           child: InkWell(
             onTap: () {
               setState(() {
                 !widget._selectedCategories.contains(category)
                     ? widget._selectedCategories.add(category)
-                    : widget._selectedCategories.remove(category);
+                    : widget._selectedCategories
+                        .remove(category); // = category;
               });
             },
             child: Center(

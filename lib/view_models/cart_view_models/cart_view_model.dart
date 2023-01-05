@@ -30,7 +30,9 @@ class CartViewModel with ChangeNotifier {
   }
 
   List<CartItemViewModel> get cartItems {
-    return _cart.items.entries.map((e) => CartItemViewModel(e.value)).toList();
+    return _cart.items.entries
+        .map((e) => CartItemViewModel.fromExistingCartItem(e.value))
+        .toList();
   }
 
   // Returns the number of items in the cart
