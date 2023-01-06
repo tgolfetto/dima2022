@@ -20,6 +20,7 @@ class UserViewModel with ChangeNotifier {
   String get email => _user.email;
   String get phone => _user.phone;
   String get address => _user.address;
+  bool get isClerk => _user.isClerk;
   String get profileImageUrl => _user.profileImageUrl;
   String get size => _user.size;
   String get shoeSizeString =>

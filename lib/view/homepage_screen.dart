@@ -2,12 +2,10 @@ import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/orders_page.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/requests.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
@@ -120,17 +118,6 @@ class HomePageState extends State<HomePage> {
             extendBody: true,
             extendBodyBehindAppBar: true,
             appBar: null,
-
-            // AppBar(
-            //   iconTheme: IconThemeData(color: CustomTheme.primaryColor),
-            //   title: const Text(CustomTheme.appTitle,
-            //       style: TextStyle(color: Colors.black)),
-            //   actions: [_cartButton(context)],
-            //   backgroundColor: CustomTheme.backgroundColor,
-            // ),
-
-            // endDrawer:
-            //     alwaysDisplayDrawer ? null : SideBar(key: const ValueKey('Drawer')),
             body: Stack(
               children: <Widget>[
                 Container(
@@ -158,9 +145,6 @@ class HomePageState extends State<HomePage> {
                                     context, content.mainContentIndex)),
                           ),
                           if (alwaysDisplayDrawer) SideBar(),
-                          // SideBar(
-                          //   key: const ValueKey('Drawer'),
-                          // ),
                         ],
                       ),
                     ),
@@ -181,7 +165,7 @@ class HomePageState extends State<HomePage> {
                           colors: [
                             Colors.transparent,
                             const Color.fromARGB(255, 106, 106, 106)
-                                .withOpacity(0.2),
+                                .withOpacity(0.18),
                           ],
                         ),
                       ),

@@ -248,6 +248,17 @@ class _LineItemState extends State<LineItem> {
                       ],
                     ),
                   ),
+                  // const SizedBox(height: 8),
+                  // Flexible(
+                  //   flex: 2,
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(child: _addToCartButton(product)),
+                  //       //const SizedBox(width: 8),
+                  //       //Expanded(child: _addToCartButton(product)),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
