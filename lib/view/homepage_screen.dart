@@ -142,8 +142,8 @@ class HomePageState extends State<HomePage> {
                     Flexible(
                       child: Row(
                         children: [
-                          if (context.layout.breakpoint >
-                              LayoutBreakpoint.sm) ...[
+                          if (context.layout.breakpoint >=
+                              LayoutBreakpoint.md) ...[
                             Consumer<ContentViewModel>(
                                 builder: (context, content, _) =>
                                     NavigationSideBar(

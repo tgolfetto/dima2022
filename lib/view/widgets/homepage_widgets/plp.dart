@@ -25,8 +25,6 @@ class _PlpState extends State<Plp> {
 
   @override
   void initState() {
-    //Provider.of<Products>(context).fetchAndSetProducts(); /THIS WON'T WORK HERE --> WE HAVE TO MOVE IT IN didChangeDependencies
-    // TODO: implement initState
     super.initState();
   }
 
@@ -107,14 +105,16 @@ class _PlpState extends State<Plp> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: context.layout.value(
                   xs: 2,
-                  sm: 2,
+                  sm: 3,
                   md: 2,
                   lg: 3,
                   xl: 4,
                 ),
-                mainAxisSpacing: spacing,
+                mainAxisSpacing: spacing * 2,
                 crossAxisSpacing: spacing,
-                childAspectRatio: 0.532544378698225,
+                childAspectRatio: 0.5,
+
+                //0.532544378698225,
               ),
             ),
           ),

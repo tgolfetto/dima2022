@@ -21,8 +21,9 @@ class CustomTheme {
       backgroundColor: secondaryColor,
       foregroundColor: backgroundColor,
       padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(buttonPaddingV),
-          horizontal: getProportionateScreenWidth(buttonPaddingH)),
+        vertical: getProportionateScreenHeight(buttonPaddingV),
+        //horizontal: getProportionateScreenWidth(buttonPaddingH)
+      ),
       shape: RoundedRectangleBorder(
           side: BorderSide(
               color: secondaryColor, width: 1, style: BorderStyle.solid),
@@ -34,19 +35,21 @@ class CustomTheme {
       ));
 
   static ButtonStyle buttonStyleOutline = ElevatedButton.styleFrom(
-      backgroundColor: backgroundColor,
-      foregroundColor: secondaryColor,
-      padding: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(buttonPaddingV),
-          horizontal: getProportionateScreenWidth(buttonPaddingH)),
-      shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: secondaryColor, width: 1, style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(5)),
-      textStyle: TextStyle(
-          fontSize: getProportionateScreenHeight(16),
-          fontFamily: 'Raleway',
-          fontWeight: FontWeight.bold));
+    backgroundColor: backgroundColor,
+    foregroundColor: secondaryColor,
+    padding: EdgeInsets.symmetric(
+      vertical: getProportionateScreenHeight(buttonPaddingV),
+      // horizontal: getProportionateScreenWidth(buttonPaddingH)
+    ),
+    shape: RoundedRectangleBorder(
+        side: BorderSide(
+            color: secondaryColor, width: 1, style: BorderStyle.solid),
+        borderRadius: BorderRadius.circular(5)),
+    textStyle: TextStyle(
+        fontSize: getProportionateScreenHeight(16),
+        fontFamily: 'Raleway',
+        fontWeight: FontWeight.bold),
+  );
 
   static ButtonStyle buttonStyleIcon = TextButton.styleFrom(
     backgroundColor: Colors.transparent,

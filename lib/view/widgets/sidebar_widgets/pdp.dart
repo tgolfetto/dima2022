@@ -68,9 +68,7 @@ class _PdpState extends State<Pdp> {
           listen: false,
         ).addSingleItem(productId)
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start,
-
-          children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         const Icon(Icons.add_shopping_cart),
         Padding(
           padding: EdgeInsets.only(left: CustomTheme.smallPadding),
@@ -120,40 +118,38 @@ class _PdpState extends State<Pdp> {
                       style: CustomTheme.bodyStyle),
                   Text('EUR ${loadedProduct.price}',
                       style: CustomTheme.bodyStyle),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Size: ', style: CustomTheme.bodyStyle),
-                        DropdownButton<int>(
-                          value: dropdownValue == 0
-                              ? loadedProduct.sizes![0] //productModel.sizes[0]
-                              : dropdownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          underline: Container(
-                            height: 2,
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          onChanged: (int? value) {
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                          items: loadedProduct.sizes! //productModel.sizes
-                              .map<DropdownMenuItem<int>>((int value) {
-                            return DropdownMenuItem<int>(
-                              value: value,
-                              child:
-                                  Text("$value", style: CustomTheme.bodyStyle),
-                            );
-                          }).toList(),
-                        ),
-                      ]),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text('Size: ', style: CustomTheme.bodyStyle),
+                    DropdownButton<int>(
+                      value: dropdownValue == 0
+                          ? loadedProduct.sizes![0] //productModel.sizes[0]
+                          : dropdownValue,
+                      icon: const Icon(Icons.arrow_downward),
+                      elevation: 16,
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (int? value) {
+                        setState(() {
+                          dropdownValue = value!;
+                        });
+                      },
+                      items: loadedProduct.sizes! //productModel.sizes
+                          .map<DropdownMenuItem<int>>((int value) {
+                        return DropdownMenuItem<int>(
+                          value: value,
+                          child: Text("$value", style: CustomTheme.bodyStyle),
+                        );
+                      }).toList(),
+                    ),
+                  ]),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Margin(
-                        margin: EdgeInsets.only(right: CustomTheme.spacePadding),
+                        margin:
+                            EdgeInsets.only(right: CustomTheme.spacePadding),
                         child: _requestButton(loadedProduct.id),
                       ),
                       _addToCartButton(loadedProduct.id)

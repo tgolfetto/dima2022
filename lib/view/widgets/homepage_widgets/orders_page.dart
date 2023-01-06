@@ -150,11 +150,11 @@ class _OrdersPageState extends State<OrdersPage> {
             sm: 3,
             md: 2,
             lg: 3,
-            xl: 4,
+            xl: 3,
           ),
           mainAxisSpacing: spacing,
           crossAxisSpacing: spacing,
-          childAspectRatio: 2,
+          childAspectRatio: 1.5,
         ),
         delegate: SliverChildBuilderDelegate(
           (context, index) {

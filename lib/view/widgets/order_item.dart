@@ -71,6 +71,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                               children: [
                                 Text(
                                   prod.title,
+                                  //overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
@@ -78,6 +79,7 @@ class _OrderItemWidgetState extends State<OrderItemWidget> {
                                 ),
                                 Text(
                                   '${prod.quantity}x €${prod.price}',
+                                  //overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 18,
                                   ),
