@@ -196,7 +196,7 @@ class _LineItemState extends State<LineItem> {
                   Flexible(
                     flex: 3,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(

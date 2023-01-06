@@ -124,6 +124,7 @@ class CartItem extends StatelessWidget {
                       text: cartItemViewModel.title,
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
+                      textOverflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Row(
                       children: <Widget>[

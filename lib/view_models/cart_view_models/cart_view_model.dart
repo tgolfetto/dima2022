@@ -9,6 +9,8 @@ import 'cart_item_view_model.dart';
 class CartViewModel with ChangeNotifier {
   // The Cart instance
   late final Cart _cart;
+  // flag to monitor the state of the cart
+  bool isOrdered = false;
   // The CartService instance
   late final CartService _cartService;
 
@@ -33,6 +35,11 @@ class CartViewModel with ChangeNotifier {
     return _cart.items.entries
         .map((e) => CartItemViewModel.fromExistingCartItem(e.value))
         .toList();
+  }
+
+  void setIsOrdered() {
+    isOrdered = !isOrdered;
+    notifyListeners();
   }
 
   // Returns the number of items in the cart

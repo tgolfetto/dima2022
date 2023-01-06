@@ -495,6 +495,8 @@ class CardHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -544,12 +546,23 @@ class CardHeader extends StatelessWidget {
         SizedBox(
           height: getProportionateScreenHeight(30),
         ),
-        TitleText(
-          text: textTitle,
-          fontSize: 34,
-          color: Colors.black87,
+        Container(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
+              TitleText(
+                text: textTitle,
+                fontSize: 34,
+                color: Colors.black87,
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                textSubtitle,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-        Text(textSubtitle),
         const Gutter(),
         SizedBox(
           height: getProportionateScreenHeight(20),

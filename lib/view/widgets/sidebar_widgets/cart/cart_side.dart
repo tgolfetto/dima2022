@@ -109,28 +109,57 @@ class CartSide extends StatelessWidget {
                       )
                     ],
                   )
-                : Column(
-                    children: [
-                      CardHeader(
-                        formKey: GlobalKey(),
-                        pageController: PageController(),
-                        nextButton: false,
-                        textTitle: 'Add something ...',
-                        textSubtitle: '',
-                        backButton: true,
-                        backIcon: Icons.close,
-                        onPressedBack: () {
-                          final content = context.read<ContentViewModel>();
-                          if (context.layout.breakpoint < LayoutBreakpoint.md) {
-                            content.updateMainContentIndex(Filter.pageIndex);
-                          } else {
-                            content.updateSideBarIndex(Filter.pageIndex);
-                          }
-                        },
+                : cartViewModel!.isOrdered
+                    ? Column(
+                        children: [
+                          CardHeader(
+                            formKey: GlobalKey(),
+                            pageController: PageController(),
+                            nextButton: false,
+                            textTitle: 'Thank you for your order!',
+                            textSubtitle:
+                                "Your order has been received and is being processed. We'll send you a confirmation email shortly with the details of your order.",
+                            backButton: true,
+                            backIcon: Icons.close,
+                            onPressedBack: () {
+                              final content = context.read<ContentViewModel>();
+                              cartViewModel!.setIsOrdered();
+                              if (context.layout.breakpoint <
+                                  LayoutBreakpoint.md) {
+                                content
+                                    .updateMainContentIndex(Filter.pageIndex);
+                              } else {
+                                content.updateSideBarIndex(Filter.pageIndex);
+                              }
+                            },
+                          ),
+                          Lottie.asset('../assets/animated/order_ok.json'),
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          CardHeader(
+                            formKey: GlobalKey(),
+                            pageController: PageController(),
+                            nextButton: false,
+                            textTitle: 'Add something ...',
+                            textSubtitle: '',
+                            backButton: true,
+                            backIcon: Icons.close,
+                            onPressedBack: () {
+                              final content = context.read<ContentViewModel>();
+                              if (context.layout.breakpoint <
+                                  LayoutBreakpoint.md) {
+                                content
+                                    .updateMainContentIndex(Filter.pageIndex);
+                              } else {
+                                content.updateSideBarIndex(Filter.pageIndex);
+                              }
+                            },
+                          ),
+                          Lottie.asset('../assets/animated/empty_cart_1.json'),
+                        ],
                       ),
-                      Lottie.asset('../assets/animated/empty_cart_1.json'),
-                    ],
-                  ),
           ),
         );
       },
@@ -172,6 +201,7 @@ class _OrderButtonState extends State<OrderButton> {
               setState(() {
                 _isLoading = false;
               });
+              widget.cart.setIsOrdered();
               widget.cart.clear();
             },
       child: _isLoading ? const CircularProgressIndicator() : null,

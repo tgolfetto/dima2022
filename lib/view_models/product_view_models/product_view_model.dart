@@ -62,6 +62,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The id of the product will be updated
   void setId(String? id) {
     _product.id = id;
+    notifyListeners();
   }
 
   // Sets the title of the product
@@ -69,6 +70,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The title of the product will be updated
   void setTitle(String title) {
     _product.title = title;
+    notifyListeners();
   }
 
   // Sets the description of the product
@@ -76,6 +78,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The description of the product will be updated
   void setDescription(String description) {
     _product.description = description;
+    notifyListeners();
   }
 
   // Sets the price of the product
@@ -83,6 +86,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The price of the product will be updated
   void setPrice(double price) {
     _product.price = price;
+    notifyListeners();
   }
 
   // Sets the image url of the product
@@ -90,6 +94,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The image url of the product will be updated
   void setImageUrl(String imageUrl) {
     _product.imageUrl = imageUrl;
+    notifyListeners();
   }
 
   // Sets whether the product is a favorite or not
@@ -97,6 +102,7 @@ class ProductViewModel extends ChangeNotifier {
   // @ensure The favorite status of the product will be updated
   void setIsFavorite(bool isFavorite) {
     _product.isFavorite = isFavorite;
+    notifyListeners();
   }
 
   // Sets the categories the product belongs to
