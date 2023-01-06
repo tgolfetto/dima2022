@@ -36,7 +36,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   var _isInit = true;
   var _isLoading = false;
-  var userViewModel;
+  late UserViewModel userViewModel;
 
   late String _barcodeScanned;
 
@@ -88,27 +88,13 @@ class HomePageState extends State<HomePage> {
     }
   }
 
-  // ElevatedButton _cartButton(BuildContext context) {
-  //   final content = context.read<ContentViewModel>();
-  //   return ElevatedButton(
-  //     style: CustomTheme.buttonStyleIcon,
-  //     onPressed: () {
-  //       if (context.layout.breakpoint < LayoutBreakpoint.md) {
-  //         content.updateMainContentIndex(CartSide.pageIndex);
-  //       } else {
-  //         content.updateSideBarIndex(CartSide.pageIndex);
-  //       }
-  //     },
-  //     child: const Icon(Icons.shopping_cart),
-  //   );
-  // }
-
   @override
   void didChangeDependencies() {
     if (_isInit) {
       setState(() {
         _isLoading = true;
       });
+
       Provider.of<UserViewModel>(context).getUser().then((_) {
         setState(() {
           userViewModel = Provider.of<UserViewModel>(context, listen: false);
@@ -118,7 +104,7 @@ class HomePageState extends State<HomePage> {
       });
     }
     _isInit = false;
-    // TODO: implement didChangeDependencies
+
     super.didChangeDependencies();
   }
 

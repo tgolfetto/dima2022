@@ -20,27 +20,13 @@ class UserService {
   @ensure the user is created in the database
   */
   Future<void> createUser(String email) async {
-    final _params = {
-      'auth': _authToken,
-    };
-    final url = Uri.https(baseUrl, '/users/$_userId.json', _params);
-
-    final response = await http.post(
-      url,
-      body: '',
-    );
-
     User newUser = User(
       id: _userId,
       email: email,
       profileImageUrl: userAvatar,
     );
 
-    updateUser(newUser);
-
-    if (response.statusCode != 200 && response.statusCode != 201) {
-      throw HttpException('Failed to create user');
-    }
+    await updateUser(newUser);
   }
 
   /*
@@ -49,7 +35,7 @@ class UserService {
   @require user != null
   @ensure the user is updated in the database
   */
-  Future<void> updateUser(User user) async {
+  Future<User> updateUser(User user) async {
     final _params = {
       'auth': _authToken,
     };
@@ -63,6 +49,8 @@ class UserService {
     if (response.statusCode != 200 && response.statusCode != 204) {
       throw HttpException('Failed to update user');
     }
+
+    return await getUser();
   }
 
   /*

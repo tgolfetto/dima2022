@@ -43,7 +43,7 @@ var authProviders = [
         auth.token, auth.userId, previousRequests),
   ),
 
-  // ChangeNotifierProxyProvider for the RequestListViewModel
+  // ChangeNotifierProxyProvider for the UserViewModel
   ChangeNotifierProxyProvider<AuthViewModel, UserViewModel>(
     create: (context) => UserViewModel(),
     update: (context, auth, previousRequests) =>

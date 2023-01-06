@@ -42,8 +42,6 @@ class _OrdersPageState extends State<OrdersPage> {
     final double spacing =
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
-    //var tiles = [{"Total Orders", orderData.getTotalCount().toString()}, {"Average Order Amount", "€ ${orderData.getAverageAmount().toStringAsFixed(2)}"}, {"Maximum Order Amount", "€ ${orderData.getMaxAmount().toStringAsFixed(1)}"}, {"Minimum Order Amount", "€ ${orderData.getMinAmount().toStringAsFixed(2)}"}, {"Month with Highest Orders", orderData.computeExpensiveMonth()} ];
-
     return FutureBuilder(
         future: _ordersFuture,
         builder: (ctx, dataSnapshot) {

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/user/user.dart';
 import '../../services/auth_service.dart';
 
 import '../../models/user/auth.dart';
@@ -49,7 +50,7 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> signup(String email, String password) async {
     _auth = await _authService.signup(email, password);
     _userService = UserService(_auth.token, _auth.userId);
-    var userId = _userService.createUser(email);
+    await _userService.createUser(email);
     notifyListeners();
   }
 

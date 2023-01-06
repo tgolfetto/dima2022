@@ -13,7 +13,6 @@ class UserViewModel with ChangeNotifier {
 
   UserViewModel.fromAuth(String? token, String? userId) {
     _userService = UserService(token, userId);
-    getUser();
   }
 
   String get id => _user.id;
@@ -29,13 +28,12 @@ class UserViewModel with ChangeNotifier {
   List<ItemCategory> get favoriteCategories => _user.favoriteCategories;
 
   Future<void> saveChanges() async {
-    await _userService.updateUser(_user);
+    _user = await _userService.updateUser(_user);
     notifyListeners();
   }
 
   Future<void> getUser() async {
-    final u = await _userService.getUser();
-    _user = u;
+    _user = await _userService.getUser();
     notifyListeners();
   }
 
