@@ -125,6 +125,7 @@ class CartItem extends StatelessWidget {
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       textOverflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.start,
                     ),
                     subtitle: Row(
                       children: <Widget>[

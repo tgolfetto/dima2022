@@ -6,11 +6,13 @@ class TitleText extends StatelessWidget {
   final Color color;
   final FontWeight fontWeight;
   final TextOverflow? textOverflow;
+  final TextAlign? textAlign;
   const TitleText(
       {Key? key,
       required this.text,
       this.fontSize = 18,
       this.textOverflow,
+      this.textAlign,
       required this.color,
       this.fontWeight = FontWeight.w900})
       : super(key: key);
@@ -18,7 +20,7 @@ class TitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text,
-        textAlign: TextAlign.center,
+        textAlign: textAlign ?? TextAlign.center,
         overflow: textOverflow ?? TextOverflow.visible,
         style: TextStyle(
           fontFamily: 'Raleway',
