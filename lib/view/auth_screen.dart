@@ -18,6 +18,7 @@ class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
 
   Widget authScreenPage(BuildContext context) {
+    SizeConfig().init(context);
     final deviceSize = MediaQuery.of(context).size;
     return Scaffold(
         body: Stack(
@@ -29,23 +30,32 @@ class AuthScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Flexible(
-                    child: Padding(
-                  padding: EdgeInsets.all(
-                      getProportionateScreenHeight(CustomTheme.smallPadding)),
-                  child: Image.asset('assets/images/logo.png'),
-                )),
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      getProportionateScreenHeight(CustomTheme.smallPadding),
+                    ),
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ),
                 Flexible(
-                    child: Padding(
-                        padding: EdgeInsets.all(getProportionateScreenHeight(
-                            CustomTheme.smallPadding)),
-                        child: Text(
-                          'Gaetano Alessi - Thomas Golfetto',
-                          style: CustomTheme.bodyStyle,
-                        ))),
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      getProportionateScreenHeight(CustomTheme.smallPadding),
+                    ),
+                    child: Text(
+                      'Gaetano Alessi - Thomas Golfetto',
+                      style: CustomTheme.bodyStyle,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: getProportionateScreenHeight(20),
+                ),
                 Flexible(
-                  flex: deviceSize.width > 600 ? 2 : 1,
+                  flex: deviceSize.width > 600 ? 3 : 2,
                   child: const AuthCard(),
                 ),
               ],
@@ -183,84 +193,93 @@ class AuthCardState extends State<AuthCard> {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
-      elevation: 2.0,
-      shadowColor: Colors.transparent,
-      child: Container(
-        height: _authMode == AuthMode.signup ? 320 : 260,
-        constraints:
-            BoxConstraints(minHeight: _authMode == AuthMode.signup ? 320 : 260),
-        width: deviceSize.width * 0.75,
-        padding: EdgeInsets.all(
-            getProportionateScreenHeight(CustomTheme.smallPadding)),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'E-Mail'),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty || !value.contains('@')) {
-                      return 'Invalid email!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _authData['email'] = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value!.isEmpty || value.length < 5) {
-                      return 'Password is too short!';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _authData['password'] = value!;
-                  },
-                ),
-                if (_authMode == AuthMode.signup)
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxWidth:
+              deviceSize.width * 0.65 > 400 ? 400 : deviceSize.width * 0.65),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+        ),
+        elevation: 2.0,
+        shadowColor: Colors.transparent,
+        child: Container(
+          height: _authMode == AuthMode.signup ? 320 : 260,
+          constraints: BoxConstraints(
+              minHeight: _authMode == AuthMode.signup ? 320 : 260),
+          width: deviceSize.width * 0.75,
+          padding: EdgeInsets.all(
+              getProportionateScreenHeight(CustomTheme.smallPadding)),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
                   TextFormField(
-                    enabled: _authMode == AuthMode.signup,
-                    decoration:
-                        const InputDecoration(labelText: 'Confirm Password'),
-                    obscureText: true,
-                    validator: _authMode == AuthMode.signup
-                        ? (value) {
-                            if (value != _passwordController.text) {
-                              return 'Passwords do not match!';
-                            }
-                            return null;
-                          }
-                        : null,
+                    decoration: const InputDecoration(
+                      labelText: 'E-Mail',
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty || !value.contains('@')) {
+                        return 'Invalid email!';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['email'] = value!;
+                    },
                   ),
-                const SizedBox(
-                  height: 20,
-                ),
-                _isLoading
-                    ? const AnimatedCircularProgressIndicator()
-                    : ElevatedButton(
-                        onPressed: _submit,
-                        style: CustomTheme.buttonStyleFill,
-                        child: Text(
-                            _authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP'),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 5) {
+                        return 'Password is too short!';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _authData['password'] = value!;
+                    },
+                  ),
+                  if (_authMode == AuthMode.signup)
+                    TextFormField(
+                      enabled: _authMode == AuthMode.signup,
+                      decoration: const InputDecoration(
+                        labelText: 'Confirm Password',
                       ),
-                TextButton(
-                  onPressed: _switchAuthMode,
-                  child: Text(
-                      '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
-                      style: CustomTheme.bodyStyle),
-                ),
-              ],
+                      obscureText: true,
+                      validator: _authMode == AuthMode.signup
+                          ? (value) {
+                              if (value != _passwordController.text) {
+                                return 'Passwords do not match!';
+                              }
+                              return null;
+                            }
+                          : null,
+                    ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  _isLoading
+                      ? const AnimatedCircularProgressIndicator()
+                      : ElevatedButton(
+                          onPressed: _submit,
+                          style: CustomTheme.buttonStyleFill,
+                          child: Text(_authMode == AuthMode.login
+                              ? 'LOGIN'
+                              : 'SIGN UP'),
+                        ),
+                  TextButton(
+                    onPressed: _switchAuthMode,
+                    child: Text(
+                        '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD',
+                        style: CustomTheme.bodyStyle),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

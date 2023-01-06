@@ -258,6 +258,8 @@ class OnBoardingState extends State<OnBoarding> {
                       netDragPercent: dragDistance,
                       pagesLength: pagesLength,
                       indicator: Indicator(
+                        closedIndicator:
+                            ClosedIndicator(color: CustomTheme.secondaryColor),
                         indicatorDesign: IndicatorDesign.polygon(
                           polygonDesign: PolygonDesign(
                             polygon: DesignType.polygon_circle,
@@ -266,19 +268,23 @@ class OnBoardingState extends State<OnBoarding> {
                       ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Padding(
                             padding: EdgeInsets.all(getProportionateScreenWidth(
                                 CustomTheme.spacePadding)),
                             child: index != pagesLength - 1
                                 ? _skipButton(setIndex: setIndex)
-                                : const SizedBox()),
-                      ),
-                      Expanded(
+                                : const SizedBox(),
+                          ),
+                        ),
+                        Expanded(
                           flex: 1,
                           child: Padding(
                             padding: EdgeInsets.all(getProportionateScreenWidth(
@@ -286,9 +292,11 @@ class OnBoardingState extends State<OnBoarding> {
                             child: index != pagesLength - 1
                                 ? _nextButton(setIndex: setIndex)
                                 : _signupButton,
-                          )),
-                    ],
-                  )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             );
