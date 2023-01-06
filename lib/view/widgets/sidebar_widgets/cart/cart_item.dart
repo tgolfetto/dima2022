@@ -59,32 +59,30 @@ class CartItem extends StatelessWidget {
         Provider.of<CartViewModel>(context, listen: false)
             .removeItem(cartItemViewModel.productId);
       },
-      child: GlassRoundedContainer(
-        margin: EdgeInsets.only(
-          bottom: getProportionateScreenHeight(20),
-          left: getProportionateScreenWidth(3),
-          right: getProportionateScreenWidth(3),
-        ),
-        itemPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-        radius: BorderRadius.circular(20.0),
-        opacity: 0.8,
-        enableBorder: false,
-        enableShadow: true,
-        child: Container(
-          color: Colors.white,
-          height: 100,
-          child: Row(
-            children: <Widget>[
-              LayoutBuilder(
-                builder: (context, constraints) {
-                  // Get the screen width and height from the MediaQuery object
-                  double screenWidth = MediaQuery.of(context).size.width;
-                  double screenHeight = MediaQuery.of(context).size.height;
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Get the screen width and height from the MediaQuery object
+          double screenWidth = constraints.maxWidth;
 
-                  // Determine if the screen width is lower than a certain threshold
-                  bool showWidget = screenWidth < 1300;
-
-                  return showWidget
+          // Determine if the screen width is lower than a certain threshold
+          bool hideImage = screenWidth < 315;
+          return GlassRoundedContainer(
+            margin: EdgeInsets.only(
+              bottom: getProportionateScreenHeight(20),
+              left: getProportionateScreenWidth(3),
+              right: getProportionateScreenWidth(3),
+            ),
+            itemPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+            radius: BorderRadius.circular(20.0),
+            opacity: 0.8,
+            enableBorder: false,
+            enableShadow: true,
+            child: Container(
+              color: const Color.fromARGB(190, 255, 255, 255),
+              height: 100,
+              child: Row(
+                children: <Widget>[
+                  hideImage
                       ? Container()
                       : AspectRatio(
                           aspectRatio: 0.8,
@@ -112,78 +110,82 @@ class CartItem extends StatelessWidget {
                               ),
                             ],
                           ),
-                        );
-                },
-              ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: getProportionateScreenWidth(3)),
-                  child: ListTile(
-                    title: TitleText(
-                      color: Colors.black87,
-                      text: cartItemViewModel.title,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      textOverflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.start,
-                    ),
-                    subtitle: Row(
-                      children: <Widget>[
-                        const TitleText(
-                          text: '\€ ',
-                          color: Colors.teal,
-                          fontSize: 12,
                         ),
-                        TitleText(
-                          text: cartItemViewModel.price.toString(),
-                          fontSize: 14,
-                          color: Colors.grey,
+                  Expanded(
+                    child: Container(
+                      margin:
+                          EdgeInsets.only(left: getProportionateScreenWidth(3)),
+                      child: ListTile(
+                        title: TitleText(
+                          color: Colors.black87,
+                          text: cartItemViewModel.title,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          textOverflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.start,
                         ),
-                      ],
-                    ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          iconSize: 17,
-                          icon: const Icon(Icons.remove),
-                          onPressed: () {
-                            // Decrement the quantity value
-                            Provider.of<CartViewModel>(context, listen: false)
-                                .removeSingleItem(cartItemViewModel.productId);
-                          },
+                        subtitle: Row(
+                          children: <Widget>[
+                            const TitleText(
+                              text: '\€ ',
+                              color: Colors.teal,
+                              fontSize: 12,
+                            ),
+                            TitleText(
+                              text: cartItemViewModel.price.toString(),
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                          ],
                         ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: Colors.teal.withAlpha(200),
-                              borderRadius: BorderRadius.circular(10)),
-                          child: TitleText(
-                            color: Colors.white,
-                            text: 'x${cartItemViewModel.quantity}',
-                            fontSize: 13,
-                          ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              iconSize: 17,
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
+                                // Decrement the quantity value
+                                Provider.of<CartViewModel>(context,
+                                        listen: false)
+                                    .removeSingleItem(
+                                        cartItemViewModel.productId);
+                              },
+                            ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Colors.teal.withAlpha(200),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: TitleText(
+                                color: Colors.white,
+                                text: 'x${cartItemViewModel.quantity}',
+                                fontSize: 13,
+                              ),
+                            ),
+                            IconButton(
+                              iconSize: 17,
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                // Increment the quantity value
+                                Provider.of<CartViewModel>(context,
+                                        listen: false)
+                                    .addSingleItem(cartItemViewModel.productId);
+                              },
+                            ),
+                          ],
                         ),
-                        IconButton(
-                          iconSize: 17,
-                          icon: const Icon(Icons.add),
-                          onPressed: () {
-                            // Increment the quantity value
-                            Provider.of<CartViewModel>(context, listen: false)
-                                .addSingleItem(cartItemViewModel.productId);
-                          },
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
