@@ -38,6 +38,8 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 ## WIP:
 - LayoutBuilder in tutte le home per margine sotto
 - Filters UI
+    - non mantiene lo stato (se chiudo e riapro non mantiene le spunte)
+    - UI del filtro Price da rivedere
 - Homepage (PLP product_item_line height)
 - Navigation (side non sempre sincronizzato nelle varie res)
 
