@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_models/content_view_model.dart';
+import '../../../view_models/content_view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
 import '../../custom_theme.dart';

@@ -9,7 +9,7 @@ import '../../../models/product/product.dart';
 import '../../../models/request/request.dart';
 import '../../../models/request/request_status.dart';
 import '../../../models/user/user.dart';
-import '../../../view_models/content_view_model.dart';
+import '../../../view_models/content_view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
 import '../../../view_models/request_view_models/request_list_view_model.dart';

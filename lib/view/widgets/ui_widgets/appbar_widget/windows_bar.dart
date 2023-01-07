@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../../utils/size_config.dart';
 
 import '../../../../view_models/cart_view_models/cart_view_model.dart';
-import '../../../../view_models/content_view_model.dart';
+import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
 import '../../../custom_theme.dart';
 import '../../sidebar_widgets/cart/cart_side.dart';

@@ -48,7 +48,7 @@ dependencies:
   flutter_layout_grid: ^2.0.1
   image_picker: ^0.8.6 
   lottie: ^2.0.0
-  
+  geolocator: ^9.0.2
 
 
 

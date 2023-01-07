@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
-import '../../../../view_models/content_view_model.dart';
+import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../custom_theme.dart';
 import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';

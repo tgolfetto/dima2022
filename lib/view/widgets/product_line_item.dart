@@ -1,5 +1,3 @@
-import 'package:dima2022/utils/size_config.dart';
-import 'package:dima2022/view_models/content_view_model.dart';
 import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
 import 'package:dima2022/view_models/product_view_models/products_view_model.dart';
 import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
@@ -92,7 +90,6 @@ class _LineItemState extends State<LineItem> {
   Widget _addToCartButton(ProductViewModel productViewModel) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
-
       onPressed: () => {
         Provider.of<CartViewModel>(
           context,
@@ -100,22 +97,13 @@ class _LineItemState extends State<LineItem> {
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
             productViewModel.price!, productViewModel.title!)
       },
-      child: const Icon(
-        Icons.add_shopping_cart,
-        size: 14,
-      ),
-
-      // Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   crossAxisAlignment: CrossAxisAlignment.center,
-      //   children: [
-      //     const Icon(Icons.add_shopping_cart),
-      //     Text(
-      //       'Add to cart',
-      //       overflow: TextOverflow.ellipsis,
-      //     ),
-      //   ],
-      // ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        const Icon(Icons.add_shopping_cart),
+        Padding(
+          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
+          child: Text('Add to cart', style: CustomTheme.bodySecondStyle),
+        )
+      ]),
     );
   }
 

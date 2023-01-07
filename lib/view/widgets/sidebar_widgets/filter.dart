@@ -5,7 +5,7 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/product/category.dart';
-import '../../../view_models/content_view_model.dart';
+import '../../../view_models/content_view_models/content_view_model.dart';
 import '../../custom_theme.dart';
 import '../homepage_widgets/plp.dart';
 
