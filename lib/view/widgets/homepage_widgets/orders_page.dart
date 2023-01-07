@@ -1,16 +1,16 @@
-import 'package:dima2022/view_models/order_view_models/order_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:layout/layout.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import '../../../utils/size_config.dart';
+import '../../../view_models/order_view_models/order_view_model.dart';
 import '../../../view_models/order_view_models/orders_view_model.dart';
 
 import '../../custom_theme.dart';
-import '../../grid_delegate.dart';
 import '../common/animated_circular_progress_indicator.dart';
 import '../order_item.dart';
+import '../sidebar_widgets/profile_side/user_input_widget.dart';
 import 'tile_widget.dart';
 
 class OrdersPage extends StatefulWidget {
@@ -78,46 +78,24 @@ class _OrdersPageState extends State<OrdersPage> {
                         ),
                       )),
                   const SliverGutter(),
-                  if (orderData.items.isNotEmpty)
-                    getTileGrid(spacing, orderData),
-                  // SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(
-                  //         vertical: CustomTheme.smallPadding),
-                  //     child: Card(
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(10.0),
-                  //       ),
-                  //       elevation: 5.0,
-                  //       margin: EdgeInsets.all(10.0),
-                  //       child: Container(
-                  //         padding: EdgeInsets.all(20.0),
-                  //         decoration: BoxDecoration(
-                  //           gradient: LinearGradient(
-                  //             colors: [
-                  //               Color(0xff3e9f96),
-                  //               Color.fromARGB(255, 13, 122, 113),
-                  //             ],
-                  //             begin: Alignment.topCenter,
-                  //             end: Alignment.bottomCenter,
-                  //           ),
-                  //           borderRadius: BorderRadius.circular(10.0),
-                  //         ),
-                  //         child: Column(
-                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                  //           children: [
-                  //             Text("Nerd Stats",
-                  //                 style: TextStyle(
-                  //                     color: Colors.white,
-                  //                     fontSize: 20.0,
-                  //                     fontWeight: FontWeight.bold)),
-                  //             getTileGrid(spacing, orderData),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  orderData.items.isNotEmpty
+                      ? getTileGrid(spacing, orderData)
+                      : SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              CardHeader(
+                                formKey: GlobalKey(),
+                                pageController: PageController(),
+                                nextButton: false,
+                                textTitle: 'You do not have any orders yet.',
+                                textSubtitle:
+                                    'You currently have no orders. Check out our store to start making purchases!',
+                                backButton: false,
+                              ),
+                              Lottie.asset('../assets/animated/no_orders.json'),
+                            ],
+                          ),
+                        ),
                   for (var group in groupByMonth(orderData.items).entries)
                     ...getGroup(group, spacing, orderData),
                 ],
