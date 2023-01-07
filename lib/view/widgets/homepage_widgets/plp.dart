@@ -22,6 +22,7 @@ class Plp extends StatefulWidget {
 class _PlpState extends State<Plp> {
   var _isInit = true;
   var _isLoading = false;
+  var filters;
 
   @override
   void initState() {
@@ -43,6 +44,10 @@ class _PlpState extends State<Plp> {
       });
     }
     _isInit = false;
+    setState(() {
+      filters = Provider.of<ContentViewModel>(context).filters;
+    });
+
     super.didChangeDependencies();
   }
 
@@ -60,16 +65,16 @@ class _PlpState extends State<Plp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> items = [];
-    bool favFilter =
-        Provider.of<ContentViewModel>(context, listen: false).filterFavorites;
+
+    bool isFilterActive = filters.isNotEmpty;
     if (_isLoading) {
       items.add(const Text('Loading products...'));
     } else {
       final products = context.read<ProductListViewModel>();
-      for (ProductViewModel p in products.items) {
-        if (!favFilter || p.isFavorite) {
-          items.add(LineItem(productViewModel: p));
-        }
+      for (ProductViewModel p in isFilterActive
+          ? products.filterByMultipleCriteria(filters)
+          : products.items) {
+        items.add(LineItem(productViewModel: p));
       }
     }
 
@@ -113,8 +118,6 @@ class _PlpState extends State<Plp> {
                 mainAxisSpacing: spacing * 2,
                 crossAxisSpacing: spacing,
                 childAspectRatio: 0.5,
-
-                //0.532544378698225,
               ),
             ),
           ),

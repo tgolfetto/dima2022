@@ -58,30 +58,36 @@ class _WindowBarState extends State<WindowBar> {
                   child: SizedBox(
                     child: Row(
                       children: [
-                        Consumer<CartViewModel>(
-                          builder: (_, cart, ch) => Badge(
-                            value: cart.itemCount.toString(),
-                            color: CustomTheme.secondaryColor,
-                            child: ch!,
+                        if (!widget.userViewModel.isClerk)
+                          Row(
+                            children: [
+                              Consumer<CartViewModel>(
+                                builder: (_, cart, ch) => Badge(
+                                  value: cart.itemCount.toString(),
+                                  color: CustomTheme.secondaryColor,
+                                  child: ch!,
+                                ),
+                                child: IconButton(
+                                  iconSize: 30,
+                                  icon: const Icon(
+                                    Icons.shopping_cart,
+                                  ),
+                                  onPressed: () {
+                                    // mostra nella side
+                                    if (context.layout.breakpoint <
+                                        LayoutBreakpoint.md) {
+                                      content.updateMainContentIndex(
+                                          CartSide.pageIndex);
+                                    } else {
+                                      content.updateSideBarIndex(
+                                          CartSide.pageIndex);
+                                    }
+                                  },
+                                ),
+                              ),
+                              const Gutter(),
+                            ],
                           ),
-                          child: IconButton(
-                            iconSize: 30,
-                            icon: const Icon(
-                              Icons.shopping_cart,
-                            ),
-                            onPressed: () {
-                              // mostra nella side
-                              if (context.layout.breakpoint <
-                                  LayoutBreakpoint.md) {
-                                content
-                                    .updateMainContentIndex(CartSide.pageIndex);
-                              } else {
-                                content.updateSideBarIndex(CartSide.pageIndex);
-                              }
-                            },
-                          ),
-                        ),
-                        const Gutter(),
                         UserAvatar(
                           onPressed: () {
                             if (context.layout.breakpoint <

@@ -41,6 +41,12 @@ class ProductViewModel extends ChangeNotifier {
   // Returns the sizes of the product
   List<int>? get sizes => _product.sizes;
 
+  num? get rating => _product.rating;
+
+  List<ItemCategory> get categories => _product.categories ?? [];
+
+  ProductType? get type => _product.type;
+
   // Toggles the favorite status of the product
   // @ensure The favorite status of the product will be updated and the ProductService will be updated with the new status
   Future<void> toggleFavoriteStatus() async {

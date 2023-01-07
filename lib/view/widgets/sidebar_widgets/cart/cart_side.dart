@@ -1,3 +1,4 @@
+import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
@@ -204,7 +205,11 @@ class _OrderButtonState extends State<OrderButton> {
               widget.cart.setIsOrdered();
               widget.cart.clear();
             },
-      child: _isLoading ? const CircularProgressIndicator() : null,
+      child: _isLoading
+          ? const CircularProgressIndicator(
+              color: Colors.white,
+            )
+          : null,
     );
   }
 }

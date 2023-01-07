@@ -26,7 +26,6 @@ class _AnimatedResizeState extends State<AnimatedResize>
 
   @override
   void didChangeDependencies() {
-    print('ciao');
     animationController.forward();
     super.didChangeDependencies();
   }

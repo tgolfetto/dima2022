@@ -1,3 +1,5 @@
+import 'package:dima2022/models/product/category.dart';
+import 'package:dima2022/models/product/product_type.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -40,6 +42,52 @@ class ProductListViewModel extends ChangeNotifier {
   // Returns a list of ProductViewModel instances marked as favorites
   List<ProductViewModel> get favoriteItems {
     return items.where((element) => element.isFavorite).toList();
+  }
+
+  // Filters the products by multiple criteria
+  // minPrice The minimum price of the range (null if no price range criteria is specified)
+  // maxPrice The maximum price of the range (null if no price range criteria is specified)
+  // categories A list of categories to filter by (empty list if no category criteria is specified)
+  // productTypes A list of product types to filter by (empty list if no product type criteria is specified)
+  // minRating The minimum rating to filter by (null if no rating criteria is specified)
+  // @param filters data strucure that contains all the multiple criteria
+  // @return A list of ProductViewModel instances that match the specified criteria
+  List<ProductViewModel> filterByMultipleCriteria(
+      Map<String, dynamic> filters) {
+    double? minPrice = filters['priceMin'];
+    double? maxPrice = filters['priceMax'];
+    List<ItemCategory>? categories = filters['categories'];
+    List<ProductType>? productTypes = filters['productTypes'];
+    int? minRating = filters['rating'];
+    bool filterFavorites = filters['favorite'];
+
+    return items.where((product) {
+      if (filterFavorites && !product.isFavorite) {
+        return false;
+      }
+      if (minPrice != null && product.price! < minPrice) {
+        return false;
+      }
+      if (maxPrice != null && product.price! > maxPrice) {
+        return false;
+      }
+      if (categories != null &&
+          categories.isNotEmpty &&
+          categories
+              .where((element) => !product.categories.contains(element))
+              .isNotEmpty) {
+        return false;
+      }
+      if (productTypes != null &&
+          productTypes.isNotEmpty &&
+          !productTypes.contains(product.type)) {
+        return false;
+      }
+      if (minRating != null && product.rating! < minRating) {
+        return false;
+      }
+      return true;
+    }).toList();
   }
 
   // Returns a ProductViewModel instance with the specified id
