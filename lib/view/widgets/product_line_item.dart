@@ -10,6 +10,7 @@ import '../../models/request/request.dart';
 import '../../models/request/request_status.dart';
 import '../../models/user/user.dart';
 import '../../view_models/cart_view_models/cart_view_model.dart';
+import '../../view_models/content_view_models/content_view_model.dart';
 import '../../view_models/request_view_models/request_view_model.dart';
 import '../custom_theme.dart';
 import 'sidebar_widgets/pdp.dart';
@@ -90,6 +91,7 @@ class _LineItemState extends State<LineItem> {
   Widget _addToCartButton(ProductViewModel productViewModel) {
     return ElevatedButton(
       style: CustomTheme.buttonStyleFill,
+
       onPressed: () => {
         Provider.of<CartViewModel>(
           context,
@@ -97,13 +99,22 @@ class _LineItemState extends State<LineItem> {
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
             productViewModel.price!, productViewModel.title!)
       },
-      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const Icon(Icons.add_shopping_cart),
-        Padding(
-          padding: EdgeInsets.only(left: CustomTheme.smallPadding),
-          child: Text('Add to cart', style: CustomTheme.bodySecondStyle),
-        )
-      ]),
+      child: const Icon(
+        Icons.add_shopping_cart,
+        size: 14,
+      ),
+
+      // Row(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   children: [
+      //     const Icon(Icons.add_shopping_cart),
+      //     Text(
+      //       'Add to cart',
+      //       overflow: TextOverflow.ellipsis,
+      //     ),
+      //   ],
+      // ),
     );
   }
 

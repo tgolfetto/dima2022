@@ -8,7 +8,6 @@ import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
-import 'package:dima2022/view_models/user_view_models/auth_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
