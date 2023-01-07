@@ -75,7 +75,8 @@ class _FilterState extends State<Filter> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          //Container(alignment: Alignment.centerLeft, child: _backButton(context)),
+          Container(
+              alignment: Alignment.centerLeft, child: _backButton(context)),
           Padding(
             padding: EdgeInsets.symmetric(
                 vertical: CustomTheme.smallPadding,

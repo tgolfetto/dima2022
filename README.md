@@ -13,11 +13,10 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - SplashScreen
 - OnBoarding
 - Login/SignUp
-- edit_profile_screen.dart
 - Homepage
 
 ## Boxes
-- Settings
+- Settings 
 - PDP
 - PLP
 - cart_box.dart - Cart
@@ -27,11 +26,30 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - request_list_box.dart - ListaRichieste (Commessa)
 
 ## Da fare:
+- Requests Page User
+- Requests Page Clerk
+- Request Detail da aprire nel side
+- Add/Edit new product Clerk
+- OrdersPage: cosa mettiamo nella SIDE??
+- TESTING!
+- DESIGN DOC
+- PRESENTAZIONE
 
 ## WIP:
+- LayoutBuilder in tutte le home per margine sotto
+- Filters UI
+- Homepage (PLP product_item_line height)
+- Navigation (side non sempre sincronizzato nelle varie res)
 
 ## Fatto:
 - Base app
+- On Boarding
+- Splash
+- Auth Screen
+- Cart
+- Orders
+- User Profile
+- Menu
 
 ## Dependencies:
 -  http
