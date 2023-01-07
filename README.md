@@ -30,18 +30,25 @@ App utilizzata nei negozi di vestiti dai clienti con funzionalità:
 - Requests Page Clerk
 - Request Detail da aprire nel side
 - Add/Edit new product Clerk
+- Push Notifications
 - OrdersPage: cosa mettiamo nella SIDE??
 - TESTING!
+- Debuggare su Android/iOS
 - DESIGN DOC
 - PRESENTAZIONE
 
 ## WIP:
+- Evitare il re-loading della Product list quando si torna indietro dal dettaglio prodotto
+- Cosa mettiamo nella AppBar (lasciamo cosi/la rendiamo trasparente ...)
 - LayoutBuilder in tutte le home per margine sotto
 - Filters UI
     - non mantiene lo stato (se chiudo e riapro non mantiene le spunte)
     - UI del filtro Price da rivedere
+    - UI Categories and Type da rivedere
 - Homepage (PLP product_item_line height)
-- Navigation (side non sempre sincronizzato nelle varie res)
+    - pulsanti CART e REQUEST da mettere in Column
+- Navigation (side non sempre sincronizzato nelle varie res / user profile non si apre in smartphone res ...)
+- animations in re-shuffle
 
 ## Fatto:
 - Base app

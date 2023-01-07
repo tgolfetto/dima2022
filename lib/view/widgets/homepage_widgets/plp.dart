@@ -5,7 +5,7 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/content_view_model.dart';
-import '../../../view_models/product_view_models/product_view_model.dart';
+
 import '../../../view_models/product_view_models/products_view_model.dart';
 import '../sidebar_widgets/filter.dart';
 
@@ -21,8 +21,8 @@ class Plp extends StatefulWidget {
 
 class _PlpState extends State<Plp> {
   var _isInit = true;
-  var _isLoading = false;
   var filters;
+  final loadingNotifier = ValueNotifier<bool>(true);
 
   @override
   void initState() {
@@ -32,15 +32,11 @@ class _PlpState extends State<Plp> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+      loadingNotifier.value = true;
       Provider.of<ProductListViewModel>(context, listen: false)
           .fetchAndSetProducts()
           .then((_) {
-        setState(() {
-          _isLoading = false;
-        });
+        loadingNotifier.value = false;
       });
     }
     _isInit = false;
@@ -64,19 +60,8 @@ class _PlpState extends State<Plp> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> items = [];
-
     bool isFilterActive = filters.isNotEmpty;
-    if (_isLoading) {
-      items.add(const Text('Loading products...'));
-    } else {
-      final products = context.read<ProductListViewModel>();
-      for (ProductViewModel p in isFilterActive
-          ? products.filterByMultipleCriteria(filters)
-          : products.items) {
-        items.add(LineItem(productViewModel: p));
-      }
-    }
+    final products = context.read<ProductListViewModel>();
 
     final double spacing =
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
@@ -84,7 +69,6 @@ class _PlpState extends State<Plp> {
     return Scrollbar(
       child: CustomScrollView(
         slivers: [
-          const SliverGutter(),
           SliverMargin(
               margin: context.layout.breakpoint == LayoutBreakpoint.xs
                   ? EdgeInsets.symmetric(horizontal: (CustomTheme.spacePadding))
@@ -105,20 +89,38 @@ class _PlpState extends State<Plp> {
             margin: context.layout.breakpoint == LayoutBreakpoint.xs
                 ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
                 : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
-            sliver: SliverGrid(
-              delegate: SliverChildListDelegate.fixed(items),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: context.layout.value(
-                  xs: 2,
-                  sm: 3,
-                  md: 2,
-                  lg: 3,
-                  xl: 4,
-                ),
-                mainAxisSpacing: spacing * 2,
-                crossAxisSpacing: spacing,
-                childAspectRatio: 0.5,
-              ),
+            sliver: AnimatedBuilder(
+              animation: loadingNotifier,
+              builder: (context, child) {
+                if (loadingNotifier.value) {
+                  // Show the loading indicator
+                  return const SliverToBoxAdapter(
+                    child: Text('Loading products...'),
+                  );
+                } else {
+                  // Show the list of products
+                  final items = isFilterActive
+                      ? products.filterByMultipleCriteria(filters)
+                      : products.items;
+                  return SliverGrid(
+                    delegate: SliverChildListDelegate.fixed(items
+                        .map((p) => LineItem(productViewModel: p))
+                        .toList()),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: context.layout.value(
+                        xs: 2,
+                        sm: 3,
+                        md: 2,
+                        lg: 3,
+                        xl: 4,
+                      ),
+                      mainAxisSpacing: spacing * 2,
+                      crossAxisSpacing: spacing,
+                      childAspectRatio: 0.5,
+                    ),
+                  );
+                }
+              },
             ),
           ),
         ],
