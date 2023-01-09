@@ -21,7 +21,7 @@ class RequestListViewModel with ChangeNotifier {
   // @param previousRequests - the previous list of requests, if any.
   RequestListViewModel.fromAuth(
       String? token, String? userId, RequestListViewModel? previousRequests) {
-    _requests = previousRequests!._requests;
+    _requests = previousRequests == null ? [] : previousRequests._requests;
     _requestListService = RequestListService(token, userId);
   }
 

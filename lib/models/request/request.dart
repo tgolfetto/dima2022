@@ -7,7 +7,7 @@ class Request with ChangeNotifier {
   // id of the request
   String? id;
   // a User object representing the user who made the request
-  final User user;
+  late final User user;
   // a User object representing the clerk assigned to the request (null if not assigned)
   late final User? clerk;
   // a list of Product objects representing the products in the request
@@ -56,7 +56,9 @@ class Request with ChangeNotifier {
   Request.fromJson(MapEntry<String, dynamic> requestData)
       : id = requestData.key, // ['id'],
         user = User.fromJson(requestData.value['user']),
-        clerk = User.fromJson(requestData.value['clerk']),
+        clerk = requestData.value['clerk'] == null
+            ? null
+            : User.fromJson(requestData.value['clerk']),
         products = (requestData.value['products'] as Map<String, dynamic>)
             .entries
             .map((e) => Product.fromJson(e.key, e.value, null))

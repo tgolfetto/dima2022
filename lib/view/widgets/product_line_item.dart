@@ -1,17 +1,15 @@
-import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
-import 'package:dima2022/view_models/product_view_models/products_view_model.dart';
-import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
-import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:layout/layout.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import '../../models/request/request.dart';
-import '../../models/request/request_status.dart';
-import '../../models/user/user.dart';
+
 import '../../view_models/cart_view_models/cart_view_model.dart';
 import '../../view_models/content_view_models/content_view_model.dart';
+import '../../view_models/product_view_models/product_view_model.dart';
+import '../../view_models/product_view_models/products_view_model.dart';
+import '../../view_models/request_view_models/request_list_view_model.dart';
 import '../../view_models/request_view_models/request_view_model.dart';
+import '../../view_models/user_view_models/user_view_model.dart';
 import '../custom_theme.dart';
 import 'sidebar_widgets/pdp.dart';
 
@@ -32,42 +30,25 @@ class _LineItemState extends State<LineItem> {
     return ElevatedButton(
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
-        List<RequestViewModel> rqList = Provider.of<RequestListViewModel>(
-          context,
-          listen: false,
-        ).requests;
-
         ProductViewModel product = widget.productViewModel;
-        // Provider.of<ProductListViewModel>(
-        //   context,
-        //   listen: false,
-        // ).findById(productId);
-
-        String email = Provider.of<UserViewModel>(
+        UserViewModel userViewModel = Provider.of<UserViewModel>(
           context,
           listen: false,
-        ).email;
+        );
 
-        Request rq = Request(
-            id: '${rqList.length}',
-            user: User(email: email),
-            clerk: null,
-            products: [product.getProduct],
-            message: 'May i have this product',
-            status: RequestStatus.pending);
-
-        Provider.of<RequestViewModel>(
-          context,
-          listen: false,
-        ).createRequest(rq);
+        var newRequestViewModel = RequestViewModel();
+        newRequestViewModel.createRequest(
+          userViewModel.user,
+          product.getProduct,
+        );
+        // newRequestViewModel.setUser(userViewModel);
+        // newRequestViewModel.addProduct(product);
+        newRequestViewModel.updateMessage('May i have this product');
 
         Provider.of<RequestListViewModel>(
           context,
           listen: false,
-        ).addRequest(Provider.of<RequestViewModel>(
-          context,
-          listen: false,
-        ));
+        ).addRequest(newRequestViewModel);
 
         ///TODO: ?????
       },

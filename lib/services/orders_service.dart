@@ -33,7 +33,7 @@ class OrdersService {
     final url = Uri.https(baseUrl, _path, _params);
     try {
       final response = await http.get(url);
-      //print(json.decode(response.body));
+
       final List<OrderItem> loadedOrders = [];
       if (response.body == 'null') {
         return loadedOrders;

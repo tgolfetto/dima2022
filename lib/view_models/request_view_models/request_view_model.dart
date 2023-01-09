@@ -1,3 +1,5 @@
+import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
+import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../models/product/product.dart';
@@ -31,6 +33,10 @@ class RequestViewModel with ChangeNotifier {
   String get message => _request.message!;
   RequestStatus get status => _request.status;
 
+  void createRequest(User user, Product product) {
+    _request = Request(user: user, products: [product]);
+  }
+
   // @requires newStatus != null
   // @ensure request.status == newStatus
   void updateStatus(RequestStatus newStatus) {
@@ -41,14 +47,19 @@ class RequestViewModel with ChangeNotifier {
   // @requires newClerk != null
   // @ensure request.clerk == newClerk
   void assignClerk(User newClerk) {
-    _request.clerk = newClerk;
+    _request.assignClerk(newClerk);
     notifyListeners();
   }
 
-  // @requires request != null
-  // @ensure _request == request
-  void createRequest(Request request) {
-    _request = request;
+  void setUser(UserViewModel user) {
+    _request.user = user.user;
+    notifyListeners();
+  }
+
+  // @requires product != null
+  // @ensure the product will be added to the product list of the request
+  void addProduct(ProductViewModel product) {
+    _request.products.add(product.getProduct);
     notifyListeners();
   }
 

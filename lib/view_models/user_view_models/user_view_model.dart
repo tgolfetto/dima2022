@@ -15,6 +15,7 @@ class UserViewModel with ChangeNotifier {
     _userService = UserService(token, userId);
   }
 
+  User get user => _user;
   String get id => _user.id;
   String get name => _user.name;
   String get email => _user.email;

@@ -29,15 +29,21 @@ class RequestListService {
     };
     final url = Uri.https(baseUrl, '/requests/$_userId.json', _params);
     final response = await http.get(url);
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body) as Map<String, dynamic>;
-      final requests = data.entries.map(
+    try {
+      final List<Request> loadedRequests = [];
+      if (response.body == 'null') {
+        return loadedRequests;
+      }
+      final extractedRequests =
+          json.decode(response.body) as Map<String, dynamic>;
+
+      final requests = extractedRequests.entries.map(
         (requestData) {
           return Request.fromJson(requestData);
         },
       ).toList();
       return requests;
-    } else {
+    } catch (error) {
       throw HttpException('Failed to load requests');
     }
   }
