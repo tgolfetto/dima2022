@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:dima2022/models/product/product_type.dart';
 import 'package:http/http.dart' as http;
+import '../models/product/category.dart';
 import '../models/request/request.dart';
 
 import '../utils/constants.dart';
@@ -18,7 +20,7 @@ class RequestListService {
   // @param userId the ID of the user
   RequestListService(this._authToken, this._userId);
 
-  // Fetch a list of requests from the database
+  // Fetch a list of requests of the logged user from the database
   // @return a list of Request objects
   // @throws HttpException if the request fails
   // @requires _authToken != null
@@ -42,6 +44,33 @@ class RequestListService {
           return Request.fromJson(requestData);
         },
       ).toList();
+      return requests;
+    } catch (error) {
+      throw HttpException('Failed to load requests');
+    }
+  }
+
+  Future<List<Request>> fetchAllRequests() async {
+    final _params = {
+      'auth': _authToken,
+    };
+    final url = Uri.https(baseUrl, '/requests.json', _params);
+    final response = await http.get(url);
+
+    try {
+      List<Request> requests = [];
+      var uRequests;
+      final requestsMap = json.decode(response.body) as Map<String, dynamic>;
+      for (final ur in requestsMap.values) {
+        var userRequests = ur as Map<String, dynamic>;
+        uRequests = userRequests.entries.map(
+          (requestData) {
+            return Request.fromJson(requestData);
+          },
+        ).toList();
+        requests.addAll(uRequests);
+      }
+
       return requests;
     } catch (error) {
       throw HttpException('Failed to load requests');

@@ -14,6 +14,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/size_config.dart';
 import '../view_models/content_view_models/content_view_model.dart';
 import '../view_models/position_view_models/position_view_model.dart';
 import '../view_models/user_view_models/user_view_model.dart';
@@ -131,6 +132,11 @@ class HomePageState extends State<HomePage> {
                 Container(
                   color: CustomTheme.secondaryBackgroundColor,
                 ),
+
+                // Stack(
+                //   children: [
+                //     LayoutBuilder(builder: (context, constraints) {
+                //       return
                 Column(
                   children: [
                     WindowBar(userViewModel: userViewModel),
@@ -158,6 +164,16 @@ class HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
+                // }),
+                //     Positioned(
+                //       top: 0,
+                //       left: 0,
+                //       right: 0,
+                //       child: WindowBar(userViewModel: userViewModel),
+                //     ),
+                //   ],
+                // ),
+
                 // Add the vignette container here
                 if (context.layout.breakpoint < LayoutBreakpoint.md)
                   Positioned(

@@ -27,10 +27,9 @@ class _LineItemState extends State<LineItem> {
   int productId = 0;
 
   Widget _requestButton(ProductViewModel product) {
-    return ElevatedButton(
+    return TextButton(
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
-        ProductViewModel product = widget.productViewModel;
         UserViewModel userViewModel = Provider.of<UserViewModel>(
           context,
           listen: false,
@@ -70,7 +69,7 @@ class _LineItemState extends State<LineItem> {
   }
 
   Widget _addToCartButton(ProductViewModel productViewModel) {
-    return ElevatedButton(
+    return TextButton(
       style: CustomTheme.buttonStyleFill,
 
       onPressed: () => {

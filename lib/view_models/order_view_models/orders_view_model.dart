@@ -121,9 +121,3 @@ class OrdersViewModel extends ChangeNotifier {
     notifyListeners();
   }
 }
-
-// class OrdersPerMonth {
-//   final String month;
-//   final double amount;
-//   OrdersPerMonth(this.month, this.amount);
-//}

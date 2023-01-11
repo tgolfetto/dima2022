@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/content_view_models/content_view_model.dart';
+import '../../../../view_models/user_view_models/auth_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
 import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';
@@ -373,6 +374,37 @@ class _UserInputFormState extends State<UserInputForm> {
                                                     }
                                                     return null;
                                                   },
+                                                ),
+                                                const Gutter(),
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.of(context)
+                                                        .pushReplacementNamed(
+                                                            '/');
+                                                    Provider.of<AuthViewModel>(
+                                                            context,
+                                                            listen: false)
+                                                        .logout();
+                                                  },
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: const [
+                                                      Icon(
+                                                        Icons.exit_to_app,
+                                                        color:
+                                                            Color(0xffb3001e),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Text(
+                                                        "Logout",
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xffb3001e),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),

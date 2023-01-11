@@ -71,20 +71,21 @@ class _PlpState extends State<Plp> {
       child: CustomScrollView(
         slivers: [
           SliverMargin(
-              margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                  ? EdgeInsets.symmetric(horizontal: (CustomTheme.spacePadding))
-                  : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
-              sliver: SliverToBoxAdapter(
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Product list',
-                        style: CustomTheme.headingStyle,
-                      ),
-                      _filterButton(context)
-                    ]),
-              )),
+            margin: context.layout.breakpoint == LayoutBreakpoint.xs
+                ? EdgeInsets.symmetric(horizontal: (CustomTheme.spacePadding))
+                : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
+            sliver: SliverToBoxAdapter(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Product list',
+                      style: CustomTheme.headingStyle,
+                    ),
+                    _filterButton(context)
+                  ]),
+            ),
+          ),
           const SliverGutter(),
           SliverMargin(
             margin: context.layout.breakpoint == LayoutBreakpoint.xs

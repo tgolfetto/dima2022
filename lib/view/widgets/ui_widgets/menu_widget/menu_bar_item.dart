@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../view_models/user_view_models/user_view_model.dart';
 
 List<MenuBarItem> items = [
   MenuBarItem(
@@ -32,6 +35,33 @@ List<MenuBarItem> items = [
       textAlign: TextAlign.center,
     ),
     selectedColor: Colors.teal,
+  ),
+];
+
+List<MenuBarItem> clerkItems = [
+  MenuBarItem(
+    icon: const Icon(Icons.home),
+    title: const Text(
+      "Home",
+      textAlign: TextAlign.center,
+    ),
+    selectedColor: Colors.purple,
+  ),
+  MenuBarItem(
+    icon: const Icon(Icons.qr_code_scanner),
+    title: const Text(
+      "Scan",
+      textAlign: TextAlign.center,
+    ),
+    selectedColor: Colors.pink,
+  ),
+  MenuBarItem(
+    icon: const Icon(Icons.notifications_none),
+    title: const Text(
+      "Notifications",
+      textAlign: TextAlign.center,
+    ),
+    selectedColor: Colors.orange,
   ),
 ];
 

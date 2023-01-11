@@ -15,6 +15,8 @@ class UserViewModel with ChangeNotifier {
     _userService = UserService(token, userId);
   }
 
+  UserViewModel.fromExistingUser(this._user);
+
   User get user => _user;
   String get id => _user.id;
   String get name => _user.name;
@@ -28,6 +30,16 @@ class UserViewModel with ChangeNotifier {
       _user.shoeSize != 0 ? _user.shoeSize.toString() : '';
   List<String> get favoriteBrands => _user.favoriteBrands;
   List<ItemCategory> get favoriteCategories => _user.favoriteCategories;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserViewModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
 
   Future<void> saveChanges() async {
     _user = await _userService.updateUser(_user);

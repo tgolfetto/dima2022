@@ -192,7 +192,7 @@ class _OrdersPageState extends State<OrdersPage> {
             childCount: group.value.length,
           ),
         ),
-      )
+      ),
     ];
   }
 

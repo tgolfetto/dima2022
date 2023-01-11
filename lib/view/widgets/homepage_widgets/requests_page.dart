@@ -1,3 +1,6 @@
+import 'package:dima2022/view/widgets/ui_widgets/appbar_widget/user_avatar.dart';
+import 'package:dima2022/view_models/request_view_models/request_view_model.dart';
+import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
@@ -22,10 +25,15 @@ class RequestPage extends StatefulWidget {
 
 class _RequestPageState extends State<RequestPage> {
   late Future _requestsFuture;
+  late bool isClerk;
 
   Future _obtainRequestsFuture() {
-    return Provider.of<RequestListViewModel>(context, listen: false)
-        .fetchRequests();
+    isClerk = Provider.of<UserViewModel>(context, listen: false).isClerk;
+    return isClerk
+        ? Provider.of<RequestListViewModel>(context, listen: false)
+            .fetchAllRequests()
+        : Provider.of<RequestListViewModel>(context, listen: false)
+            .fetchRequests();
   }
 
   @override
@@ -40,78 +48,72 @@ class _RequestPageState extends State<RequestPage> {
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
     return FutureBuilder(
-        future: _requestsFuture,
-        builder: (ctx, dataSnapshot) {
-          if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: AnimatedCircularProgressIndicator(),
-            );
-          }
-          if (dataSnapshot.error != null) {
-            // ERROR HANDLING
-            return const Center(
-              child: Text('An error occured!'),
-            );
-          } else {
-            return Consumer<RequestListViewModel>(
-              builder: (context, requestsData, child) => CustomScrollView(
-                slivers: [
-                  const SliverGutter(),
-                  SliverMargin(
-                      margin: context.layout.breakpoint == LayoutBreakpoint.xs
-                          ? EdgeInsets.symmetric(
-                              horizontal: CustomTheme.spacePadding)
-                          : EdgeInsets.symmetric(
-                              horizontal: CustomTheme.mediumPadding),
-                      sliver: SliverToBoxAdapter(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'My Requests',
-                              style: CustomTheme.headingStyle,
-                            ),
-                          ],
-                        ),
-                      )),
-                  const SliverGutter(),
-                  requestsData.requests.isNotEmpty
-                      ? SliverMargin(
-                          margin:
-                              context.layout.breakpoint == LayoutBreakpoint.xs
-                                  ? EdgeInsets.symmetric(
-                                      horizontal: CustomTheme.spacePadding)
-                                  : EdgeInsets.symmetric(
-                                      horizontal: CustomTheme.mediumPadding),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) => RequestLineItem(
-                                requestViewModel: requestsData.requests[index],
-                              ),
-                              childCount: requestsData.requests.length,
-                            ),
+      future: _requestsFuture,
+      builder: (ctx, dataSnapshot) {
+        if (dataSnapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: AnimatedCircularProgressIndicator(),
+          );
+        }
+        if (dataSnapshot.error != null) {
+          // ERROR HANDLING
+          return const Center(
+            child: Text('An error occured!'),
+          );
+        } else {
+          return Consumer<RequestListViewModel>(
+            builder: (context, requestsData, child) => CustomScrollView(
+              slivers: [
+                const SliverGutter(),
+                SliverMargin(
+                    margin: context.layout.breakpoint == LayoutBreakpoint.xs
+                        ? EdgeInsets.symmetric(
+                            horizontal: CustomTheme.spacePadding)
+                        : EdgeInsets.symmetric(
+                            horizontal: CustomTheme.mediumPadding),
+                    sliver: SliverToBoxAdapter(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'My Requests',
+                            style: CustomTheme.headingStyle,
                           ),
-                        )
-                      : SliverToBoxAdapter(
-                          child: Column(
-                            children: [
-                              CardHeader(
-                                formKey: GlobalKey(),
-                                pageController: PageController(),
-                                nextButton: false,
-                                textTitle: 'You do not have any requests yet.',
-                                textSubtitle: 'You currently have no requests.',
-                                backButton: false,
-                              ),
-                              Lottie.asset('../assets/animated/no_orders.json'),
-                            ],
-                          ),
+                        ],
+                      ),
+                    )),
+                const SliverGutter(),
+                if (requestsData.requests.isNotEmpty)
+                  if (isClerk)
+                    for (var group
+                        in groupByUser(requestsData.requests).entries)
+                      ...getUserGroup(group, spacing, requestsData)
+                  else
+                    getRequestLineItems(requestsData.requests)
+                else
+                  SliverToBoxAdapter(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CardHeader(
+                          formKey: GlobalKey(),
+                          pageController: PageController(),
+                          nextButton: false,
+                          textTitle: 'You do not have any requests yet.',
+                          textSubtitle: 'You currently have no requests.',
+                          backButton: false,
                         ),
-                ],
-              ),
-            );
-          }
-        });
+                        Lottie.asset('../assets/animated/no_orders.json'),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          );
+        }
+      },
+    );
 
     // List<RequestViewModel> rqList = Provider.of<RequestListViewModel>(
     //   context,
@@ -139,5 +141,87 @@ class _RequestPageState extends State<RequestPage> {
     //     children: items,
     //   ),
     // );
+  }
+
+  List<SliverMargin> getUserGroup(
+      MapEntry<UserViewModel, List<RequestViewModel>> group,
+      spacing,
+      RequestListViewModel requestData) {
+    return [
+      SliverMargin(
+        margin: context.layout.breakpoint == LayoutBreakpoint.xs
+            ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
+            : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
+        sliver: SliverToBoxAdapter(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: CustomTheme.smallPadding),
+            child: Column(
+              children: [
+                const Gutter(),
+                const Gutter(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UserAvatar(
+                          avatarUrl: group.key.profileImageUrl,
+                          onPressed: () {},
+                        ),
+                        Text(
+                          group.key.name,
+                          style: CustomTheme.headingStyle,
+                        ),
+                      ],
+                    ),
+                    Text(
+                      ' #Requests: ${group.value.length}',
+                      style: CustomTheme.bodyStyle,
+                    ),
+                  ],
+                ),
+                const Divider(),
+              ],
+            ),
+          ),
+        ),
+      ),
+      getRequestLineItems(group.value),
+    ];
+  }
+
+  SliverMargin getRequestLineItems(requestsListData) {
+    return SliverMargin(
+      margin: context.layout.breakpoint == LayoutBreakpoint.xs
+          ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
+          : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (context, index) => RequestLineItem(
+            requestViewModel: requestsListData[index],
+          ),
+          childCount: requestsListData.length,
+        ),
+      ),
+    );
+  }
+
+  // helper function to group the items by user
+  Map<UserViewModel, List<RequestViewModel>> groupByUser(
+      List<RequestViewModel> items) {
+    var groups = <UserViewModel, List<RequestViewModel>>{};
+    for (var item in items) {
+      UserViewModel user = UserViewModel.fromExistingUser(item.user);
+
+      if (!groups.containsKey(user)) {
+        groups[user] = [item];
+      } else {
+        groups[user]?.add(item);
+      }
+    }
+    return groups;
   }
 }

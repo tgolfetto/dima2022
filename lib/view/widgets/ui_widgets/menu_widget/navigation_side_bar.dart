@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/content_view_models/content_view_model.dart';
+import '../../../../view_models/user_view_models/user_view_model.dart';
 import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';
 
@@ -18,7 +19,9 @@ class NavigationSideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return MenuSide(
       currentIndex: selectedIndex,
-      items: items,
+      items: Provider.of<UserViewModel>(context, listen: false).isClerk
+          ? clerkItems
+          : items,
     );
   }
 }

@@ -85,15 +85,12 @@ class _PdpState extends State<Pdp> {
       context,
       listen: false,
     ).findById(content.productId);
-    return Scaffold(
-        body: Column(
+    return Column(
       children: [
         Container(alignment: Alignment.centerLeft, child: _backButton(content)),
         Expanded(
           child: SingleChildScrollView(
             child: Expanded(
-                child: Padding(
-              padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -160,10 +157,10 @@ class _PdpState extends State<Pdp> {
                   )
                 ],
               ),
-            )),
+            ),
           ),
         ),
       ],
-    ));
+    );
   }
 }

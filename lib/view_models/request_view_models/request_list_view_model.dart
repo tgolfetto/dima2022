@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../../models/product/product_type.dart';
 import 'request_view_model.dart';
 import '../../services/requests_service.dart';
 
@@ -37,6 +38,36 @@ class RequestListViewModel with ChangeNotifier {
   Future<void> fetchRequests() async {
     _requests = await _requestListService.fetchRequests();
     notifyListeners();
+  }
+
+  Future<void> fetchAllRequests() async {
+    _requests = await _requestListService.fetchAllRequests();
+    notifyListeners();
+  }
+
+  // Future<void> fetchAllRequestsByType() async {
+  //   _requests = await _requestListService.fetchAllRequests();
+
+  //   final requestsByCategory = <ProductType, List<Request>>{};
+  //   for (final request in _requests) {
+  //     for (final product in request.products) {
+  //       if (!requestsByCategory.containsKey(product.type)) {
+  //         requestsByCategory[product.type!] = [];
+  //       }
+  //       requestsByCategory[product.type]!.add(request);
+  //     }
+  //   }
+  //   notifyListeners();
+  // }
+
+  Map<String, List<RequestViewModel>> groupRequestsByUser() {
+    final result = <String, List<RequestViewModel>>{};
+    for (var r in requests) {
+      final user = r.user;
+      result[user.id] ??= [];
+      result[user.id]?.add(r);
+    }
+    return result;
   }
 
   // Returns request view model with the given id

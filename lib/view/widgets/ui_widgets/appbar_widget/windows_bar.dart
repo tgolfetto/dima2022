@@ -52,7 +52,7 @@ class _WindowBarState extends State<WindowBar> {
                   itemPadding: EdgeInsets.symmetric(
                       vertical: marginHeight, horizontal: marginWidth),
                   radius: BorderRadius.circular(20.0),
-                  opacity: 0.4,
+                  opacity: 0.75,
                   enableShadow: false,
                   enableBorder: true,
                   child: SizedBox(
