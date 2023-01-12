@@ -114,33 +114,6 @@ class _RequestPageState extends State<RequestPage> {
         }
       },
     );
-
-    // List<RequestViewModel> rqList = Provider.of<RequestListViewModel>(
-    //   context,
-    //   listen: false,
-    // ).requests;
-    // List<Widget> items = [];
-    // for (RequestViewModel rq in rqList) {
-    //   items.add(RequestLineItem(
-    //     rq: rq.request,
-    //   ));
-    // }
-    // items.add(RequestLineItem(
-    //     rq: Request(
-    //         id: '1001',
-    //         user: User(email: 'thomas@email.it'),
-    //         clerk: null,
-    //         message: 'Please give me this item',
-    //         products: [
-    //           Product(title: 'Tshirt grigia', sizes: [44, 46])
-    //         ],
-    //         status: RequestStatus.pending)));
-    // return Container(
-    //   color: CustomTheme.secondaryBackgroundColor,
-    //   child: ListView(
-    //     children: items,
-    //   ),
-    // );
   }
 
   List<SliverMargin> getUserGroup(
@@ -157,32 +130,68 @@ class _RequestPageState extends State<RequestPage> {
             padding: EdgeInsets.symmetric(vertical: CustomTheme.smallPadding),
             child: Column(
               children: [
-                const Gutter(),
-                const Gutter(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        UserAvatar(
-                          avatarUrl: group.key.profileImageUrl,
-                          onPressed: () {},
-                        ),
-                        Text(
-                          group.key.name,
-                          style: CustomTheme.headingStyle,
-                        ),
-                      ],
-                    ),
-                    Text(
-                      ' #Requests: ${group.value.length}',
-                      style: CustomTheme.bodyStyle,
-                    ),
-                  ],
+                ExpansionTile(
+                  leading: UserAvatar(
+                    avatarUrl: group.key.profileImageUrl,
+                    onPressed: () {},
+                  ),
+                  trailing: Text(
+                    ' #Requests: ${group.value.length}',
+                    style: CustomTheme.bodyStyle,
+                  ),
+                  title: Text(
+                    group.key.name,
+                    style: CustomTheme.headingStyle,
+                  ),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${group.key.email}',
+                        style: CustomTheme.bodyStyle,
+                      ),
+                      const Gutter(),
+                      Row(
+                        children: [
+                          Text(
+                            'Size: ${group.key.size}',
+                            style: CustomTheme.bodyStyle,
+                          ),
+                          const Gutter(),
+                          Text(
+                            'Shoe Size: ${group.key.shoeSizeString}',
+                            style: CustomTheme.bodyStyle,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   mainAxisSize: MainAxisSize.max,
+                //   children: [
+                //     Row(
+                //       mainAxisAlignment: MainAxisAlignment.start,
+                //       mainAxisSize: MainAxisSize.min,
+                //       children: [
+                //         UserAvatar(
+                //           avatarUrl: group.key.profileImageUrl,
+                //           onPressed: () {},
+                //         ),
+                //         Text(
+                //           group.key.name,
+                //           style: CustomTheme.headingStyle,
+                //         ),
+                //       ],
+                //     ),
+                //     Text(
+                //       ' #Requests: ${group.value.length}',
+                //       style: CustomTheme.bodyStyle,
+                //     ),
+                //   ],
+                // ),
                 const Divider(),
               ],
             ),

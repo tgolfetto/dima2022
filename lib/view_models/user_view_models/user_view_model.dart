@@ -51,6 +51,11 @@ class UserViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getUserById(String id) async {
+    _user = await _userService.getUserById(id);
+    notifyListeners();
+  }
+
   set id(String newId) {
     _user.id = newId;
     notifyListeners();

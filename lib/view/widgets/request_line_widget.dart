@@ -1,5 +1,7 @@
+import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+import 'package:provider/provider.dart';
 
 import '../../view_models/request_view_models/request_view_model.dart';
 import '../custom_theme.dart';
@@ -14,9 +16,12 @@ class RequestLineItem extends StatefulWidget {
 }
 
 class _RequestLineItemState extends State<RequestLineItem> {
+  var check = false;
+
   @override
   Widget build(BuildContext context) {
     RequestViewModel request = widget.requestViewModel;
+    check = request.clerk != null ? true : false;
     return Margin(
         margin: EdgeInsets.all(CustomTheme.mediumPadding),
         child: Container(
@@ -39,7 +44,21 @@ class _RequestLineItemState extends State<RequestLineItem> {
                   Text(
                     'Product: ${request.products[0].title} - Size: ${request.products[0].sizes}',
                     style: CustomTheme.bodySecondStyle,
-                  )
+                  ),
+                  Checkbox(
+                      value: check,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          check = value!;
+                        });
+
+                        request.assignClerk(
+                          check
+                              ? Provider.of<UserViewModel>(context,
+                                  listen: false)
+                              : null,
+                        );
+                      }),
                 ],
               )),
         ));

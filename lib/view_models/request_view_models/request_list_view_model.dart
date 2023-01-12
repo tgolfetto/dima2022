@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import '../../models/product/product_type.dart';
+import '../../services/request_service.dart';
 import 'request_view_model.dart';
 import '../../services/requests_service.dart';
 
@@ -24,6 +25,9 @@ class RequestListViewModel with ChangeNotifier {
       String? token, String? userId, RequestListViewModel? previousRequests) {
     _requests = previousRequests == null ? [] : previousRequests._requests;
     _requestListService = RequestListService(token, userId);
+
+    RequestService.authToken = token;
+    RequestService.userId = userId;
   }
 
   // Returns a list of request view models based on the list of requests.

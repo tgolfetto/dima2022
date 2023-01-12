@@ -96,4 +96,28 @@ class UserService {
     User u = User.fromJson(userData);
     return u;
   }
+
+  /*
+  Function to get a single user from the database passing the user
+  @param id the id of the user to be retrieved
+  @require userId != null
+  @ensure the user is retrieved from the database
+  */
+  Future<User> getUserById(String id) async {
+    final _params = {
+      'auth': _authToken,
+    };
+    final url = Uri.https(baseUrl, '/users/${id}.json', _params);
+    final http.Response response = await http.get(
+      url,
+    );
+
+    if (response.statusCode != 200 && response.statusCode != 204) {
+      throw HttpException('Failed to get user');
+    }
+
+    final Map<String, dynamic> userData = json.decode(response.body);
+    User u = User.fromJson(userData);
+    return u;
+  }
 }

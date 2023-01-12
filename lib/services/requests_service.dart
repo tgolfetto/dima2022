@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dima2022/models/product/product_type.dart';
+import 'package:dima2022/services/user_service.dart';
 import 'package:http/http.dart' as http;
 import '../models/product/category.dart';
 import '../models/request/request.dart';
@@ -98,23 +99,23 @@ class RequestListService {
     }
   }
 
-  // Update an existing request in the database
-  // @param request: the request to be updated in the database
-  // @require request != null
-  // @ensure an existing request is updated in the database
-  Future<void> updateRequest(Request request) async {
-    final _params = {
-      'auth': _authToken,
-    };
-    final url = Uri.https(baseUrl, '/requests/$_userId.json', _params);
-    final response = await http.put(
-      url,
-      body: json.encode(request.toJson()),
-    );
-    if (response.statusCode != 200) {
-      throw Exception('Failed to update cart');
-    }
-  }
+  // // Update an existing request in the database
+  // // @param request: the request to be updated in the database
+  // // @require request != null
+  // // @ensure an existing request is updated in the database
+  // Future<void> updateRequest(Request request) async {
+  //   final _params = {
+  //     'auth': _authToken,
+  //   };
+  //   final url = Uri.https(baseUrl, '/requests/$_userId.json', _params);
+  //   final response = await http.put(
+  //     url,
+  //     body: json.encode(request.toJson()),
+  //   );
+  //   if (response.statusCode != 200) {
+  //     throw Exception('Failed to update cart');
+  //   }
+  // }
 
   // @param requestList: a list of requests to be updated in the database
   // @param _request: the request to be removed from the list

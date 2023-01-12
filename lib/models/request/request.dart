@@ -9,13 +9,13 @@ class Request with ChangeNotifier {
   // a User object representing the user who made the request
   late final User user;
   // a User object representing the clerk assigned to the request (null if not assigned)
-  late final User? clerk;
+  late User? clerk;
   // a list of Product objects representing the products in the request
   final List<Product> products;
   // a string containing any additional message from the user (null if not provided)
   late String? message;
   // a RequestStatus object representing the current status of the request
-  late final RequestStatus status;
+  late RequestStatus status;
 
   Request({
     this.id,
@@ -85,6 +85,11 @@ class Request with ChangeNotifier {
   */
   void assignClerk(User newClerk) {
     clerk = newClerk;
+    notifyListeners();
+  }
+
+  void unassignClerk() {
+    clerk = null;
     notifyListeners();
   }
 }

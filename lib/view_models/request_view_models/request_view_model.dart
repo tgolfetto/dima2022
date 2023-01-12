@@ -1,3 +1,4 @@
+import 'package:dima2022/services/request_service.dart';
 import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
 import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/foundation.dart';
@@ -10,12 +11,15 @@ import '../../models/request/request.dart';
 class RequestViewModel with ChangeNotifier {
   late final Request _request;
 
+  late final RequestService _requestService;
+
   RequestViewModel();
 
   // Constructs a new RequestViewModel object from an existing Request object.
   // @param existingRequest: the Request object to be converted into a RequestViewModel object.
   RequestViewModel.fromExistingRequest(Request existingRequest) {
     _request = existingRequest;
+    _requestService = RequestService();
   }
 
   //@return the Request object associated with this RequestViewModel.
@@ -28,7 +32,7 @@ class RequestViewModel with ChangeNotifier {
   User get user => _request.user;
 
   //@return the clerk associated with the Request object associated with this RequestViewModel.
-  User get clerk => _request.clerk!;
+  User? get clerk => _request.clerk;
   List<Product> get products => _request.products;
   String get message => _request.message!;
   RequestStatus get status => _request.status;
@@ -41,13 +45,19 @@ class RequestViewModel with ChangeNotifier {
   // @ensure request.status == newStatus
   void updateStatus(RequestStatus newStatus) {
     _request.updateStatus(newStatus);
+    _requestService.updateRequest(_request);
     notifyListeners();
   }
 
   // @requires newClerk != null
   // @ensure request.clerk == newClerk
-  void assignClerk(User newClerk) {
-    _request.assignClerk(newClerk);
+  void assignClerk(UserViewModel? newClerk) {
+    newClerk != null
+        ? _request.assignClerk(newClerk.user)
+        : _request.unassignClerk();
+
+    _requestService.updateRequest(_request);
+
     notifyListeners();
   }
 
