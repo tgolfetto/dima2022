@@ -1,3 +1,5 @@
+import 'package:dima2022/models/request/request_status.dart';
+import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../models/product/product_type.dart';
@@ -37,6 +39,21 @@ class RequestListViewModel with ChangeNotifier {
           (product) => RequestViewModel.fromExistingRequest(product))
       .toList();
 
+  List<RequestViewModel> get pendingRequests => _requests
+      .map<RequestViewModel>(
+          (product) => RequestViewModel.fromExistingRequest(product))
+      .where((element) => element.status == RequestStatus.pending)
+      .toList();
+
+  List<RequestViewModel> getRequestsAssignedTo(UserViewModel user) {
+    return _requests
+        .map<RequestViewModel>(
+            (product) => RequestViewModel.fromExistingRequest(product))
+        .where(
+            (element) => element.clerk != null && element.clerk!.id == user.id)
+        .toList();
+  }
+
   // Requests the list of requests from the RequestListService and updates the list of requests.
   // @ensure requests will be updated with the fetched requests.
   Future<void> fetchRequests() async {
@@ -48,21 +65,6 @@ class RequestListViewModel with ChangeNotifier {
     _requests = await _requestListService.fetchAllRequests();
     notifyListeners();
   }
-
-  // Future<void> fetchAllRequestsByType() async {
-  //   _requests = await _requestListService.fetchAllRequests();
-
-  //   final requestsByCategory = <ProductType, List<Request>>{};
-  //   for (final request in _requests) {
-  //     for (final product in request.products) {
-  //       if (!requestsByCategory.containsKey(product.type)) {
-  //         requestsByCategory[product.type!] = [];
-  //       }
-  //       requestsByCategory[product.type]!.add(request);
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
 
   Map<String, List<RequestViewModel>> groupRequestsByUser() {
     final result = <String, List<RequestViewModel>>{};

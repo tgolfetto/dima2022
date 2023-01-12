@@ -1,4 +1,3 @@
-import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/widgets/ui_widgets/appbar_widget/user_avatar.dart';
 import 'package:dima2022/view_models/request_view_models/request_view_model.dart';
 import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
@@ -7,29 +6,31 @@ import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import '../../../view_models/request_view_models/request_list_view_model.dart';
+import '../../../../models/request/request_status.dart';
+import '../../../../view_models/request_view_models/request_list_view_model.dart';
+import '../../../custom_theme.dart';
+import '../../common/animated_circular_progress_indicator.dart';
+import '../../request_line_widget.dart';
+import '../profile_side/user_input_widget.dart';
 
-import '../../custom_theme.dart';
-import '../common/animated_circular_progress_indicator.dart';
-import '../request_line_widget.dart';
-import '../sidebar_widgets/profile_side/user_input_widget.dart';
-
-class RequestPage extends StatefulWidget {
+class RequestSide extends StatefulWidget {
   static const routeName = '/requests';
-  static const pageIndex = 2;
+  static const pageIndex = 9;
 
-  const RequestPage({super.key});
+  const RequestSide({super.key});
 
   @override
-  State<RequestPage> createState() => _RequestPageState();
+  State<RequestSide> createState() => _RequestSideState();
 }
 
-class _RequestPageState extends State<RequestPage> {
+class _RequestSideState extends State<RequestSide> {
   late Future _requestsFuture;
   late bool isClerk;
+  late UserViewModel userViewModel;
 
   Future _obtainRequestsFuture() {
-    isClerk = Provider.of<UserViewModel>(context, listen: false).isClerk;
+    userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    isClerk = userViewModel.isClerk;
     return isClerk
         ? Provider.of<RequestListViewModel>(context, listen: false)
             .fetchAllRequests()
@@ -77,20 +78,24 @@ class _RequestPageState extends State<RequestPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            isClerk ? 'Outstanding requests' : 'My Requests',
+                            'My Requests',
                             style: CustomTheme.headingStyle,
                           ),
                         ],
                       ),
                     )),
                 const SliverGutter(),
-                if (requestsData.requests.isNotEmpty)
+                if (requestsData
+                    .getRequestsAssignedTo(userViewModel)
+                    .isNotEmpty)
                   if (isClerk)
-                    for (var group
-                        in groupByUser(requestsData.pendingRequests).entries)
-                      ...getUserGroup(group, spacing)
+                    for (var group in groupByRequestStatus(
+                            requestsData.getRequestsAssignedTo(userViewModel))
+                        .entries)
+                      ...getUserGroup(group, spacing, requestsData)
                   else
-                    getRequestLineItems(requestsData.requests)
+                    getRequestLineItems(
+                        requestsData.getRequestsAssignedTo(userViewModel))
                 else
                   SliverToBoxAdapter(
                     child: Column(
@@ -118,9 +123,9 @@ class _RequestPageState extends State<RequestPage> {
   }
 
   List<SliverMargin> getUserGroup(
-    MapEntry<UserViewModel, List<RequestViewModel>> group,
-    spacing,
-  ) {
+      MapEntry<RequestStatus, List<RequestViewModel>> group,
+      spacing,
+      RequestListViewModel requestData) {
     return [
       SliverMargin(
         margin: context.layout.breakpoint == LayoutBreakpoint.xs
@@ -132,42 +137,43 @@ class _RequestPageState extends State<RequestPage> {
             child: Column(
               children: [
                 ExpansionTile(
-                  leading: UserAvatar(
-                    avatarUrl: group.key.profileImageUrl,
-                    onPressed: () {},
+                  leading: CircleAvatar(
+                    backgroundColor: CustomTheme.backgroundColor,
+                    child: Text(
+                      '${group.value.length}',
+                      style: CustomTheme.bodyStyle,
+                    ),
                   ),
-                  trailing: Text(
-                    ' #Requests: ${group.value.length}',
-                    style: CustomTheme.bodyStyle,
-                  ),
+
                   title: Text(
-                    group.key.name,
+                    group.key.name[0].toUpperCase() +
+                        group.key.name.substring(1),
                     style: CustomTheme.headingStyle,
                   ),
-                  subtitle: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${group.key.email}',
-                        style: CustomTheme.bodyStyle,
-                      ),
-                      SizedBox(height: getProportionateScreenHeight(10)),
-                      Row(
-                        children: [
-                          Text(
-                            'Size: ${group.key.size}',
-                            style: CustomTheme.bodyStyle.copyWith(fontSize: 14),
-                          ),
-                          const Gutter(),
-                          Text(
-                            'Shoe Size: ${group.key.shoeSizeString}',
-                            style: CustomTheme.bodyStyle.copyWith(fontSize: 14),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  // subtitle: Column(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   crossAxisAlignment: CrossAxisAlignment.start,
+                  //   children: [
+                  //     Text(
+                  //       '${group.key.email}',
+                  //       style: CustomTheme.bodyStyle,
+                  //     ),
+                  //     const Gutter(),
+                  //     Row(
+                  //       children: [
+                  //         Text(
+                  //           'Size: ${group.key.size}',
+                  //           style: CustomTheme.bodyStyle,
+                  //         ),
+                  //         const Gutter(),
+                  //         Text(
+                  //           'Shoe Size: ${group.key.shoeSizeString}',
+                  //           style: CustomTheme.bodyStyle,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
                 ),
                 const Divider(),
               ],
@@ -195,17 +201,15 @@ class _RequestPageState extends State<RequestPage> {
     );
   }
 
-  // helper function to group the items by user
-  Map<UserViewModel, List<RequestViewModel>> groupByUser(
+  Map<RequestStatus, List<RequestViewModel>> groupByRequestStatus(
       List<RequestViewModel> items) {
-    var groups = <UserViewModel, List<RequestViewModel>>{};
+    var groups = <RequestStatus, List<RequestViewModel>>{};
     for (var item in items) {
-      UserViewModel user = UserViewModel.fromExistingUser(item.user);
-
-      if (!groups.containsKey(user)) {
-        groups[user] = [item];
+      RequestStatus status = item.status;
+      if (!groups.containsKey(status)) {
+        groups[status] = [item];
       } else {
-        groups[user]?.add(item);
+        groups[status]?.add(item);
       }
     }
     return groups;

@@ -4,6 +4,7 @@ import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
 import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +35,10 @@ class SideBarState extends State<SideBar> {
       case UserInputForm.pageIndex:
         {
           return const UserInputForm();
+        }
+      case RequestSide.pageIndex:
+        {
+          return const RequestSide();
         }
       default:
         {

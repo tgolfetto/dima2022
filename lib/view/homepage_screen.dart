@@ -8,6 +8,7 @@ import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,8 +65,11 @@ class HomePageState extends State<HomePage> {
             }
           });
         }
-      case 2:
+      case RequestPage.pageIndex:
         {
+          // TODO non il massim
+          final content = context.read<ContentViewModel>();
+          content.updateSideBarIndex(RequestSide.pageIndex);
           return const RequestPage();
         }
       case 3:

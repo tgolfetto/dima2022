@@ -52,9 +52,13 @@ class RequestViewModel with ChangeNotifier {
   // @requires newClerk != null
   // @ensure request.clerk == newClerk
   void assignClerk(UserViewModel? newClerk) {
-    newClerk != null
-        ? _request.assignClerk(newClerk.user)
-        : _request.unassignClerk();
+    if (newClerk != null) {
+      _request.assignClerk(newClerk.user);
+      _request.updateStatus(RequestStatus.accepted);
+    } else {
+      _request.unassignClerk();
+      _request.updateStatus(RequestStatus.pending);
+    }
 
     _requestService.updateRequest(_request);
 
