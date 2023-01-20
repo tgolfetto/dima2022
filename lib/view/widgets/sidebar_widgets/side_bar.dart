@@ -4,6 +4,7 @@ import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/chat_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
 import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class SideBarState extends State<SideBar> {
         }
       case RequestSide.pageIndex:
         {
-          return const RequestSide();
+          return ChatSide();
         }
       default:
         {
@@ -57,9 +58,12 @@ class SideBarState extends State<SideBar> {
     return AnimatedResize(
       child: GlassRoundedContainer(
         margin: EdgeInsets.symmetric(
-            vertical: marginHeight / marginHeight * marginHeight,
+            vertical: marginHeight,
             horizontal: marginWidth / marginHeight * marginHeight),
-        itemPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+        itemPadding: const EdgeInsets.symmetric(
+            vertical: 0,
+            horizontal:
+                0), // const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         radius: BorderRadius.circular(20.0),
         opacity: 0.8,
         enableBorder: false,

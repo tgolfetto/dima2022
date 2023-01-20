@@ -187,6 +187,7 @@ class _OrderButtonState extends State<OrderButton> {
   @override
   Widget build(BuildContext context) {
     return CustomButton(
+      outline: false,
       transparent: false,
       text: !_isLoading ? 'Order Now' : null,
       onPressed: (widget.cart.totalAmount <= 0 || _isLoading)

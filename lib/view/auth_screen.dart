@@ -71,24 +71,21 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-        child: Consumer<AuthViewModel>(
-      builder: (context, auth, child) => MaterialApp(
-        title: CustomTheme.appTitle,
-        theme: CustomTheme().materialTheme,
-        debugShowCheckedModeBanner: false,
-        home: auth.isAuthenticated
-            ? const HomePage()
-            : FutureBuilder(
-                future: auth.tryAutoLogin(),
-                builder: (context, authResultSnapshot) =>
-                    authResultSnapshot.connectionState ==
-                            ConnectionState.waiting
-                        ? const SplashScreen()
-                        : authScreenPage(context),
-              ),
-        routes: Routes.routeList,
+      child: Consumer<AuthViewModel>(
+        builder: (context, auth, child) => Scaffold(
+          body: auth.isAuthenticated
+              ? const HomePage()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (context, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? const SplashScreen()
+                          : authScreenPage(context),
+                ),
+        ),
       ),
-    ));
+    );
   }
 }
 

@@ -15,9 +15,7 @@ import 'badge.dart';
 import 'user_avatar.dart';
 
 class WindowBar extends StatefulWidget with PreferredSizeWidget {
-  final UserViewModel userViewModel;
-
-  const WindowBar({super.key, required this.userViewModel});
+  const WindowBar({super.key});
 
   @override
   State<WindowBar> createState() => _WindowBarState();
@@ -29,6 +27,9 @@ class WindowBar extends StatefulWidget with PreferredSizeWidget {
 class _WindowBarState extends State<WindowBar> {
   @override
   Widget build(BuildContext context) {
+    final UserViewModel userViewModel =
+        Provider.of<UserViewModel>(context, listen: false);
+
     final content = context.read<ContentViewModel>();
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
@@ -58,7 +59,7 @@ class _WindowBarState extends State<WindowBar> {
                   child: SizedBox(
                     child: Row(
                       children: [
-                        if (!widget.userViewModel.isClerk)
+                        if (!userViewModel.isClerk)
                           Row(
                             children: [
                               Consumer<CartViewModel>(
@@ -99,7 +100,7 @@ class _WindowBarState extends State<WindowBar> {
                                   .updateSideBarIndex(UserInputForm.pageIndex);
                             }
                           },
-                          avatarUrl: widget.userViewModel.profileImageUrl,
+                          avatarUrl: userViewModel.profileImageUrl,
                         ),
                       ],
                     ),

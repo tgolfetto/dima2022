@@ -16,8 +16,9 @@ class SizeConfig {
   }
 }
 
-double getProportionateScreenHeight(double inputHeight) {
-  double screenHeight = SizeConfig.screenHeight;
+double getProportionateScreenHeight(double inputHeight,
+    {double? parentHeight}) {
+  double screenHeight = parentHeight ?? SizeConfig.screenHeight;
   return (inputHeight / 812.0) * screenHeight;
 }
 

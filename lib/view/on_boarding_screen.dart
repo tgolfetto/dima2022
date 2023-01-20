@@ -229,81 +229,75 @@ class OnBoardingState extends State<OnBoarding> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    return MaterialApp(
-      title: CustomTheme.appTitle,
-      theme: CustomTheme().materialTheme,
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Onboarding(
-          pages: onBoardingPagesList,
-          onPageChange: (int pageIndex) {
-            index = pageIndex;
-          },
-          footerBuilder: (context, dragDistance, pagesLength, setIndex) {
-            return Padding(
-              padding: EdgeInsets.all(
-                  getProportionateScreenWidth(CustomTheme.spacePadding)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        bottom: getProportionateScreenHeight(
-                            CustomTheme.smallPadding),
-                        right: getProportionateScreenWidth(
-                            context.layout.breakpoint < LayoutBreakpoint.md
-                                ? CustomTheme.bigPadding
-                                : CustomTheme.smallPadding)),
-                    child: CustomIndicator(
-                      netDragPercent: dragDistance,
-                      pagesLength: pagesLength,
-                      indicator: Indicator(
-                        closedIndicator:
-                            ClosedIndicator(color: CustomTheme.secondaryColor),
-                        indicatorDesign: IndicatorDesign.polygon(
-                          polygonDesign: PolygonDesign(
-                            polygon: DesignType.polygon_circle,
-                          ),
+    return Scaffold(
+      body: Onboarding(
+        pages: onBoardingPagesList,
+        onPageChange: (int pageIndex) {
+          index = pageIndex;
+        },
+        footerBuilder: (context, dragDistance, pagesLength, setIndex) {
+          return Padding(
+            padding: EdgeInsets.all(
+                getProportionateScreenWidth(CustomTheme.spacePadding)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: getProportionateScreenHeight(
+                          CustomTheme.smallPadding),
+                      right: getProportionateScreenWidth(
+                          context.layout.breakpoint < LayoutBreakpoint.md
+                              ? CustomTheme.bigPadding
+                              : CustomTheme.smallPadding)),
+                  child: CustomIndicator(
+                    netDragPercent: dragDistance,
+                    pagesLength: pagesLength,
+                    indicator: Indicator(
+                      closedIndicator:
+                          ClosedIndicator(color: CustomTheme.secondaryColor),
+                      indicatorDesign: IndicatorDesign.polygon(
+                        polygonDesign: PolygonDesign(
+                          polygon: DesignType.polygon_circle,
                         ),
                       ),
                     ),
                   ),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 500),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(getProportionateScreenWidth(
-                                CustomTheme.spacePadding)),
-                            child: index != pagesLength - 1
-                                ? _skipButton(setIndex: setIndex)
-                                : const SizedBox(),
-                          ),
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 500),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.all(getProportionateScreenWidth(
+                              CustomTheme.spacePadding)),
+                          child: index != pagesLength - 1
+                              ? _skipButton(setIndex: setIndex)
+                              : const SizedBox(),
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Padding(
-                            padding: EdgeInsets.all(getProportionateScreenWidth(
-                                CustomTheme.spacePadding)),
-                            child: index != pagesLength - 1
-                                ? _nextButton(setIndex: setIndex)
-                                : _signupButton,
-                          ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.all(getProportionateScreenWidth(
+                              CustomTheme.spacePadding)),
+                          child: index != pagesLength - 1
+                              ? _nextButton(setIndex: setIndex)
+                              : _signupButton,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          },
-        ),
+                ),
+              ],
+            ),
+          );
+        },
       ),
-      routes: Routes.routeList,
     );
   }
 }

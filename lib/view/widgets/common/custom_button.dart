@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 
 import '../../../utils/size_config.dart';
+import '../../custom_theme.dart';
 
 class CustomButton extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
@@ -12,9 +13,10 @@ class CustomButton extends StatelessWidget {
   final String? text;
   final IconData? icon;
   final bool transparent;
+  final bool outline;
   final Widget? child;
 
-  const CustomButton({
+  CustomButton({
     required this.onPressed,
     this.child,
     this.text,
@@ -30,6 +32,7 @@ class CustomButton extends StatelessWidget {
       Color(0xff3e9f96),
     ]),
     required this.transparent,
+    required this.outline,
   });
 
   @override
@@ -39,13 +42,13 @@ class CustomButton extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        gradient: transparent == false ? gradient : null,
+        gradient: transparent == false && outline == false ? gradient : null,
         borderRadius: BorderRadius.circular(22),
-        boxShadow: transparent == false
+        boxShadow: transparent == false && outline == false
             ? [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
-                  offset: Offset(0, 4),
+                  offset: const Offset(0, 4),
                   blurRadius: 4,
                 ),
               ]
@@ -57,6 +60,7 @@ class CustomButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 mainAxisSize: MainAxisSize.min,
+                textDirection: TextDirection.rtl,
                 children: [
                   if (child != null) child!,
                   if (text != null)
@@ -78,15 +82,33 @@ class CustomButton extends StatelessWidget {
             )
           : ElevatedButton(
               onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenHeight(30)),
-                backgroundColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(22),
-                ),
-              ),
+              style: !outline
+                  ? ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(30)),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                    )
+                  : ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getProportionateScreenHeight(30),
+                      ),
+                      shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                              color: CustomTheme.secondaryColor,
+                              width: 1,
+                              style: BorderStyle.solid),
+                          borderRadius: BorderRadius.circular(22)),
+                      textStyle: TextStyle(
+                          fontSize: getProportionateScreenHeight(16),
+                          fontFamily: 'Raleway',
+                          fontWeight: FontWeight.bold),
+                    ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
@@ -95,16 +117,25 @@ class CustomButton extends StatelessWidget {
                   if (text != null)
                     Text(
                       text!,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: outline
+                            ? Color.fromARGB(255, 72, 72, 72)
+                            : Colors.white,
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   if (icon != null)
-                    Icon(
-                      icon,
-                      color: Colors.white,
+                    Row(
+                      children: [
+                        const SizedBox(width: 5),
+                        Icon(
+                          icon,
+                          color: outline
+                              ? CustomTheme.secondaryColor
+                              : Colors.white,
+                        ),
+                      ],
                     ),
                 ],
               ),

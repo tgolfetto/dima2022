@@ -90,6 +90,14 @@ class CustomTheme {
     letterSpacing: 1.0,
   );
 
+  static TextStyle smallBodyStyle = TextStyle(
+    fontSize: getProportionateScreenHeight(13),
+    fontWeight: FontWeight.w100,
+    color: primaryColor,
+    height: 1.0,
+    letterSpacing: 1.0,
+  );
+
   ThemeData get materialTheme {
     return ThemeData(
       primaryColor: primaryColor,

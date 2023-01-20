@@ -45,6 +45,15 @@ class RequestListViewModel with ChangeNotifier {
       .where((element) => element.status == RequestStatus.pending)
       .toList();
 
+  List<RequestViewModel> get outstandingRequests => _requests
+      .map<RequestViewModel>(
+          (product) => RequestViewModel.fromExistingRequest(product))
+      .where((element) =>
+          element.status == RequestStatus.pending ||
+          (element.status == RequestStatus.accepted &&
+              element.clerk!.id == RequestService.userId))
+      .toList();
+
   List<RequestViewModel> getRequestsAssignedTo(UserViewModel user) {
     return _requests
         .map<RequestViewModel>(

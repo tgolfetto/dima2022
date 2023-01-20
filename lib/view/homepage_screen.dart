@@ -40,7 +40,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   var _isInit = true;
   var _isLoading = false;
-  late UserViewModel userViewModel;
+  //late UserViewModel userViewModel;
 
   late String _barcodeScanned;
 
@@ -104,7 +104,7 @@ class HomePageState extends State<HomePage> {
 
       Provider.of<UserViewModel>(context).getUser().then((_) {
         setState(() {
-          userViewModel = Provider.of<UserViewModel>(context, listen: false);
+          //userViewModel = Provider.of<UserViewModel>(context, listen: false);
 
           _isLoading = false;
         });
@@ -143,7 +143,7 @@ class HomePageState extends State<HomePage> {
                 //       return
                 Column(
                   children: [
-                    WindowBar(userViewModel: userViewModel),
+                    WindowBar(),
                     Flexible(
                       child: Row(
                         children: [

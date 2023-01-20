@@ -135,6 +135,7 @@ class _UserInputFormState extends State<UserInputForm> {
           ),
           actions: [
             CustomButton(
+              outline: false,
               transparent: false,
               onPressed: () => Navigator.of(context).pop(),
               child: const Text('Ok'),
@@ -380,7 +381,7 @@ class _UserInputFormState extends State<UserInputForm> {
                                                   onPressed: () {
                                                     Navigator.of(context)
                                                         .pushReplacementNamed(
-                                                            '/');
+                                                            '/auth');
                                                     Provider.of<AuthViewModel>(
                                                             context,
                                                             listen: false)
@@ -536,6 +537,7 @@ class CardHeader extends StatelessWidget {
           children: [
             backButton
                 ? CustomButton(
+                    outline: false,
                     transparent: true,
                     onPressed: onPressedBack ??
                         () {
@@ -553,6 +555,7 @@ class CardHeader extends StatelessWidget {
                   ),
             if (nextButton)
               CustomButton(
+                outline: false,
                 transparent: false,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../models/user/user.dart';
 import '../../services/auth_service.dart';
 
 import '../../models/user/auth.dart';
@@ -96,7 +95,7 @@ class AuthViewModel extends ChangeNotifier {
   @ensure The user will be logged out and the authentication state will be updated
   */
   Future<void> logout() async {
-    _auth.logout();
+    await _auth.logout();
     notifyListeners();
   }
 }

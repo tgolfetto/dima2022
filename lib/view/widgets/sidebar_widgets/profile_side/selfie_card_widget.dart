@@ -81,6 +81,7 @@ class _SelfieCardState extends State<SelfieCard> {
             height: getProportionateScreenHeight(50),
           ),
           CustomButton(
+            outline: false,
             transparent: false,
             text: "Upload Selfie",
             onPressed: _getImage,

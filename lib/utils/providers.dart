@@ -19,36 +19,49 @@ var authProviders = [
 // ChangeNotifierProxyProvider for the ProductListViewModel
   ChangeNotifierProxyProvider<AuthViewModel, ProductListViewModel>(
     create: (context) => ProductListViewModel(),
-    update: (context, auth, previousProducts) => ProductListViewModel.fromAuth(
-        auth.token, auth.userId, previousProducts),
+    update: (context, auth, previousProducts) => auth.isAuthenticated
+        ? ProductListViewModel.fromAuth(
+            auth.token,
+            auth.userId,
+            previousProducts,
+          )
+        : ProductListViewModel(),
   ),
 
 // ChangeNotifierProxyProvider for the OrdersViewModel
   ChangeNotifierProxyProvider<AuthViewModel, OrdersViewModel>(
     create: (context) => OrdersViewModel(),
-    update: (context, auth, previousOrders) =>
-        OrdersViewModel.fromAuth(auth.token, auth.userId, previousOrders),
+    update: (context, auth, previousOrders) => auth.isAuthenticated
+        ? OrdersViewModel.fromAuth(auth.token, auth.userId, previousOrders)
+        : OrdersViewModel(),
   ),
 
 // ChangeNotifierProxyProvider for the CartViewModel
   ChangeNotifierProxyProvider<AuthViewModel, CartViewModel>(
     create: (context) => CartViewModel(),
-    update: (context, auth, previousOrders) =>
-        CartViewModel.fromAuth(auth.token, auth.userId),
+    update: (context, auth, previousOrders) => auth.isAuthenticated
+        ? CartViewModel.fromAuth(auth.token, auth.userId)
+        : CartViewModel(),
   ),
 
 // ChangeNotifierProxyProvider for the RequestListViewModel
   ChangeNotifierProxyProvider<AuthViewModel, RequestListViewModel>(
     create: (context) => RequestListViewModel(),
-    update: (context, auth, previousRequests) => RequestListViewModel.fromAuth(
-        auth.token, auth.userId, previousRequests),
+    update: (context, auth, previousRequests) => auth.isAuthenticated
+        ? RequestListViewModel.fromAuth(
+            auth.token,
+            auth.userId,
+            previousRequests,
+          )
+        : RequestListViewModel(),
   ),
 
   // ChangeNotifierProxyProvider for the UserViewModel
   ChangeNotifierProxyProvider<AuthViewModel, UserViewModel>(
     create: (context) => UserViewModel(),
-    update: (context, auth, previousRequests) =>
-        UserViewModel.fromAuth(auth.token, auth.userId),
+    update: (context, auth, _) => auth.isAuthenticated
+        ? UserViewModel.fromAuth(auth.token, auth.userId)
+        : UserViewModel(),
   ),
 
 // ChangeNotifierProxyProvider for the ContentViewModel
@@ -59,7 +72,12 @@ var authProviders = [
   // ChangeNotifierProxyProvider for the PositionViewModel
   ChangeNotifierProxyProvider<AuthViewModel, PositionViewModel>(
     create: (context) => PositionViewModel(),
-    update: (context, auth, previousPositionArea) => PositionViewModel.fromAuth(
-        auth.token, auth.userId, previousPositionArea),
+    update: (context, auth, previousPositionArea) => auth.isAuthenticated
+        ? PositionViewModel.fromAuth(
+            auth.token,
+            auth.userId,
+            previousPositionArea,
+          )
+        : PositionViewModel(),
   ),
 ];

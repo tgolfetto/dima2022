@@ -100,18 +100,19 @@ class _LineItemState extends State<LineItem> {
 
   Widget _addToFavoriteButton(ProductViewModel product) {
     return Consumer<ProductListViewModel>(
-        builder: (context, content, _) => ElevatedButton(
-              style: CustomTheme.buttonStyleIcon,
-              onHover: (_) {},
-              onPressed: () {
-                setState(() {
-                  product.toggleFavoriteStatus();
-                });
-              },
-              child: product.isFavorite
-                  ? const Icon(Icons.favorite)
-                  : const Icon(Icons.favorite_border),
-            ));
+      builder: (context, content, _) => ElevatedButton(
+        style: CustomTheme.buttonStyleIcon,
+        onHover: (_) {},
+        onPressed: () {
+          setState(() {
+            product.toggleFavoriteStatus();
+          });
+        },
+        child: product.isFavorite
+            ? const Icon(Icons.favorite)
+            : const Icon(Icons.favorite_border),
+      ),
+    );
   }
 
   @override
@@ -131,24 +132,26 @@ class _LineItemState extends State<LineItem> {
             Container(
               width: width,
               //height: width,
-              child: Stack(children: [
-                GestureDetector(
-                  onTap: () {
-                    content.updateProductId(product.id!);
-                    if (context.layout.breakpoint < LayoutBreakpoint.lg) {
-                      content.updateMainContentIndex(Pdp.pageIndex);
-                    } else {
-                      content.updateSideBarIndex(Pdp.pageIndex);
-                    }
-                  },
-                  child: Image.network(product.imageUrl!),
-                ),
-                Positioned(
-                  right: 0.0,
-                  top: 0.0,
-                  child: _addToFavoriteButton(product),
-                )
-              ]),
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      content.updateProductId(product.id!);
+                      if (context.layout.breakpoint < LayoutBreakpoint.lg) {
+                        content.updateMainContentIndex(Pdp.pageIndex);
+                      } else {
+                        content.updateSideBarIndex(Pdp.pageIndex);
+                      }
+                    },
+                    child: Image.network(product.imageUrl!),
+                  ),
+                  Positioned(
+                    right: 0.0,
+                    top: 0.0,
+                    child: _addToFavoriteButton(product),
+                  )
+                ],
+              ),
             ),
             Expanded(
               child: Column(

@@ -1,5 +1,6 @@
 import 'package:dima2022/models/product/product_type.dart';
 import 'package:dima2022/utils/size_config.dart';
+import 'package:dima2022/view/widgets/homepage_widgets/category_tag.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
@@ -148,6 +149,7 @@ class _FilterState extends State<Filter> {
                 child: ListView(
                   children: [
                     for (var option in ItemCategory.values)
+                      // ItemCategoryTag(category: option)
                       CheckboxListTile(
                         title: Text(option.toString().split('.').last),
                         value: selectedCategories.contains(option),

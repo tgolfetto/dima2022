@@ -28,36 +28,47 @@ class _RequestLineItemState extends State<RequestLineItem> {
     checkCompletedTask =
         request.status == RequestStatus.completed ? true : false;
     return Margin(
-        margin: EdgeInsets.all(CustomTheme.mediumPadding),
-        child: Container(
-          decoration: BoxDecoration(
-            color: CustomTheme.secondaryColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-              padding: EdgeInsets.all(CustomTheme.smallPadding),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Status: ${request.status}',
-                    style: CustomTheme.bodySecondStyle,
-                  ),
-                  Text('ID: ${request.id} - ${request.message}',
-                      style: CustomTheme.bodySecondStyle),
-                  Text(
-                    'Product: ${request.products[0].title} - Size: ${request.products[0].sizes}',
-                    style: CustomTheme.bodySecondStyle,
-                  ),
-                  isClerk
+      margin: EdgeInsets.all(CustomTheme.mediumPadding),
+      child: Container(
+        decoration: BoxDecoration(
+          color: CustomTheme.secondaryColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(CustomTheme.smallPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Status: ${request.status}',
+                style: CustomTheme.bodySecondStyle,
+              ),
+              Text('ID: ${request.id} - ${request.message}',
+                  style: CustomTheme.bodySecondStyle),
+              Text(
+                'Product: ${request.products[0].title} - Size: ${request.products[0].sizes}',
+                style: CustomTheme.bodySecondStyle,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10)),
+                  color: CustomTheme.secondaryColor,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.all(CustomTheme.smallPadding),
+                  child: isClerk
                       ? Row(
                           children: [
-                            Checkbox(
+                            Transform.scale(
+                              scale: 0.7,
+                              child: Switch(
                                 value: checkAssignedClerk,
-                                onChanged: (bool? value) {
+                                onChanged: (bool value) {
                                   setState(() {
-                                    checkAssignedClerk = value!;
+                                    checkAssignedClerk = value;
                                   });
 
                                   request.assignClerk(
@@ -66,30 +77,84 @@ class _RequestLineItemState extends State<RequestLineItem> {
                                             listen: false)
                                         : null,
                                   );
-                                }),
-                            Text('Assign me'),
+                                },
+                                activeColor: CustomTheme.primaryColor,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text('Assign me',
+                                style: CustomTheme.bodySecondStyle),
                           ],
                         )
                       : Row(
                           children: [
-                            Checkbox(
+                            Transform.scale(
+                              scale: 0.7,
+                              child: Switch(
                                 value: checkCompletedTask,
-                                onChanged: (bool? value) {
+                                onChanged: (bool value) {
                                   if (request.status ==
                                       RequestStatus.accepted) {
                                     setState(() {
-                                      checkCompletedTask = value!;
+                                      checkCompletedTask = value;
                                     });
-                                    if (checkCompletedTask)
+                                    if (checkCompletedTask) {
                                       request.updateStatus(
                                           RequestStatus.completed);
+                                    }
                                   }
-                                }),
-                            Text('Request completed'),
+                                },
+                                activeColor: CustomTheme.primaryColor,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text('Request completed',
+                                style: CustomTheme.bodySecondStyle),
                           ],
                         ),
-                ],
-              )),
-        ));
+                ),
+              ),
+              // isClerk
+              //     ? Row(
+              //         children: [
+              //           Checkbox(
+              //               value: checkAssignedClerk,
+              //               onChanged: (bool? value) {
+              //                 setState(() {
+              //                   checkAssignedClerk = value!;
+              //                 });
+
+              //                 request.assignClerk(
+              //                   checkAssignedClerk
+              //                       ? Provider.of<UserViewModel>(context,
+              //                           listen: false)
+              //                       : null,
+              //                 );
+              //               }),
+              //           Text('Assign me'),
+              //         ],
+              //       )
+              //     : Row(
+              //         children: [
+              //           Checkbox(
+              //               value: checkCompletedTask,
+              //               onChanged: (bool? value) {
+              //                 if (request.status == RequestStatus.accepted) {
+              //                   setState(() {
+              //                     checkCompletedTask = value!;
+              //                   });
+              //                   if (checkCompletedTask) {
+              //                     request.updateStatus(RequestStatus.completed);
+              //                   }
+              //                 }
+              //               }),
+              //           Text('Request completed'),
+              //         ],
+              //       ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
