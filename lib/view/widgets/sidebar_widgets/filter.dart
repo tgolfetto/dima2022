@@ -72,8 +72,11 @@ class _FilterState extends State<Filter> {
       return CustomTheme.primaryColor;
     }
 
+    Map<String, dynamic> filters = Provider.of<ContentViewModel>(context, listen: false).filters;
+
     return SingleChildScrollView(
-      child: Column(
+      child: Consumer<ContentViewModel>(
+        builder: (context, content, _) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
@@ -98,7 +101,7 @@ class _FilterState extends State<Filter> {
               Checkbox(
                 checkColor: CustomTheme.backgroundColor,
                 fillColor: MaterialStateProperty.resolveWith(getColor),
-                value: favoriteFilter,
+                value: filters['favorite'] ?? favoriteFilter,
                 onChanged: (bool? value) {
                   setState(() {
                     favoriteFilter = value!;
@@ -119,11 +122,11 @@ class _FilterState extends State<Filter> {
                 vertical: CustomTheme.smallPadding,
                 horizontal: CustomTheme.mediumPadding),
             child: RangeSlider(
-              values: RangeValues(priceMin, priceMax),
+              values: RangeValues(filters['priceMin'] ?? priceMin, filters['priceMax'] ?? priceMax),
               min: 0,
               max: 10000,
               divisions: 1000,
-              labels: RangeLabels('\$$priceMin', '\$$priceMax'),
+              labels: RangeLabels('\$${filters['priceMin'] ?? priceMin}', '\$${filters['priceMax'] ?? priceMax}'),
               onChanged: (RangeValues values) {
                 setState(() {
                   priceMin = values.start;
@@ -152,7 +155,7 @@ class _FilterState extends State<Filter> {
                       // ItemCategoryTag(category: option)
                       CheckboxListTile(
                         title: Text(option.toString().split('.').last),
-                        value: selectedCategories.contains(option),
+                        value: filters['categories'] != null? filters['categories'].contains(option) : selectedCategories.contains(option),
                         onChanged: (bool? value) {
                           setState(() {
                             if (value!) {
@@ -187,7 +190,7 @@ class _FilterState extends State<Filter> {
                     for (var option in ProductType.values)
                       CheckboxListTile(
                         title: Text(option.toString().split('.')[1]),
-                        value: selectedProductTypes.contains(option),
+                        value: filters['productTypes'] != null? filters['productTypes'].contains(option) : selectedProductTypes.contains(option),
                         onChanged: (bool? value) {
                           setState(() {
                             if (value!) {
@@ -215,30 +218,30 @@ class _FilterState extends State<Filter> {
                 vertical: CustomTheme.smallPadding,
                 horizontal: CustomTheme.mediumPadding),
             child: DropdownButtonFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
               ),
-              value: rating,
-              items: [
+              value: filters['rating'] != null? int.parse('${filters['rating']}') : rating,
+              items: const [
                 DropdownMenuItem(
-                  child: Text('All'),
                   value: 0,
+                  child: Text('All'),
                 ),
                 DropdownMenuItem(
-                  child: Text('4+'),
                   value: 4,
+                  child: Text('4+'),
                 ),
                 DropdownMenuItem(
-                  child: Text('3+'),
                   value: 3,
+                  child: Text('3+'),
                 ),
                 DropdownMenuItem(
-                  child: Text('2+'),
                   value: 2,
+                  child: Text('2+'),
                 ),
                 DropdownMenuItem(
-                  child: Text('1+'),
                   value: 1,
+                  child: Text('1+'),
                 ),
               ],
               onChanged: (value) {
@@ -259,7 +262,7 @@ class _FilterState extends State<Filter> {
           //   ),
           // ),
         ],
-      ),
+      )),
     );
   }
 }

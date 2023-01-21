@@ -143,7 +143,7 @@ class HomePageState extends State<HomePage> {
                 //       return
                 Column(
                   children: [
-                    WindowBar(),
+                    const WindowBar(),
                     Flexible(
                       child: Row(
                         children: [
