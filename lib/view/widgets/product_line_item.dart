@@ -125,11 +125,11 @@ class _LineItemState extends State<LineItem> {
       return Container(
         width: width,
         height: height,
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               width: width,
               //height: width,
               child: Stack(
@@ -137,8 +137,9 @@ class _LineItemState extends State<LineItem> {
                   GestureDetector(
                     onTap: () {
                       content.updateProductId(product.id!);
-                      if (context.layout.breakpoint < LayoutBreakpoint.lg) {
+                      if (context.layout.breakpoint < LayoutBreakpoint.md) {
                         content.updateMainContentIndex(Pdp.pageIndex);
+                        content.updateSideBarIndex(Pdp.pageIndex);
                       } else {
                         content.updateSideBarIndex(Pdp.pageIndex);
                       }

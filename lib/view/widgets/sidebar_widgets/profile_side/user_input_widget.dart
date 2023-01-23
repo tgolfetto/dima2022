@@ -11,6 +11,7 @@ import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';
 import '../../common/custom_text_field.dart';
 import '../../common/title_text.dart';
+import '../../homepage_widgets/plp.dart';
 import '../filter.dart';
 import 'category_grid.dart';
 import 'selfie_card_widget.dart';
@@ -185,7 +186,7 @@ class _UserInputFormState extends State<UserInputForm> {
                         onPressedBack: () {
                           final content = context.read<ContentViewModel>();
                           if (context.layout.breakpoint < LayoutBreakpoint.md) {
-                            content.updateMainContentIndex(Filter.pageIndex);
+                            content.updateMainContentIndex(Plp.pageIndex);
                           } else {
                             content.updateSideBarIndex(Filter.pageIndex);
                           }
@@ -248,7 +249,7 @@ class _UserInputFormState extends State<UserInputForm> {
                                             if (context.layout.breakpoint <
                                                 LayoutBreakpoint.md) {
                                               content.updateMainContentIndex(
-                                                  Filter.pageIndex);
+                                                  Plp.pageIndex);
                                             } else {
                                               content.updateSideBarIndex(
                                                   Filter.pageIndex);

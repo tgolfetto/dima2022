@@ -7,6 +7,7 @@ import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/order_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/scanner_instructions.dart';
 import 'package:flutter/foundation.dart';
@@ -77,19 +78,50 @@ class HomePageState extends State<HomePage> {
         }
       case Filter.pageIndex:
         {
-          return const Filter();
+          if(context.layout.breakpoint < LayoutBreakpoint.md){
+            return const Filter();
+          }else{
+            content.updateMainContentIndex(Plp.pageIndex);
+            content.updateSideBarIndex(Filter.pageIndex);
+            return const Plp();
+          }
         }
       case Pdp.pageIndex:
         {
-          return const Pdp();
+          if(context.layout.breakpoint < LayoutBreakpoint.md){
+            return const Pdp();
+          }else{
+            content.updateMainContentIndex(Plp.pageIndex);
+            content.updateSideBarIndex(Pdp.pageIndex);
+            return const Plp();
+          }
         }
       case CartSide.pageIndex:
         {
-          return CartSide();
+          if(context.layout.breakpoint < LayoutBreakpoint.md){
+            content.updateSideBarIndex(CartSide.pageIndex);
+            return CartSide();
+          }else{
+            content.updateMainContentIndex(Plp.pageIndex);
+            content.updateSideBarIndex(CartSide.pageIndex);
+            return const Plp();
+          }
+        }
+      case UserInputForm.pageIndex:
+        {
+          if(context.layout.breakpoint < LayoutBreakpoint.md){
+            content.updateSideBarIndex(UserInputForm.pageIndex);
+            return const UserInputForm();
+          }else{
+            content.updateSideBarIndex(UserInputForm.pageIndex);
+            return const Plp();
+          }
         }
       default:
         {
-          content.updateSideBarIndex(Filter.pageIndex);
+          if(context.layout.breakpoint < LayoutBreakpoint.md) {
+            content.updateSideBarIndex(Filter.pageIndex);
+          }
           return const Plp();
         }
     }
