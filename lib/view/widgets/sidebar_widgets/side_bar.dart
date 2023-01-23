@@ -1,18 +1,19 @@
-import 'package:dima2022/view/homepage_screen.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/cart.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/chat_side.dart';
 import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/scanner_instructions.dart';
 import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/size_config.dart';
 import '../common/animated_resize.dart';
 import '../ui_widgets/glass_rounded_container.dart';
+import 'order_side.dart';
 
 class SideBar extends StatefulWidget {
   SideBar({super.key});
@@ -23,7 +24,9 @@ class SideBar extends StatefulWidget {
 
 class SideBarState extends State<SideBar> {
   Widget _siderBarContent(int index) {
-    print('sidebar $index');
+    if (kDebugMode) {
+      print('### Sidebar index called: $index');
+    }
     switch (index) {
       case Pdp.pageIndex:
         {
@@ -41,6 +44,14 @@ class SideBarState extends State<SideBar> {
         {
           return ChatSide();
         }
+      case ScannerInstructions.pageIndex:
+        {
+          return const ScannerInstructions();
+        }
+      case OrderSide.pageIndex:
+        {
+          return const OrderSide();
+        }
       default:
         {
           return const Filter();
@@ -50,8 +61,6 @@ class SideBarState extends State<SideBar> {
 
   @override
   Widget build(BuildContext context) {
-    final content = context.read<ContentViewModel>();
-
     SizeConfig().init(context);
     var marginWidth = getProportionateScreenWidth(10);
     var marginHeight = getProportionateScreenHeight(20);

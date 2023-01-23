@@ -9,10 +9,14 @@ class UserViewModel with ChangeNotifier {
   late final UserService _userService;
   late User _user;
 
-  UserViewModel();
+  UserViewModel(){
+    print('### USER VIEW MODEL NORMAL ');
+  }
 
   UserViewModel.fromAuth(String? token, String? userId) {
+    print('### USER VIEW MODEL from auth');
     _userService = UserService(token, userId);
+    print('### USER VIEW MODEL from auth finished');
   }
 
   UserViewModel.fromExistingUser(this._user);

@@ -15,14 +15,14 @@ class CustomTheme {
   static double mediumPadding = 24.0;
   static double bigPadding = 32.0;
   static double buttonPaddingV = 16.0;
-  static double buttonPaddingH = 9.0;
+  static double buttonPaddingH = 4.0;
 
   static ButtonStyle buttonStyleFill = ElevatedButton.styleFrom(
       backgroundColor: secondaryColor,
       foregroundColor: backgroundColor,
       padding: EdgeInsets.symmetric(
         vertical: getProportionateScreenHeight(buttonPaddingV),
-        //horizontal: getProportionateScreenWidth(buttonPaddingH)
+        horizontal: getProportionateScreenWidth(buttonPaddingH)
       ),
       shape: RoundedRectangleBorder(
           side: BorderSide(

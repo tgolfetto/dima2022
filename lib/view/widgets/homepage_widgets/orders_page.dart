@@ -26,6 +26,48 @@ class OrdersPage extends StatefulWidget {
 class _OrdersPageState extends State<OrdersPage> {
   late Future _ordersFuture;
 
+  Widget getTileGrid(spacing, OrdersViewModel orderData) {
+    Map<String, String> tiles = {
+      "Total Orders": orderData.getTotalCount().toString(),
+      "Average Order Amount":
+      "€ ${orderData.getAverageAmount().toStringAsFixed(2)}",
+      "Maximum Order Amount":
+      "€ ${orderData.getMaxAmount().toStringAsFixed(1)}",
+      "Minimum Order Amount":
+      "€ ${orderData.getMinAmount().toStringAsFixed(2)}",
+      "Month with Highest Orders": orderData.computeExpensiveMonth(),
+    };
+
+    return context.layout.breakpoint >= LayoutBreakpoint.md? const SliverGutter() : SliverMargin(
+      margin: context.layout.breakpoint == LayoutBreakpoint.xs
+          ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
+          : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
+      sliver: SliverGrid(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: context.layout.value(
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 4,
+            xl: 4,
+          ),
+          mainAxisSpacing: spacing,
+          crossAxisSpacing: spacing,
+          childAspectRatio: 1.5,
+        ),
+        delegate: SliverChildBuilderDelegate(
+              (context, index) {
+            return TileWidget(
+              textDescription: tiles.entries.elementAt(index).key,
+              textValue: tiles.entries.elementAt(index).value,
+            );
+          },
+          childCount: tiles.length,
+        ),
+      ),
+    );
+  }
+
   Future _obtainOrdersFuture() {
     return Provider.of<OrdersViewModel>(context, listen: false)
         .fetchAndSetOrders();
@@ -103,48 +145,6 @@ class _OrdersPageState extends State<OrdersPage> {
             );
           }
         });
-  }
-
-  SliverMargin getTileGrid(spacing, OrdersViewModel orderData) {
-    Map<String, String> tiles = {
-      "Total Orders": orderData.getTotalCount().toString(),
-      "Average Order Amount":
-          "€ ${orderData.getAverageAmount().toStringAsFixed(2)}",
-      "Maximum Order Amount":
-          "€ ${orderData.getMaxAmount().toStringAsFixed(1)}",
-      "Minimum Order Amount":
-          "€ ${orderData.getMinAmount().toStringAsFixed(2)}",
-      "Month with Highest Orders": orderData.computeExpensiveMonth(),
-    };
-
-    return SliverMargin(
-      margin: context.layout.breakpoint == LayoutBreakpoint.xs
-          ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
-          : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: context.layout.value(
-            xs: 2,
-            sm: 3,
-            md: 2,
-            lg: 3,
-            xl: 3,
-          ),
-          mainAxisSpacing: spacing,
-          crossAxisSpacing: spacing,
-          childAspectRatio: 1.5,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return TileWidget(
-              textDescription: tiles.entries.elementAt(index).key,
-              textValue: tiles.entries.elementAt(index).value,
-            );
-          },
-          childCount: tiles.length,
-        ),
-      ),
-    );
   }
 
   List<SliverMargin> getGroup(group, spacing, OrdersViewModel orderData) {
