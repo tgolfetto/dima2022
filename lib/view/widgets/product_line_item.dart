@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:layout/layout.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/product/product.dart';
 import '../../view_models/cart_view_models/cart_view_model.dart';
 import '../../view_models/content_view_models/content_view_model.dart';
 import '../../view_models/product_view_models/product_view_model.dart';
@@ -23,7 +26,7 @@ class LineItem extends StatefulWidget {
 }
 
 class _LineItemState extends State<LineItem> {
-  int dropdownValue = 0;
+  int selectedSize = 0;
   int productId = 0;
 
   Widget _requestButton(ProductViewModel product) {
@@ -34,22 +37,38 @@ class _LineItemState extends State<LineItem> {
           context,
           listen: false,
         );
-
+        Product p = product.getProduct;
+        p.sizes = [selectedSize == 0 ? p.sizes![0] : selectedSize];
         var newRequestViewModel = RequestViewModel();
         newRequestViewModel.createRequest(
           userViewModel.user,
-          product.getProduct,
+          p,
         );
-        // newRequestViewModel.setUser(userViewModel);
-        // newRequestViewModel.addProduct(product);
-        newRequestViewModel.updateMessage('May i have this product');
+        newRequestViewModel
+            .updateMessage('May I receive this product in the dressing room?');
 
         Provider.of<RequestListViewModel>(
           context,
           listen: false,
         ).addRequest(newRequestViewModel);
 
-        ///TODO: ?????
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product requested!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       child: const Icon(
         Icons.try_sms_star,
@@ -72,12 +91,29 @@ class _LineItemState extends State<LineItem> {
     return TextButton(
       style: CustomTheme.buttonStyleFill,
 
-      onPressed: () => {
+      onPressed: () {
         Provider.of<CartViewModel>(
           context,
           listen: false,
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
-            productViewModel.price!, productViewModel.title!)
+            productViewModel.price!, productViewModel.title!);
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product added to cart!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       child: const Icon(
         Icons.add_shopping_cart,
@@ -169,7 +205,7 @@ class _LineItemState extends State<LineItem> {
                             product.title!,
                             maxLines: 2,
                             style:
-                                CustomTheme.headingStyle.copyWith(fontSize: 14),
+                            CustomTheme.headingStyle.copyWith(fontSize: 14),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
@@ -194,9 +230,9 @@ class _LineItemState extends State<LineItem> {
                               //style: CustomTheme.bodyStyle,
                             ),
                             DropdownButton<int>(
-                              value: dropdownValue == 0
+                              value: selectedSize == 0
                                   ? product.sizes![0]
-                                  : dropdownValue,
+                                  : selectedSize,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 1,
                               underline: Container(
@@ -205,7 +241,7 @@ class _LineItemState extends State<LineItem> {
                               ),
                               onChanged: (int? value) {
                                 setState(() {
-                                  dropdownValue = value!;
+                                  selectedSize = value!;
                                 });
                               },
                               items: product.sizes!

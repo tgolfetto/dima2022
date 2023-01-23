@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/widgets/common/custom_button.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/category_tag.dart';
@@ -7,9 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/product/product.dart';
 import '../../../view_models/content_view_models/content_view_model.dart';
 import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
+import '../../../view_models/request_view_models/request_list_view_model.dart';
+import '../../../view_models/request_view_models/request_view_model.dart';
+import '../../../view_models/user_view_models/user_view_model.dart';
 import '../../custom_theme.dart';
 import '../homepage_widgets/plp.dart';
 import 'filter.dart';
@@ -24,7 +30,7 @@ class Pdp extends StatefulWidget {
 }
 
 class _PdpState extends State<Pdp> {
-  int dropdownValue = 0;
+  int selectedSize = 0;
 
   Widget _backButton(
       ContentViewModel content, double sizeWidth, double sideHeight) {
@@ -56,12 +62,11 @@ class _PdpState extends State<Pdp> {
         ));
   }
 
-  Widget _addFavoriteButton(
-      bool isFavorite, double sizeWidth, double sideHeight) {
+  Widget _addFavoriteButton(bool isFavorite, double sizeWidth, double sideHeight) {
     SizeConfig().init(context);
     var marginWidth = getProportionateScreenWidth(10, parentWidth: sizeWidth);
     var marginHeight =
-        getProportionateScreenHeight(20, parentHeight: sideHeight);
+    getProportionateScreenHeight(20, parentHeight: sideHeight);
     return GlassRoundedContainer(
         margin: EdgeInsets.symmetric(
             vertical: marginHeight,
@@ -80,8 +85,46 @@ class _PdpState extends State<Pdp> {
 
   Widget _requestButton(productId) {
     return CustomButton(
-      onPressed: () => {
-        ///TODO: request this productId
+      onPressed: () {
+        UserViewModel userViewModel = Provider.of<UserViewModel>(
+          context,
+          listen: false,
+        );
+        final content = context.read<ContentViewModel>();
+        ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
+          context,
+          listen: false,
+        ).findById(content.productId);
+        Product p = loadedProduct.getProduct;
+        p.sizes = [selectedSize == 0 ? p.sizes![0] : selectedSize];
+        var newRequestViewModel = RequestViewModel();
+        newRequestViewModel.createRequest(
+          userViewModel.user,
+          p,
+        );
+        newRequestViewModel
+            .updateMessage('May I receive this product in the dressing room?');
+        Provider.of<RequestListViewModel>(
+          context,
+          listen: false,
+        ).addRequest(newRequestViewModel);
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product requested!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       transparent: false,
       outline: true,
@@ -92,11 +135,28 @@ class _PdpState extends State<Pdp> {
 
   Widget _addToCartButton(productId) {
     return CustomButton(
-      onPressed: () => {
+      onPressed: () {
         Provider.of<CartViewModel>(
           context,
           listen: false,
-        ).addSingleItem(productId)
+        ).addSingleItem(productId);
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product added to cart!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       transparent: false,
       outline: false,
@@ -202,11 +262,11 @@ class _PdpState extends State<Pdp> {
                                       (BuildContext context, int index) {
                                     return ItemCategoryTag(
                                         category:
-                                            loadedProduct.categories[index]);
+                                        loadedProduct.categories[index]);
                                   },
                                   separatorBuilder:
                                       (BuildContext context, int index) =>
-                                          const SizedBox(
+                                  const SizedBox(
                                     width: 6,
                                   ),
                                 ),
@@ -222,10 +282,10 @@ class _PdpState extends State<Pdp> {
                                     Text('Size: ',
                                         style: CustomTheme.bodyStyle),
                                     DropdownButton<int>(
-                                      value: dropdownValue == 0
+                                      value: selectedSize == 0
                                           ? loadedProduct
                                               .sizes![0] //productModel.sizes[0]
-                                          : dropdownValue,
+                                          : selectedSize,
                                       icon: const Icon(Icons.arrow_downward),
                                       elevation: 16,
                                       underline: Container(
@@ -234,24 +294,24 @@ class _PdpState extends State<Pdp> {
                                       ),
                                       onChanged: (int? value) {
                                         setState(() {
-                                          dropdownValue = value!;
+                                          selectedSize = value!;
                                         });
                                       },
                                       items: loadedProduct
                                           .sizes! //productModel.sizes
                                           .map<DropdownMenuItem<int>>(
                                               (int value) {
-                                        return DropdownMenuItem<int>(
-                                          value: value,
-                                          child: Text("$value",
-                                              style: CustomTheme.bodyStyle),
-                                        );
-                                      }).toList(),
+                                            return DropdownMenuItem<int>(
+                                              value: value,
+                                              child: Text("$value",
+                                                  style: CustomTheme.bodyStyle),
+                                            );
+                                          }).toList(),
                                     ),
                                   ]),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   Margin(
                                     margin: EdgeInsets.only(
