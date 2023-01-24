@@ -5,8 +5,6 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_models/content_view_models/content_view_model.dart';
-import '../../../view_models/position_view_models/position_view_model.dart';
-import '../../../view_models/product_view_models/product_view_model.dart';
 import '../../../view_models/product_view_models/products_view_model.dart';
 import '../sidebar_widgets/filter.dart';
 
@@ -59,6 +57,8 @@ class _PlpState extends State<Plp> {
         : const Spacer();
   }
 
+  final ScrollController _firstController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     bool isFilterActive = filters.isNotEmpty;
@@ -68,7 +68,9 @@ class _PlpState extends State<Plp> {
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
 
     return Scrollbar(
+      controller: _firstController,
       child: CustomScrollView(
+        controller: _firstController,
         slivers: [
           SliverMargin(
             margin: context.layout.breakpoint == LayoutBreakpoint.xs

@@ -1,5 +1,6 @@
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
+import 'package:layout/layout.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   static const pageIndex = 1;
@@ -49,8 +50,19 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformAiBarcodeScannerWidget(
-          platformScannerController: _scannerController,
-        );
+    return context.layout.breakpoint < LayoutBreakpoint.md
+        ? PlatformAiBarcodeScannerWidget(
+            platformScannerController: _scannerController,
+          )
+        : FractionallySizedBox(
+            widthFactor: 0.95,
+            heightFactor: 0.95,
+            child: Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
+              child: PlatformAiBarcodeScannerWidget(
+                platformScannerController: _scannerController,
+              ),
+            ));
   }
 }

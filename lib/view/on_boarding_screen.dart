@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/routes.dart';
 import '../utils/size_config.dart';
 import './custom_theme.dart';
 
@@ -22,8 +21,7 @@ class OnBoardingState extends State<OnBoarding> {
   List<PageModel> get onBoardingPagesList {
     return [
       PageModel(
-        widget: Flexible(
-          child: Container(
+        widget: Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -73,10 +71,9 @@ class OnBoardingState extends State<OnBoarding> {
             ),
           ),
         ),
-      ),
+
       PageModel(
-        widget: Flexible(
-          child: Container(
+        widget: Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -125,11 +122,10 @@ class OnBoardingState extends State<OnBoarding> {
               ),
             ),
           ),
-        ),
+
       ),
       PageModel(
-        widget: Flexible(
-          child: Container(
+        widget:  Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -178,7 +174,7 @@ class OnBoardingState extends State<OnBoarding> {
               ),
             ),
           ),
-        ),
+
       ),
     ];
   }

@@ -48,16 +48,20 @@ class HomePageState extends State<HomePage> {
     switch (index) {
       case BarcodeScannerWidget.pageIndex:
         {
-          content.updateSideBarIndex(ScannerInstructions.pageIndex);
+          WidgetsBinding.instance.addPostFrameCallback((_) =>
+              content.updateSideBarIndex(ScannerInstructions.pageIndex));
           return BarcodeScannerWidget((String code) {
             _barcodeScanned = code;
             try {
               final content = context.read<ContentViewModel>();
-              content.updateProductId(code);
+              WidgetsBinding.instance.addPostFrameCallback((_) =>
+                  content.updateProductId(code));
               if (context.layout.breakpoint < LayoutBreakpoint.md) {
-                content.updateMainContentIndex(Pdp.pageIndex);
+                WidgetsBinding.instance.addPostFrameCallback((_) =>
+                    content.updateMainContentIndex(Pdp.pageIndex));
               } else {
-                content.updateSideBarIndex(Pdp.pageIndex);
+                WidgetsBinding.instance.addPostFrameCallback((_) =>
+                    content.updateSideBarIndex(Pdp.pageIndex));
               }
             } catch (e) {
               if (kDebugMode) {
@@ -68,21 +72,25 @@ class HomePageState extends State<HomePage> {
         }
       case RequestPage.pageIndex:
         {
-          content.updateSideBarIndex(RequestSide.pageIndex);
+          WidgetsBinding.instance.addPostFrameCallback((_) =>
+              content.updateSideBarIndex(RequestSide.pageIndex));
           return const RequestPage();
         }
       case 3:
         {
-          content.updateSideBarIndex(OrderSide.pageIndex);
+          WidgetsBinding.instance.addPostFrameCallback((_) =>
+              content.updateSideBarIndex(OrderSide.pageIndex));
           return const OrdersPage();
         }
       case Filter.pageIndex:
         {
           if(context.layout.breakpoint < LayoutBreakpoint.md){
             return const Filter();
-          }else{
-            content.updateMainContentIndex(Plp.pageIndex);
-            content.updateSideBarIndex(Filter.pageIndex);
+          }else {
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateMainContentIndex(Plp.pageIndex));
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(Filter.pageIndex));
             return const Plp();
           }
         }
@@ -90,37 +98,43 @@ class HomePageState extends State<HomePage> {
         {
           if(context.layout.breakpoint < LayoutBreakpoint.md){
             return const Pdp();
-          }else{
-            content.updateMainContentIndex(Plp.pageIndex);
-            content.updateSideBarIndex(Pdp.pageIndex);
+          }else {
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateMainContentIndex(Plp.pageIndex));
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(Pdp.pageIndex));
             return const Plp();
           }
         }
       case CartSide.pageIndex:
         {
-          if(context.layout.breakpoint < LayoutBreakpoint.md){
-            content.updateSideBarIndex(CartSide.pageIndex);
+          WidgetsBinding.instance.addPostFrameCallback((_) =>
+              content.updateSideBarIndex(CartSide.pageIndex));
+          if (context.layout.breakpoint < LayoutBreakpoint.md) {
             return CartSide();
-          }else{
-            content.updateMainContentIndex(Plp.pageIndex);
-            content.updateSideBarIndex(CartSide.pageIndex);
-            return const Plp();
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateMainContentIndex(Plp.pageIndex));
+                return const Plp();
           }
         }
       case UserInputForm.pageIndex:
         {
           if(context.layout.breakpoint < LayoutBreakpoint.md){
-            content.updateSideBarIndex(UserInputForm.pageIndex);
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(UserInputForm.pageIndex));
             return const UserInputForm();
           }else{
-            content.updateSideBarIndex(UserInputForm.pageIndex);
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(UserInputForm.pageIndex));
             return const Plp();
           }
         }
       default:
         {
           if(context.layout.breakpoint < LayoutBreakpoint.md) {
-            content.updateSideBarIndex(Filter.pageIndex);
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(Filter.pageIndex));
           }
           return const Plp();
         }

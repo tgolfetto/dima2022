@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class ContentViewModel with ChangeNotifier {
@@ -29,17 +30,17 @@ class ContentViewModel with ChangeNotifier {
   bool get filterFavorites => _filterFavorites;
   Map<String, dynamic> get filters => _filters;
 
-  void updateMainContentIndex(int index) {
+  Future<void> updateMainContentIndex(int index) async{
     _mainContentIndex = index;
     notifyListeners();
   }
 
-  void updateSideBarIndex(int index) {
+  Future<void> updateSideBarIndex(int index) async{
     _sideBarIndex = index;
     notifyListeners();
   }
 
-  void updateProductId(String id) {
+  Future<void> updateProductId(String id) async{
     _productId = id;
     notifyListeners();
   }
