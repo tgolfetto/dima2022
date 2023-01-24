@@ -10,13 +10,11 @@ class UserViewModel with ChangeNotifier {
   late User _user;
 
   UserViewModel(){
-    print('### USER VIEW MODEL NORMAL ');
+    _user = User(id: '', email: ''); // Initialization needed after logout
   }
 
   UserViewModel.fromAuth(String? token, String? userId) {
-    print('### USER VIEW MODEL from auth');
     _userService = UserService(token, userId);
-    print('### USER VIEW MODEL from auth finished');
   }
 
   UserViewModel.fromExistingUser(this._user);
@@ -26,21 +24,36 @@ class UserViewModel with ChangeNotifier {
   String get name => _user.name;
   String get email => _user.email;
   String get phone => _user.phone;
+
   String get address => _user.address;
+
   bool get isClerk => _user.isClerk;
+
   String get profileImageUrl => _user.profileImageUrl;
+
   String get size => _user.size;
+
   String get shoeSizeString =>
       _user.shoeSize != 0 ? _user.shoeSize.toString() : '';
+
   List<String> get favoriteBrands => _user.favoriteBrands;
+
   List<ItemCategory> get favoriteCategories => _user.favoriteCategories;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UserViewModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
+  bool operator ==(Object other) {
+    try {
+      return identical(this, other) ||
+          other is UserViewModel &&
+              runtimeType == other.runtimeType &&
+              id == other.id;
+    }catch(e){
+      if(kDebugMode){
+        print('### AUTH COMPARISON ERROR $e');
+      }
+      return false;
+    }
+  }
 
   @override
   int get hashCode => id.hashCode;

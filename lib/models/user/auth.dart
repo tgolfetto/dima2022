@@ -85,7 +85,6 @@ class Auth with ChangeNotifier {
 
   // clears the auth data
   void _clearAuthData() {
-    print('### clear Auth');
     _token = null;
     _userId = null;
     _expiryDate = null;

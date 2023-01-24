@@ -86,7 +86,7 @@ class AuthViewModel extends ChangeNotifier {
     _auth.userId = extractedUserData['userId'];
     _auth.expiryDate = expiryDate;
     notifyListeners();
-    _auth.autoLogout(); //it is used to set again the Timer
+    _auth.autoLogout(); //it is usedagain the Timer
     return true;
   }
 

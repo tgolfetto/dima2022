@@ -39,7 +39,6 @@ class AuthService {
         ),
       );
       final responseData = json.decode(response.body);
-      //print(responseData);
       if (responseData['error'] != null) {
         //we have problem
         throw HttpException(responseData['error']['message']);

@@ -24,9 +24,6 @@ class SideBar extends StatefulWidget {
 
 class SideBarState extends State<SideBar> {
   Widget _siderBarContent(int index) {
-    if (kDebugMode) {
-      print('### Sidebar index called: $index');
-    }
     switch (index) {
       case Pdp.pageIndex:
         {

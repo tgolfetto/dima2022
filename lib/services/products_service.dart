@@ -71,6 +71,7 @@ class ProductsService {
     } catch (error) {
       throw HttpException(error.toString());
     }
+
   }
 
   // Adds a new product to the database
