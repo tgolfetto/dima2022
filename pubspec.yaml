@@ -87,6 +87,12 @@ flutter:
     - assets/images/loading.jpg
     - assets/images/logo.png
     - assets/images/scan.png
+    - assets/animated/no_orders.json
+    - assets/animated/empty_cart_1.json
+    - assets/animated/order_ok.json
+    - assets/animated/purchase_female.json
+    - assets/animated/purchase_male.json
+    - assets/animated/success.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
