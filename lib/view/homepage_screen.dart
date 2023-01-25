@@ -17,6 +17,8 @@ import 'package:provider/provider.dart';
 
 import '../view_models/content_view_models/content_view_model.dart';
 import '../view_models/position_view_models/position_view_model.dart';
+import '../view_models/product_view_models/product_view_model.dart';
+import '../view_models/product_view_models/products_view_model.dart';
 import '../view_models/user_view_models/user_view_model.dart';
 import 'widgets/common/animated_circular_progress_indicator.dart';
 import 'widgets/sidebar_widgets/side_bar.dart';
@@ -48,12 +50,18 @@ class HomePageState extends State<HomePage> {
     switch (index) {
       case BarcodeScannerWidget.pageIndex:
         {
-          WidgetsBinding.instance.addPostFrameCallback((_) =>
-              content.updateSideBarIndex(ScannerInstructions.pageIndex));
+          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ){
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(ScannerInstructions.pageIndex));
+          }
           return BarcodeScannerWidget((String code) {
             _barcodeScanned = code;
             try {
               final content = context.read<ContentViewModel>();
+              ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
+                context,
+                listen: false,
+              ).findById(code);
               WidgetsBinding.instance.addPostFrameCallback((_) =>
                   content.updateProductId(code));
               if (context.layout.breakpoint < LayoutBreakpoint.md) {
@@ -72,14 +80,18 @@ class HomePageState extends State<HomePage> {
         }
       case RequestPage.pageIndex:
         {
-          WidgetsBinding.instance.addPostFrameCallback((_) =>
-              content.updateSideBarIndex(RequestSide.pageIndex));
+          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ) {
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(RequestSide.pageIndex));
+          }
           return const RequestPage();
         }
       case 3:
         {
-          WidgetsBinding.instance.addPostFrameCallback((_) =>
-              content.updateSideBarIndex(OrderSide.pageIndex));
+          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ) {
+            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                content.updateSideBarIndex(OrderSide.pageIndex));
+          }
           return const OrdersPage();
         }
       case Filter.pageIndex:

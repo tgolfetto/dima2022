@@ -11,13 +11,20 @@ import '../../common/animated_circular_progress_indicator.dart';
 import '../../common/custom_button.dart';
 import '../../common/custom_text_field.dart';
 import '../../common/title_text.dart';
+import '../../homepage_widgets/barcode_scanner.dart';
+import '../../homepage_widgets/orders_page.dart';
 import '../../homepage_widgets/plp.dart';
+import '../../homepage_widgets/requests_page.dart';
 import '../filter.dart';
+import '../order_side.dart';
+import '../requests_side/clerk_requests.dart';
+import '../scanner_instructions.dart';
 import 'category_grid.dart';
 import 'selfie_card_widget.dart';
 
 class UserInputForm extends StatefulWidget {
   static const pageIndex = 8;
+
   const UserInputForm({super.key});
 
   @override
@@ -251,8 +258,34 @@ class _UserInputFormState extends State<UserInputForm> {
                                               content.updateMainContentIndex(
                                                   Plp.pageIndex);
                                             } else {
-                                              content.updateSideBarIndex(
-                                                  Filter.pageIndex);
+                                              switch (
+                                                  content.mainContentIndex) {
+                                                case BarcodeScannerWidget
+                                                    .pageIndex:
+                                                  {
+                                                    content.updateSideBarIndex(
+                                                        ScannerInstructions
+                                                            .pageIndex);
+                                                    break;
+                                                  }
+                                                case RequestPage.pageIndex:
+                                                  {
+                                                    content.updateSideBarIndex(
+                                                        RequestSide.pageIndex);
+                                                    break;
+                                                  }
+                                                case OrdersPage.pageIndex:
+                                                  {
+                                                    content.updateSideBarIndex(
+                                                        OrderSide.pageIndex);
+                                                    break;
+                                                  }
+                                                default:
+                                                  {
+                                                    content.updateSideBarIndex(
+                                                        Filter.pageIndex);
+                                                  }
+                                              }
                                             }
                                           },
                                         ),

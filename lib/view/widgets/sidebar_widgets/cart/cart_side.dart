@@ -1,4 +1,5 @@
 import 'package:dima2022/view/custom_theme.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/order_side.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
@@ -10,13 +11,19 @@ import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/order_view_models/orders_view_model.dart';
 import '../../common/custom_button.dart';
 import '../../common/title_text.dart';
+import '../../homepage_widgets/barcode_scanner.dart';
+import '../../homepage_widgets/orders_page.dart';
 import '../../homepage_widgets/plp.dart';
+import '../../homepage_widgets/requests_page.dart';
 import '../filter.dart';
 import '../profile_side/user_input_widget.dart';
+import '../requests_side/clerk_requests.dart';
+import '../scanner_instructions.dart';
 import 'cart_item.dart';
 
 class CartSide extends StatelessWidget {
   static const pageIndex = 7;
+
   CartSide({Key? key}) : super(key: key);
 
   CartViewModel? cartViewModel;
@@ -88,7 +95,30 @@ class CartSide extends StatelessWidget {
                           if (context.layout.breakpoint < LayoutBreakpoint.md) {
                             content.updateMainContentIndex(Plp.pageIndex);
                           } else {
-                            content.updateSideBarIndex(Filter.pageIndex);
+                            switch (content.mainContentIndex) {
+                              case BarcodeScannerWidget.pageIndex:
+                                {
+                                  content.updateSideBarIndex(
+                                      ScannerInstructions.pageIndex);
+                                  break;
+                                }
+                              case RequestPage.pageIndex:
+                                {
+                                  content.updateSideBarIndex(
+                                      RequestSide.pageIndex);
+                                  break;
+                                }
+                              case OrdersPage.pageIndex:
+                                {
+                                  content
+                                      .updateSideBarIndex(OrderSide.pageIndex);
+                                  break;
+                                }
+                              default:
+                                {
+                                  content.updateSideBarIndex(Filter.pageIndex);
+                                }
+                            }
                           }
                         },
                       ),
