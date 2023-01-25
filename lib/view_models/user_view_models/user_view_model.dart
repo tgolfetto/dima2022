@@ -6,7 +6,7 @@ import '../../models/product/category.dart';
 import '../../models/user/user.dart';
 
 class UserViewModel with ChangeNotifier {
-  late final UserService _userService;
+  late final UserService userService;
   late User _user;
 
   UserViewModel(){
@@ -14,7 +14,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   UserViewModel.fromAuth(String? token, String? userId) {
-    _userService = UserService(token, userId);
+    userService = UserService(token, userId);
   }
 
   UserViewModel.fromExistingUser(this._user);
@@ -59,17 +59,17 @@ class UserViewModel with ChangeNotifier {
   int get hashCode => id.hashCode;
 
   Future<void> saveChanges() async {
-    _user = await _userService.updateUser(_user);
+    _user = await userService.updateUser(_user);
     notifyListeners();
   }
 
   Future<void> getUser() async {
-    _user = await _userService.getUser();
+    _user = await userService.getUser();
     notifyListeners();
   }
 
   Future<void> getUserById(String id) async {
-    _user = await _userService.getUserById(id);
+    _user = await userService.getUserById(id);
     notifyListeners();
   }
 
