@@ -213,6 +213,7 @@ class AuthCardState extends State<AuthCard> {
               child: Column(
                 children: <Widget>[
                   TextFormField(
+                    key: const Key('emailField'),
                     decoration: const InputDecoration(
                       labelText: 'E-Mail',
                     ),
@@ -228,6 +229,7 @@ class AuthCardState extends State<AuthCard> {
                     },
                   ),
                   TextFormField(
+                    key: const Key('passField'),
                     decoration: const InputDecoration(labelText: 'Password'),
                     obscureText: true,
                     controller: _passwordController,
@@ -243,6 +245,7 @@ class AuthCardState extends State<AuthCard> {
                   ),
                   if (_authMode == AuthMode.signup)
                     TextFormField(
+                      key: const Key('confirmPassField'),
                       enabled: _authMode == AuthMode.signup,
                       decoration: const InputDecoration(
                         labelText: 'Confirm Password',
@@ -263,6 +266,7 @@ class AuthCardState extends State<AuthCard> {
                   _isLoading
                       ? const AnimatedCircularProgressIndicator()
                       : ElevatedButton(
+                          key: const Key("loginButton"),
                           onPressed: _submit,
                           style: CustomTheme.buttonStyleFill,
                           child: Text(_authMode == AuthMode.login
@@ -270,6 +274,7 @@ class AuthCardState extends State<AuthCard> {
                               : 'SIGN UP'),
                         ),
                   TextButton(
+                    key: const Key("signupInsteadButton"),
                     onPressed: _switchAuthMode,
                     child: Text(
                         '${_authMode == AuthMode.login ? 'SIGNUP' : 'LOGIN'} INSTEAD',

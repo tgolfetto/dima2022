@@ -42,6 +42,7 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       body: Center(
         child: ScaleTransition(
+          key: const Key('splashScreen'),
           scale: _scaleAnimation,
           child: Image.asset('assets/images/logo.png'),
         ),

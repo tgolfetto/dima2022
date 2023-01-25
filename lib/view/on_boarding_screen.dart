@@ -187,6 +187,7 @@ class OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _skipButton({void Function(int)? setIndex}) {
     return ElevatedButton(
+      key: const Key("skipButton"),
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
         if (setIndex != null) {
@@ -200,6 +201,7 @@ class OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton _nextButton({void Function(int)? setIndex}) {
     return ElevatedButton(
+      key: const Key("nextButton"),
       style: CustomTheme.buttonStyleFill,
       onPressed: () {
         if (setIndex != null) {
@@ -212,6 +214,7 @@ class OnBoardingState extends State<OnBoarding> {
 
   ElevatedButton get _signupButton {
     return ElevatedButton(
+      key: const Key("signupButton"),
       style: CustomTheme.buttonStyleFill,
       onPressed: () async {
         final prefs = await SharedPreferences.getInstance();
