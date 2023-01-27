@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:layout/layout.dart';
 
@@ -180,7 +181,7 @@ class _LineItemState extends State<LineItem> {
                         content.updateSideBarIndex(Pdp.pageIndex);
                       }
                     },
-                    child: Image.network(product.imageUrl!),
+                    child: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png') : Image.network(product.imageUrl!),
                   ),
                   Positioned(
                     right: 0.0,

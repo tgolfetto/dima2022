@@ -1,26 +1,40 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dima2022/main.dart';
 import 'package:dima2022/models/cart/cart.dart';
-import 'package:dima2022/models/cart/cart_item.dart';
 import 'package:dima2022/models/orders/order_item.dart';
 import 'package:dima2022/models/position/position_area.dart';
 import 'package:dima2022/models/product/product.dart';
+import 'package:dima2022/models/product/products.dart';
+import 'package:dima2022/models/request/request.dart';
+import 'package:dima2022/models/request/request_status.dart';
 import 'package:dima2022/models/user/auth.dart';
+import 'package:dima2022/models/user/user.dart';
 import 'package:dima2022/services/auth_service.dart';
 import 'package:dima2022/services/cart_service.dart';
 import 'package:dima2022/services/orders_service.dart';
 import 'package:dima2022/services/position_service.dart';
 import 'package:dima2022/services/product_service.dart';
+import 'package:dima2022/services/products_service.dart';
+import 'package:dima2022/services/request_service.dart';
+import 'package:dima2022/services/requests_service.dart';
+import 'package:dima2022/services/user_service.dart';
 import 'package:dima2022/utils/providers.dart';
 import 'package:dima2022/utils/routes.dart';
 import 'package:dima2022/view/auth_screen.dart';
 import 'package:dima2022/view/custom_theme.dart';
 import 'package:dima2022/view/homepage_screen.dart';
 import 'package:dima2022/view/splash_screen.dart';
+import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
+import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
+import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
+import 'package:dima2022/view_models/position_view_models/position_view_model.dart';
+import 'package:dima2022/view_models/product_view_models/products_view_model.dart';
+import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
 import 'package:dima2022/view_models/user_view_models/auth_view_model.dart';
+import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
+import 'package:fake_async/fake_async.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:layout/layout.dart';
@@ -28,14 +42,46 @@ import 'package:mocktail_image_network/mocktail_image_network.dart';
 import 'package:nock/nock.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:network_image_mock/network_image_mock.dart';
-import 'package:fake_async/fake_async.dart';
 
 void main() {
-
   const String authToken =
       "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw";
   const String userId = "xFt5SXvRdzQibaId5Wmuojf6oZO2";
+  var mockAuthProviders = [
+    ChangeNotifierProvider(
+      create: (context) => AuthViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ProductListViewModel.fromAuth(
+        authToken,
+        userId,
+        null,
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => OrdersViewModel.fromAuth(
+        authToken,
+        userId,
+        null,
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => CartViewModel.fromAuth(authToken, userId),
+    ),
+    ChangeNotifierProvider(
+      create: (context) =>
+          RequestListViewModel.fromAuth(authToken, userId, null),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserViewModel.fromAuth(authToken, userId),
+    ),
+    ChangeNotifierProvider(
+      create: (ctx) => ContentViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (ctx) => PositionViewModel.fromAuth(authToken, userId, null),
+    ),
+  ];
 
   setUpAll(() {
     nock.init();
@@ -43,7 +89,6 @@ void main() {
 
   setUp(() {
     nock.cleanAll();
-
     // Auth
     final mockAuthL = nock("https://identitytoolkit.googleapis.com").post(
         "/v1/accounts:signInWithPassword?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
@@ -53,7 +98,7 @@ void main() {
             'password': 'thomas',
             'returnSecureToken': true,
           },
-        ))
+        ))..persist()
       ..reply(
         200,
         '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"thomas@thomas.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
@@ -75,6 +120,7 @@ void main() {
     // User
     var mockUser = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
         .get(startsWith("/users/$userId.json"))
+      ..persist()
       ..reply(200,
           '{"address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}');
     var mockUserDelete =
@@ -82,8 +128,9 @@ void main() {
             .delete("/users/$userId.json?auth=$authToken")
           ..reply(200, '');
     var mockUserUpdate =
-        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-            .put("/users/$userId.json?auth=$authToken")
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+            "/users/$userId.json?auth=$authToken",
+            '{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":null,"email":"thomas@thomas.it","phone":null,"address":null,"profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":null,"shoe_size":null,"reward_points":0,"favorite_brands":[],"favorite_categories":[]}')
           ..reply(200, '');
 
     // Products
@@ -91,30 +138,57 @@ void main() {
             "https://dima2022-491c4-default-rtdb.firebaseio.com")
         .get("/products.json?auth=$authToken")
       ..reply(200,
-          '{"-MEPxPT8F5BFAZbWokNc":{"brand":"adidas x Gucci","categories":["Men","Tops"],"color":"Red","description":"This is a red t-shirt made of 100% cotton.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","madeIn":"USA","material":"Cotton","price":19.99,"rating":4.5,"sizes":[38,40],"stock":10,"title":"Felpa con cerniera adidas x Gucci","type":"Clothing"},"-NEPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Men","Bottoms"],"color":"Blue","description":"These are blue jeans made of 99% cotton and 1% spandex.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1662417035/717104_ZAKBX_1000_001_100_0000_Light-Camicia-in-pizzo-GG-geometrico.jpg","madeIn":"China","material":"Cotton, Spandex","price":29.99,"rating":4,"sizes":[38,40],"stock":5,"title":"Camicia in pizzo GG geometrico","type":"Clothing"},"-RAPxPT8F5BFAZbWokNb":{"brand":"Gucci","categories":["Women","Dresses"],"color":"Dark violet","description":"This silk chiffon dress is infused with a romantic note through classic accents. Presented with long sleeves, ruffles, pleats and frills, the piece plays with vintage details in subtle ways to reflect the Houses creative narrative.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1669918555/731262_ZHS78_5585_001_100_0000_Light-Silk-chiffon-dress.jpg","madeIn":"Italy","material":"100% Silk","price":2200,"rating":4,"sizes":[38,40],"stock":5,"title":"Silk chiffon dress","type":"Clothing"},"-REPxPT8F5BFAZbWokNb":{"brand":"Gucci","categories":["Women","Dresses"],"color":"Magenta","description":"Translating to Original Gucci Creations, this double-breasted jacket presents the Gucci Créations Originales label as a play on traditional sartorial tags. The elegant piece is presented with a precious full canvas construction and peak lapel, while a bright shade of magnet adds an unexpected feel.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1664388069/726517_ZADVL_5896_001_100_0000_Light-Double-breasted-gauze-jacket.jpg","madeIn":"Italy","material":"100% Cupro","price":2400,"rating":4,"sizes":[38,40],"stock":5,"title":"Double-breasted gauze jacket","type":"Clothing"},"-WAPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Women","Bottoms"],"color":"Beige","description":"These are blue jeans made of 99% cotton and 1% spandex.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815053/712108_ZAKXW_2254_001_100_0000_Light-adidas-x-Gucci-GG-canvas-skirt.jpg","madeIn":"Italy","material":"Fabric: 71% Cotton, 29% Polyester","price":1400,"rating":4,"sizes":[38,40],"stock":5,"title":"adidas x Gucci GG canvas skirt","type":"Clothing"},"-WIPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Men","Bottoms"],"color":"Black and Green","description":"A second chapter in the adidas and Gucci collection, where the Web continues to juxtapose with the three white stripes and the GG monogram combines with the Trefoil. Pulling inspiration from the Creative Director’s memories of the 80s and 90s, emblematic House’s motifs mix with those of the historic sportswear brand adidas resulting in a series of hybrid looks. This soft wool cardigan features contrasting green intarsia cable knit and ivory 3-Stripe intarsia on the front.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815183/717703_XKCQF_1145_001_100_0000_Light-adidas-x-Gucci-wool-cardigan.jpg","madeIn":"Italy","material":"100% Wool.","price":1800,"rating":4,"sizes":[38,40],"stock":5,"title":"adidas x Gucci wool cardigan","type":"Clothing"}}');
+          '{"-MEPxPT8F5BFAZbWokNc":{"brand":"adidas x Gucci","categories":["Men","Tops"],"color":"Red","description":"This is a red t-shirt made of 100% cotton.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","madeIn":"USA","material":"Cotton","price":19.99,"rating":4.5,"sizes":[38,40],"stock":10,"title":"Felpa con cerniera adidas x Gucci","type":"Clothing"},"-NEPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Men","Bottoms"],"color":"Blue","description":"These are blue jeans made of 99% cotton and 1% spandex.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1662417035/717104_ZAKBX_1000_001_100_0000_Light-Camicia-in-pizzo-GG-geometrico.jpg","madeIn":"China","material":"Cotton, Spandex","price":29.99,"rating":4,"sizes":[38,40],"stock":5,"title":"Camicia in pizzo GG geometrico","type":"Clothing"},"-RAPxPT8F5BFAZbWokNb":{"brand":"Gucci","categories":["Women","Dresses"],"color":"Dark violet","description":"This silk chiffon dress is infused with a romantic note through classic accents. Presented with long sleeves, ruffles, pleats and frills, the piece plays with vintage details in subtle ways to reflect the Houses creative narrative.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1669918555/731262_ZHS78_5585_001_100_0000_Light-Silk-chiffon-dress.jpg","madeIn":"Italy","material":"100% Silk","price":2200.0,"rating":4,"sizes":[38,40],"stock":5,"title":"Silk chiffon dress","type":"Clothing"},"-REPxPT8F5BFAZbWokNb":{"brand":"Gucci","categories":["Women","Dresses"],"color":"Magenta","description":"Translating to Original Gucci Creations, this double-breasted jacket presents the Gucci Créations Originales label as a play on traditional sartorial tags. The elegant piece is presented with a precious full canvas construction and peak lapel, while a bright shade of magnet adds an unexpected feel.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1664388069/726517_ZADVL_5896_001_100_0000_Light-Double-breasted-gauze-jacket.jpg","madeIn":"Italy","material":"100% Cupro","price":2400,"rating":4,"sizes":[38,40],"stock":5,"title":"Double-breasted gauze jacket","type":"Clothing"},"-WAPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Women","Bottoms"],"color":"Beige","description":"These are blue jeans made of 99% cotton and 1% spandex.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815053/712108_ZAKXW_2254_001_100_0000_Light-adidas-x-Gucci-GG-canvas-skirt.jpg","madeIn":"Italy","material":"Fabric: 71% Cotton, 29% Polyester","price":1400,"rating":4,"sizes":[38,40],"stock":5,"title":"adidas x Gucci GG canvas skirt","type":"Clothing"},"-WIPxPT8F5BFAZbWokNb":{"brand":"adidas x Gucci","categories":["Men","Bottoms"],"color":"Black and Green","description":"A second chapter in the adidas and Gucci collection, where the Web continues to juxtapose with the three white stripes and the GG monogram combines with the Trefoil. Pulling inspiration from the Creative Director’s memories of the 80s and 90s, emblematic House’s motifs mix with those of the historic sportswear brand adidas resulting in a series of hybrid looks. This soft wool cardigan features contrasting green intarsia cable knit and ivory 3-Stripe intarsia on the front.","gender":"Women","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815183/717703_XKCQF_1145_001_100_0000_Light-adidas-x-Gucci-wool-cardigan.jpg","madeIn":"Italy","material":"100% Wool.","price":1800,"rating":4,"sizes":[38,40],"stock":5,"title":"adidas x Gucci wool cardigan","type":"Clothing"}}');
+    var mockProductsFav =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+            .get("/userFavorites/$userId.json?auth=$authToken")
+          ..reply(200, '{"-MEPxPT8F5BFAZbWokNc":true}');
+    var mockProductsAdd =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
+            "/products.json?auth=$authToken",
+            '{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38,40],"gender":"Men","madeIn":"USA"}')
+          ..reply(200, '{"name":"-MEPxPT8F5BFAZbWokNc"}');
+    var mockProductsUpd =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").patch(
+            "/products/-MEPxPT8F5BFAZbWokNc.json?auth=$authToken",
+            '{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38,40],"gender":"Men","madeIn":"USA"}')
+          ..reply(200, '');
+    var mockProductsDel =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+            .delete("/products/-MEPxPT8F5BFAZbWokNc.json?auth=$authToken")
+          ..reply(200, '');
 
     // Product
     var mockProduct = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-        .put(startsWith("/userFavorites/$userId/product.json?auth=$authToken"), 'true')
+        .put(startsWith("/userFavorites/$userId/product.json?auth=$authToken"),
+            'true')
       ..reply(200, '');
 
     // Requests
-    var mockRequests =
-        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-            .get(startsWith("/requests/$userId.json"))
-          ..reply(200, '');
+    var mockRequestsList = nock(
+            "https://dima2022-491c4-default-rtdb.firebaseio.com")
+        .get(startsWith("/requests.json?auth=$authToken"))
+      ..reply(200,
+          '{"1":{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}}');
+
+    var mockRequests = nock(
+            "https://dima2022-491c4-default-rtdb.firebaseio.com")
+        .get(startsWith("/requests/$userId.json?auth=$authToken"))
+      ..reply(200,
+          '{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}');
     var mockRequestsAdd =
         nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
-            startsWith("/requests/$userId.json"),
-            '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}')
+            startsWith("/requests/$userId.json?auth=$authToken"),
+            '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
           ..reply(200, '{"name":"-NMiZ-9hUAiMDnT6TvSV"}');
     var mockRequestsDelete =
-        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-            .delete(startsWith("/requests/$userId.json"))
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").delete(
+            startsWith(
+                "/requests/$userId/-NMiZ-9hUAiMDnT6TvSV.json?auth=$authToken"))
           ..reply(200, '');
     var mockRequestsUpdate =
         nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
-            startsWith("/requests/$userId.json"),
+            startsWith("/requests/$userId/1.json"),
             '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
           ..reply(200, '');
 
@@ -149,7 +223,6 @@ void main() {
         .post(startsWith("/orders/$userId.json?auth=$authToken"),'{"amount":100.0,"dateTime":"2023-01-26T22:17:10.084151","products":[{"id":"id","productId":"pid","title":"title","quantity":1,"price":100.0,"imageUrl":"img.jpg"}]}')
       ..reply(200, '{"name":"id"}');
 
-
     // Shared Preferences
     SharedPreferences.setMockInitialValues({
       "userData": json.encode({
@@ -159,7 +232,7 @@ void main() {
       })
     });
   });
-  /*
+
   testWidgets('Main test', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
     await tester.pump();
@@ -195,27 +268,26 @@ void main() {
     expect(find.byKey(const Key('splashScreen')), findsOneWidget);
   });
 
-
   testWidgets('Auth test', (tester) async {
     await tester.pumpWidget(MultiProvider(
-      providers: authProviders,
-      child: MaterialApp(
-        title: CustomTheme.appTitle,
-        theme: CustomTheme().materialTheme,
-        debugShowCheckedModeBanner: false,
-        home: Layout(
+        providers: mockAuthProviders,
+        child: MaterialApp(
+          title: CustomTheme.appTitle,
+          theme: CustomTheme().materialTheme,
+          debugShowCheckedModeBanner: false,
+          home: Layout(
             child: Layout(
               child: Consumer<AuthViewModel>(
-                builder: (context, auth, child) => Scaffold(
-                  body: auth.isAuthenticated
-                      ? const HomePage()
-                      : const AuthScreen().authScreenPage(context),
-                  )),
-                ),
-              ),
-
-        routes: Routes.routeList,
-      )),
+                  builder: (context, auth, child) =>
+                      Scaffold(
+                        body: auth.isAuthenticated
+                            ? const HomePage()
+                            : const AuthScreen().authScreenPage(context),
+                      )),
+            ),
+          ),
+          routes: Routes.routeList,
+        )),
     );
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.byKey(const Key('loginButton')), findsOneWidget);
@@ -224,15 +296,15 @@ void main() {
     await tester.enterText(find.byKey(const Key('passField')), 'thomas');
     await tester.tap(find.byKey(const Key('signupInsteadButton')));
     await tester.pump();
-    await tester.enterText(find.byKey(const Key('confirmPassField')), 'thomas');
+    await tester.enterText(
+        find.byKey(const Key('confirmPassField')), 'thomas');
     await tester.tap(find.byKey(const Key('signupInsteadButton')));
     await tester.pump();
     await tester.tap(find.byKey(const Key('loginButton')));
     await tester.pump();
-    //expect(find.byKey(const ValueKey('HomePageBody')), findsOneWidget);
-    await tester.pumpAndSettle(const Duration(seconds: 3600));
+    await tester.pump();
+    await tester.pump();
   });
-  */
 
   testWidgets('AuthService login', (WidgetTester tester) async {
     AuthService service = AuthService();
@@ -281,9 +353,57 @@ void main() {
     ProductService.authToken = authToken;
     ProductService.userId = userId;
     ProductService service = ProductService();
-    bool res = await service.toggleFavoriteStatus(Product(id: 'product', isFavorite: true));
+    bool res = await service
+        .toggleFavoriteStatus(Product(id: 'product', isFavorite: true));
     expect(res, true);
   });
 
+  testWidgets('ProductsService', (WidgetTester tester) async {
+    ProductsService service = ProductsService(authToken, userId);
+    List<Product> res = await service.fetchAndSetProducts();
+    expect(res.isNotEmpty, true);
+    Product p = Product.fromJson(
+        "-MEPxPT8F5BFAZbWokNc",
+        json.decode(
+            '{"brand":"adidas x Gucci","categories":["Men","Tops"],"color":"Red","description":"This is a red t-shirt made of 100% cotton.","gender":"Men","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","madeIn":"USA","material":"Cotton","price":19.99,"rating":4.5,"sizes":[38,40],"stock":10,"title":"Felpa con cerniera adidas x Gucci","type":"Clothing"}'),
+        null);
+    Product r = await service.addProduct(p);
+    expect(r.id, '-MEPxPT8F5BFAZbWokNc');
+    Product u = await service.updateProduct("-MEPxPT8F5BFAZbWokNc", p);
+    expect(u.id, '-MEPxPT8F5BFAZbWokNc');
+    Products d =
+        await service.deleteProduct(Products([p]), '-MEPxPT8F5BFAZbWokNc');
+    List<Product> delRes = d.items;
+    expect(delRes.length, 0);
+  });
 
+  testWidgets('RequestService', (WidgetTester tester) async {
+    RequestService.authToken = authToken;
+    RequestService.userId = userId;
+    RequestService service = RequestService();
+    RequestListService listService = RequestListService(authToken, userId);
+    List<Request> requests = await listService.fetchAllRequests();
+    expect(requests.length, 1);
+    requests = await listService.fetchRequests();
+    expect(requests.length, 1);
+    Request myR = requests[0];
+    Request accept = requests[0];
+    accept.status = RequestStatus.accepted;
+    service.updateRequest(accept);
+    expect(accept.status, RequestStatus.accepted);
+    Request res = await listService.addRequest(myR);
+    expect(res.id, "-NMiZ-9hUAiMDnT6TvSV");
+    requests = await listService.removeRequest(requests, myR);
+    expect(requests.length, 1);
+  });
+
+  testWidgets('UserService', (WidgetTester tester) async {
+    UserService service = UserService(authToken, userId);
+    service.createUser('thomas@thomas.it');
+    User u = await service.getUser();
+    expect(u.email.isNotEmpty, true);
+    u = await service.getUserById(userId);
+    expect(u.email.isNotEmpty, true);
+    service.deleteUser(userId);
+  });
 }

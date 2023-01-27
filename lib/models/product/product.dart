@@ -80,7 +80,7 @@ class Product with ChangeNotifier {
       id: prodId, //json['name'], //json['id'],
       title: prodData['title'],
       description: prodData['description'],
-      price: prodData['price'],
+      price: prodData['price']*1.00,
       imageUrl: prodData['imageUrl'],
       isFavorite: favData == null ? false : favData[prodId] ?? false,
       categories: categories,

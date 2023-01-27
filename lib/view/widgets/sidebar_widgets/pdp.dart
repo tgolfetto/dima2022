@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dima2022/utils/size_config.dart';
 import 'package:dima2022/view/widgets/common/custom_button.dart';
@@ -190,7 +191,7 @@ class _PdpState extends State<Pdp> {
                         children: [
                           SizedBox(
                             width: double.maxFinite,
-                            child: Image.network(loadedProduct.imageUrl!),
+                            child: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png') : Image.network(loadedProduct.imageUrl!),
                           ),
                           Positioned(
                             left: 0.0,

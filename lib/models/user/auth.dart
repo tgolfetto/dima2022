@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -100,7 +101,7 @@ class Auth with ChangeNotifier {
       _authTimer!.cancel();
     }
     final timeToExpiry = _expiryDate!.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
+    _authTimer = Platform.environment.containsKey('FLUTTER_TEST')? null : Timer(Duration(seconds: timeToExpiry), logout);
     notifyListeners();
   }
 

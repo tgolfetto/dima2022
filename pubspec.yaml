@@ -92,6 +92,7 @@ flutter:
     - assets/images/example.jpg
     - assets/images/loading.jpg
     - assets/images/logo.png
+    - assets/images/test.png
     - assets/images/scan.png
     - assets/animated/no_orders.json
     - assets/animated/empty_cart_1.json

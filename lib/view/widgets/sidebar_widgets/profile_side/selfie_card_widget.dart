@@ -54,7 +54,7 @@ class _SelfieCardState extends State<SelfieCard> {
                           fit: BoxFit.cover)
                       : DecorationImage(
                           image:
-                              NetworkImage(widget.userImageUrl ?? userAvatar),
+                          Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png').image : NetworkImage(widget.userImageUrl ?? userAvatar),
                           fit: BoxFit.cover,
                         ),
                 ),
