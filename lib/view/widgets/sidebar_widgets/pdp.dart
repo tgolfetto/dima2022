@@ -6,6 +6,7 @@ import 'package:dima2022/view/widgets/common/custom_button.dart';
 import 'package:dima2022/view/widgets/homepage_widgets/category_tag.dart';
 import 'package:dima2022/view/widgets/ui_widgets/glass_rounded_container.dart';
 import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
@@ -191,7 +192,7 @@ class _PdpState extends State<Pdp> {
                         children: [
                           SizedBox(
                             width: double.maxFinite,
-                            child: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png') : Image.network(loadedProduct.imageUrl!),
+                            child: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? Image.network(loadedProduct.imageUrl!) : Image.asset('assets/images/test.png'),
                           ),
                           Positioned(
                             left: 0.0,

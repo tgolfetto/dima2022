@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dima2022/view_models/cart_view_models/cart_item_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -102,8 +103,8 @@ class CartItem extends StatelessWidget {
                                       ),
                                     ],
                                     image: DecorationImage(
-                                      image: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png').image : NetworkImage(
-                                          cartItemViewModel.imageUrl),
+                                      image: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(
+                                          cartItemViewModel.imageUrl) : Image.asset('assets/images/test.png').image,
                                       fit: BoxFit.cover,
                                     ),
                                     color: Colors.grey,

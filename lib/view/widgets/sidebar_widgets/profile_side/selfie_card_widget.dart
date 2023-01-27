@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dima2022/utils/constants.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -54,7 +55,7 @@ class _SelfieCardState extends State<SelfieCard> {
                           fit: BoxFit.cover)
                       : DecorationImage(
                           image:
-                          Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png').image : NetworkImage(widget.userImageUrl ?? userAvatar),
+                          kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(widget.userImageUrl ?? userAvatar) : Image.asset('assets/images/test.png').image ,
                           fit: BoxFit.cover,
                         ),
                 ),

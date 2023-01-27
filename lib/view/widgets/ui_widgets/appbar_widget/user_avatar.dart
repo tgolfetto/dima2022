@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class UserAvatar extends StatelessWidget {
@@ -38,7 +39,7 @@ class UserAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png').image : NetworkImage(avatarUrl),
+                  image: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(avatarUrl) : Image.asset('assets/images/test.png').image,
                   fit: BoxFit.cover,
                 ),
               ),

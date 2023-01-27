@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:layout/layout.dart';
 
 import 'package:provider/provider.dart';
@@ -181,7 +182,7 @@ class _LineItemState extends State<LineItem> {
                         content.updateSideBarIndex(Pdp.pageIndex);
                       }
                     },
-                    child: Platform.environment.containsKey('FLUTTER_TEST')? Image.asset('assets/images/test.png') : Image.network(product.imageUrl!),
+                    child: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? Image.network(product.imageUrl!) : Image.asset('assets/images/test.png'),
                   ),
                   Positioned(
                     right: 0.0,
