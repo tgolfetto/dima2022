@@ -145,6 +145,11 @@ class HomePageState extends State<HomePage> {
           if (context.layout.breakpoint < LayoutBreakpoint.md) {
             WidgetsBinding.instance.addPostFrameCallback(
                 (_) => content.updateSideBarIndex(Filter.pageIndex));
+          }else{
+            if(content.sideBarIndex == RequestSide.pageIndex || content.sideBarIndex == OrderSide.pageIndex || content.sideBarIndex == ScannerInstructions.pageIndex){
+              WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => content.updateSideBarIndex(Filter.pageIndex));
+            }
           }
           return const Plp();
         }

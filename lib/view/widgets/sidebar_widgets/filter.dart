@@ -99,37 +99,48 @@ class _FilterState extends State<Filter> {
                     },
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: CustomTheme.smallPadding,
-                            horizontal: CustomTheme.mediumPadding),
-                        child: Text('Favorite items ',
-                            style: CustomTheme.bodyStyle),
-                      ),
-                      Checkbox(
-                        checkColor: CustomTheme.backgroundColor,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: filters['favorite'] ?? favoriteFilter,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            favoriteFilter = value!;
-                          });
-                          updateFilters();
-                        },
-                      )
+                      Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: CustomTheme.smallPadding,
+                                horizontal: CustomTheme.mediumPadding),
+                            child: Text('Favorite items ',
+                                style: CustomTheme.bodyStyle),
+                          )),
+                      Expanded(
+                          flex: 2,
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Checkbox(
+                                checkColor: CustomTheme.backgroundColor,
+                                fillColor:
+                                    MaterialStateProperty.resolveWith(getColor),
+                                value: filters['favorite'] ?? favoriteFilter,
+                                onChanged: (bool? value) {
+                                  setState(() {
+                                    favoriteFilter = value!;
+                                  });
+                                  updateFilters();
+                                },
+                              )))
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: CustomTheme.smallPadding,
-                            horizontal: CustomTheme.mediumPadding),
-                        child: Text('Price', style: CustomTheme.bodyStyle),
-                      ),
-                      Flexible(
+                      Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: CustomTheme.smallPadding,
+                                horizontal: CustomTheme.mediumPadding),
+                            child: Text('Price', style: CustomTheme.bodyStyle),
+                          )),
+                      Expanded(
+                        flex: 3,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: CustomTheme.smallPadding,

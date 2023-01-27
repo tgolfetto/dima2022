@@ -22,160 +22,154 @@ class OnBoardingState extends State<OnBoarding> {
   List<PageModel> get onBoardingPagesList {
     return [
       PageModel(
-        widget: Flexible(
-          child: Container(
-            color: CustomTheme.backgroundColor,
-            child: Center(
-              child: Column(
-                children: [
-                  const Expanded(
+        widget: Container(
+          color: CustomTheme.backgroundColor,
+          child: Center(
+            child: Column(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: Image(
+                      image: AssetImage('assets/images/onboarding3.png')),
+                ),
+                Expanded(
                     flex: 1,
-                    child: Image(
-                        image: AssetImage('assets/images/onboarding3.png')),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: getProportionateScreenWidth(
-                                      CustomTheme.bigPadding)),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Search or scan a product',
-                                  style: CustomTheme.headingStyle,
-                                  textAlign: TextAlign.left,
-                                ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Search or scan a product',
+                                style: CustomTheme.headingStyle,
+                                textAlign: TextAlign.left,
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(
-                                    CustomTheme.bigPadding),
-                                vertical: getProportionateScreenHeight(
-                                    CustomTheme.bigPadding),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(
+                                  CustomTheme.bigPadding),
+                              vertical: getProportionateScreenHeight(
+                                  CustomTheme.bigPadding),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Use the QR Code scanner or search your favorite product in the list to add it into your cart.',
+                                style: CustomTheme.bodyStyle,
+                                textAlign: TextAlign.left,
                               ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Use the QR Code scanner or search your favorite product in the list to add it into your cart.',
-                                  style: CustomTheme.bodyStyle,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            )
-                          ])),
-                ],
-              ),
+                            ),
+                          )
+                        ])),
+              ],
             ),
           ),
         ),
       ),
       PageModel(
-        widget: Flexible(
-          child: Container(
-            color: CustomTheme.backgroundColor,
-            child: Center(
-              child: Column(
-                children: [
-                  const Expanded(
+        widget: Container(
+          color: CustomTheme.backgroundColor,
+          child: Center(
+            child: Column(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: Image(
+                      image: AssetImage('assets/images/onboarding1.png')),
+                ),
+                Expanded(
                     flex: 1,
-                    child: Image(
-                        image: AssetImage('assets/images/onboarding1.png')),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: getProportionateScreenWidth(
-                                      CustomTheme.bigPadding)),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Seamless shopping experience',
-                                  style: CustomTheme.headingStyle,
-                                  textAlign: TextAlign.left,
-                                ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Seamless shopping experience',
+                                style: CustomTheme.headingStyle,
+                                textAlign: TextAlign.left,
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(
-                                    CustomTheme.bigPadding),
-                                vertical: getProportionateScreenHeight(
-                                    CustomTheme.bigPadding),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(
+                                  CustomTheme.bigPadding),
+                              vertical: getProportionateScreenHeight(
+                                  CustomTheme.bigPadding),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Checkout directly from the app to skip the queue at the counter, receive the product home or pickup in store.',
+                                style: CustomTheme.bodyStyle,
+                                textAlign: TextAlign.left,
                               ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Checkout directly from the app to skip the queue at the counter, receive the product home or pickup in store.',
-                                  style: CustomTheme.bodyStyle,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            )
-                          ])),
-                ],
-              ),
+                            ),
+                          )
+                        ])),
+              ],
             ),
           ),
         ),
       ),
       PageModel(
-        widget: Flexible(
-          child: Container(
-            color: CustomTheme.backgroundColor,
-            child: Center(
-              child: Column(
-                children: [
-                  const Expanded(
+        widget: Container(
+          color: CustomTheme.backgroundColor,
+          child: Center(
+            child: Column(
+              children: [
+                const Expanded(
+                  flex: 1,
+                  child: Image(
+                      image: AssetImage('assets/images/onboarding2.png')),
+                ),
+                Expanded(
                     flex: 1,
-                    child: Image(
-                        image: AssetImage('assets/images/onboarding2.png')),
-                  ),
-                  Expanded(
-                      flex: 1,
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: getProportionateScreenWidth(
-                                      CustomTheme.bigPadding)),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Easy try on',
-                                  style: CustomTheme.headingStyle,
-                                  textAlign: TextAlign.left,
-                                ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: getProportionateScreenWidth(
+                                    CustomTheme.bigPadding)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Easy try on',
+                                style: CustomTheme.headingStyle,
+                                textAlign: TextAlign.left,
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: getProportionateScreenWidth(
-                                    CustomTheme.bigPadding),
-                                vertical: getProportionateScreenHeight(
-                                    CustomTheme.bigPadding),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: getProportionateScreenWidth(
+                                  CustomTheme.bigPadding),
+                              vertical: getProportionateScreenHeight(
+                                  CustomTheme.bigPadding),
+                            ),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Communicate with the shopping assistant while trying on your clothes in the dressing room and ask them to bring you a different size!',
+                                style: CustomTheme.bodyStyle,
+                                textAlign: TextAlign.left,
                               ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Communicate with the shopping assistant while trying on your clothes in the dressing room and ask them to bring you a different size!',
-                                  style: CustomTheme.bodyStyle,
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            )
-                          ])),
-                ],
-              ),
+                            ),
+                          )
+                        ])),
+              ],
             ),
           ),
         ),
@@ -242,7 +236,7 @@ class OnBoardingState extends State<OnBoarding> {
             vertical: getProportionateScreenHeight(CustomTheme.buttonPaddingV),
             horizontal:
                 getProportionateScreenWidth(CustomTheme.buttonPaddingH)),
-        child: const Text('Homepage'),
+        child: const Text('Home'),
       ),
     );
   }

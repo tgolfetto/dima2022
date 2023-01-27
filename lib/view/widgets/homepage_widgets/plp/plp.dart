@@ -73,7 +73,7 @@ class _PlpState extends State<Plp> {
 
     final double spacing =
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
-
+    ScrollController controller = ScrollController();
     return ScreenBuilder(builder: (
       BuildContext context,
       BoxConstraints constraints,
@@ -84,7 +84,9 @@ class _PlpState extends State<Plp> {
       double screenHeight,
     ) {
       return Scrollbar(
+        controller: controller,
         child: CustomScrollView(
+          controller: controller,
           slivers: [
             SliverToBoxAdapter(
               child: SizedBox(
