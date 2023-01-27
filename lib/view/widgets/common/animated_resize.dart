@@ -7,10 +7,10 @@ class AnimatedResize extends StatefulWidget {
 
   const AnimatedResize({Key? key, required this.child}) : super(key: key);
   @override
-  _AnimatedResizeState createState() => _AnimatedResizeState();
+  AnimatedResizeState createState() => AnimatedResizeState();
 }
 
-class _AnimatedResizeState extends State<AnimatedResize>
+class AnimatedResizeState extends State<AnimatedResize>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
 
@@ -18,7 +18,7 @@ class _AnimatedResizeState extends State<AnimatedResize>
   void initState() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
     );
     animationController.forward();
     super.initState();
@@ -39,7 +39,7 @@ class _AnimatedResizeState extends State<AnimatedResize>
 
   @override
   Widget build(BuildContext context) {
-    SizeConfig()..init(context);
+    SizeConfig().init(context);
     return Container(
       alignment: Alignment.center,
       child: AnimatedBuilder(

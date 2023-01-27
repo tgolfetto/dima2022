@@ -48,7 +48,7 @@ class AuthViewModel extends ChangeNotifier {
   */
   Future<void> signup(String email, String password) async {
     _auth = await _authService.signup(email, password);
-    _userService = UserService(_auth.token, _auth.userId);
+    _userService = UserService(_auth.token!, _auth.userId!);
     await _userService.createUser(email);
     notifyListeners();
   }

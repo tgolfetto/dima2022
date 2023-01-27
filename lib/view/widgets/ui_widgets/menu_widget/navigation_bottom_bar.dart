@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../utils/size_config.dart';
 import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
-import '../../../custom_theme.dart';
+import '../../common/custom_theme.dart';
 import '../glass_rounded_container.dart';
 import './menu_bar_item.dart';
 
@@ -56,9 +56,10 @@ class Menu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    double width = MediaQuery.of(context).size.width;
-    double yourMargin = (width * 0.1);
     SizeConfig().init(context);
+    double width = MediaQuery.of(context).size.width;
+    double yourMargin = (width * 0.09);
+
     final content = context.read<ContentViewModel>();
     return GlassRoundedContainer(
       margin: EdgeInsets.symmetric(
@@ -84,18 +85,18 @@ class Menu extends StatelessWidget {
               curve: curve,
               duration: duration,
               builder: (context, t, _) {
-                final _selectedColor = item.selectedColor ??
+                final selectedColor = item.selectedColor ??
                     selectedItemColor ??
                     theme.primaryColor;
 
-                final _unselectedColor = item.unselectedColor ??
+                final unselectedColor = item.unselectedColor ??
                     unselectedItemColor ??
                     theme.iconTheme.color;
 
                 return Material(
                   color: Color.lerp(
-                      _selectedColor.withOpacity(0.0),
-                      _selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
+                      selectedColor.withOpacity(0.0),
+                      selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
                       t),
                   shape: itemShape,
                   child: InkWell(
@@ -103,10 +104,10 @@ class Menu extends StatelessWidget {
                       content.updateMainContentIndex(items.indexOf(item));
                     },
                     customBorder: itemShape,
-                    focusColor: _selectedColor.withOpacity(0.1),
-                    highlightColor: _selectedColor.withOpacity(0.1),
-                    splashColor: _selectedColor.withOpacity(0.1),
-                    hoverColor: _selectedColor.withOpacity(0.1),
+                    focusColor: selectedColor.withOpacity(0.1),
+                    highlightColor: selectedColor.withOpacity(0.1),
+                    splashColor: selectedColor.withOpacity(0.1),
+                    hoverColor: selectedColor.withOpacity(0.1),
                     child: Padding(
                       padding: itemPadding -
                           (Directionality.of(context) == TextDirection.ltr
@@ -116,8 +117,8 @@ class Menu extends StatelessWidget {
                         children: [
                           IconTheme(
                             data: IconThemeData(
-                              color: Color.lerp(
-                                  _unselectedColor, _selectedColor, t),
+                              color:
+                                  Color.lerp(unselectedColor, selectedColor, t),
                               size: 24,
                             ),
                             child: items.indexOf(item) == currentIndex
@@ -143,8 +144,8 @@ class Menu extends StatelessWidget {
                                   child: DefaultTextStyle(
                                     style: TextStyle(
                                       color: Color.lerp(
-                                          _selectedColor.withOpacity(0.0),
-                                          _selectedColor,
+                                          selectedColor.withOpacity(0.0),
+                                          selectedColor,
                                           t),
                                       fontWeight: FontWeight.w600,
                                     ),

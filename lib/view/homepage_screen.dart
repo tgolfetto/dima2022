@@ -1,26 +1,25 @@
-import 'package:dima2022/view/custom_theme.dart';
-import 'package:dima2022/view/widgets/homepage_widgets/barcode_scanner.dart';
-import 'package:dima2022/view/widgets/homepage_widgets/orders_page.dart';
-import 'package:dima2022/view/widgets/homepage_widgets/requests_page.dart';
-import 'package:dima2022/view/widgets/homepage_widgets/plp.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/order_side.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/scanner_instructions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/content_view_models/content_view_model.dart';
 import '../view_models/position_view_models/position_view_model.dart';
-import '../view_models/product_view_models/product_view_model.dart';
-import '../view_models/product_view_models/products_view_model.dart';
 import '../view_models/user_view_models/user_view_model.dart';
 import 'widgets/common/animated_circular_progress_indicator.dart';
+import 'widgets/common/custom_theme.dart';
+import 'widgets/homepage_widgets/barcode_scanner.dart';
+import 'widgets/homepage_widgets/orders/orders_page.dart';
+import 'widgets/homepage_widgets/plp/plp.dart';
+import 'widgets/homepage_widgets/requests/requests_page.dart';
+import 'widgets/sidebar_widgets/cart/cart_side.dart';
+import 'widgets/sidebar_widgets/filter.dart';
+import 'widgets/sidebar_widgets/order_side/order_side.dart';
+import 'widgets/sidebar_widgets/pdp_side/pdp.dart';
+import 'widgets/sidebar_widgets/profile_side/user_input_widget.dart';
+import 'widgets/sidebar_widgets/requests_side/request_side.dart';
+import 'widgets/sidebar_widgets/scanner_instructions.dart';
 import 'widgets/sidebar_widgets/side_bar.dart';
 
 import 'widgets/ui_widgets/appbar_widget/windows_bar.dart';
@@ -41,7 +40,6 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   var _isInit = true;
   var _isLoading = false;
-  //late UserViewModel userViewModel;
 
   late String _barcodeScanned;
 
@@ -50,7 +48,8 @@ class HomePageState extends State<HomePage> {
     switch (index) {
       case BarcodeScannerWidget.pageIndex:
         {
-          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ){
+          if (content.sideBarIndex != CartSide.pageIndex &&
+              content.sideBarIndex != UserInputForm.pageIndex) {
             WidgetsBinding.instance.addPostFrameCallback((_) =>
                 content.updateSideBarIndex(ScannerInstructions.pageIndex));
           }
@@ -58,18 +57,15 @@ class HomePageState extends State<HomePage> {
             _barcodeScanned = code;
             try {
               final content = context.read<ContentViewModel>();
-              ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
-                context,
-                listen: false,
-              ).findById(code);
-              WidgetsBinding.instance.addPostFrameCallback((_) =>
-                  content.updateProductId(code));
+
+              WidgetsBinding.instance
+                  .addPostFrameCallback((_) => content.updateProductId(code));
               if (context.layout.breakpoint < LayoutBreakpoint.md) {
-                WidgetsBinding.instance.addPostFrameCallback((_) =>
-                    content.updateMainContentIndex(Pdp.pageIndex));
+                WidgetsBinding.instance.addPostFrameCallback(
+                    (_) => content.updateMainContentIndex(Pdp.pageIndex));
               } else {
-                WidgetsBinding.instance.addPostFrameCallback((_) =>
-                    content.updateSideBarIndex(Pdp.pageIndex));
+                WidgetsBinding.instance.addPostFrameCallback(
+                    (_) => content.updateSideBarIndex(Pdp.pageIndex));
               }
             } catch (e) {
               if (kDebugMode) {
@@ -80,73 +76,75 @@ class HomePageState extends State<HomePage> {
         }
       case RequestPage.pageIndex:
         {
-          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ) {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(RequestSide.pageIndex));
+          if (content.sideBarIndex != CartSide.pageIndex &&
+              content.sideBarIndex != UserInputForm.pageIndex) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(RequestSide.pageIndex));
           }
           return const RequestPage();
         }
       case 3:
         {
-          if(content.sideBarIndex != CartSide.pageIndex && content.sideBarIndex != UserInputForm.pageIndex ) {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(OrderSide.pageIndex));
+          if (content.sideBarIndex != CartSide.pageIndex &&
+              content.sideBarIndex != UserInputForm.pageIndex) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(OrderSide.pageIndex));
           }
           return const OrdersPage();
         }
       case Filter.pageIndex:
         {
-          if(context.layout.breakpoint < LayoutBreakpoint.md){
+          if (context.layout.breakpoint < LayoutBreakpoint.md) {
             return const Filter();
-          }else {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateMainContentIndex(Plp.pageIndex));
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(Filter.pageIndex));
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateMainContentIndex(Plp.pageIndex));
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(Filter.pageIndex));
             return const Plp();
           }
         }
       case Pdp.pageIndex:
         {
-          if(context.layout.breakpoint < LayoutBreakpoint.md){
+          if (context.layout.breakpoint < LayoutBreakpoint.md) {
             return const Pdp();
-          }else {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateMainContentIndex(Plp.pageIndex));
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(Pdp.pageIndex));
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateMainContentIndex(Plp.pageIndex));
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(Pdp.pageIndex));
             return const Plp();
           }
         }
       case CartSide.pageIndex:
         {
-          WidgetsBinding.instance.addPostFrameCallback((_) =>
-              content.updateSideBarIndex(CartSide.pageIndex));
+          WidgetsBinding.instance.addPostFrameCallback(
+              (_) => content.updateSideBarIndex(CartSide.pageIndex));
           if (context.layout.breakpoint < LayoutBreakpoint.md) {
-            return CartSide();
+            return const CartSide();
           } else {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateMainContentIndex(Plp.pageIndex));
-                return const Plp();
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateMainContentIndex(Plp.pageIndex));
+            return const Plp();
           }
         }
       case UserInputForm.pageIndex:
         {
-          if(context.layout.breakpoint < LayoutBreakpoint.md){
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(UserInputForm.pageIndex));
+          if (context.layout.breakpoint < LayoutBreakpoint.md) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(UserInputForm.pageIndex));
             return const UserInputForm();
-          }else{
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(UserInputForm.pageIndex));
+          } else {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(UserInputForm.pageIndex));
             return const Plp();
           }
         }
       default:
         {
-          if(context.layout.breakpoint < LayoutBreakpoint.md) {
-            WidgetsBinding.instance.addPostFrameCallback((_) =>
-                content.updateSideBarIndex(Filter.pageIndex));
+          if (context.layout.breakpoint < LayoutBreakpoint.md) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => content.updateSideBarIndex(Filter.pageIndex));
           }
           return const Plp();
         }
@@ -162,8 +160,6 @@ class HomePageState extends State<HomePage> {
 
       Provider.of<UserViewModel>(context).getUser().then((_) {
         setState(() {
-          //userViewModel = Provider.of<UserViewModel>(context, listen: false);
-
           _isLoading = false;
         });
       });
@@ -175,7 +171,7 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final alwaysDisplayDrawer = context.layout.breakpoint > LayoutBreakpoint.sm;
+    final displaySide = context.layout.breakpoint > LayoutBreakpoint.sm;
 
     Provider.of<PositionViewModel>(context, listen: false)
         .listenLocation(context);
@@ -194,46 +190,50 @@ class HomePageState extends State<HomePage> {
                   color: CustomTheme.secondaryBackgroundColor,
                 ),
 
-                // Stack(
-                //   children: [
-                //     LayoutBuilder(builder: (context, constraints) {
-                //       return
-                Column(
+                Stack(
                   children: [
-                    const WindowBar(),
-                    Flexible(
-                      child: Row(
+                    LayoutBuilder(builder: (context, constraints) {
+                      return Column(
                         children: [
-                          if (context.layout.breakpoint >=
-                              LayoutBreakpoint.md) ...[
-                            Consumer<ContentViewModel>(
-                                builder: (context, content, _) =>
-                                    NavigationSideBar(
+                          if (context.layout.breakpoint >= LayoutBreakpoint.md)
+                            const WindowBar(),
+                          Flexible(
+                            child: Row(
+                              children: [
+                                if (context.layout.breakpoint >=
+                                    LayoutBreakpoint.md) ...[
+                                  Consumer<ContentViewModel>(
+                                    builder: (context, content, _) =>
+                                        NavigationSideBar(
                                       selectedIndex: content.mainContentIndex,
-                                    )),
-                            //const VerticalDivider(width: 5),
-                          ],
-                          Expanded(
-                            key: const ValueKey('HomePageBody'),
-                            child: Consumer<ContentViewModel>(
-                                builder: (context, content, _) => _maincontent(
-                                    context, content.mainContentIndex)),
+                                    ),
+                                  ),
+                                ],
+                                Flexible(
+                                  child: Consumer<ContentViewModel>(
+                                    builder: (context, content, _) =>
+                                        _maincontent(
+                                      context,
+                                      content.mainContentIndex,
+                                    ),
+                                  ),
+                                ),
+                                if (displaySide) const SideBar(),
+                              ],
+                            ),
                           ),
-                          if (alwaysDisplayDrawer) SideBar(),
                         ],
+                      );
+                    }),
+                    if (context.layout.breakpoint < LayoutBreakpoint.md)
+                      const Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: WindowBar(),
                       ),
-                    ),
                   ],
                 ),
-                // }),
-                //     Positioned(
-                //       top: 0,
-                //       left: 0,
-                //       right: 0,
-                //       child: WindowBar(userViewModel: userViewModel),
-                //     ),
-                //   ],
-                // ),
 
                 // Add the vignette container here
                 if (context.layout.breakpoint < LayoutBreakpoint.md)
@@ -250,7 +250,7 @@ class HomePageState extends State<HomePage> {
                           colors: [
                             Colors.transparent,
                             const Color.fromARGB(255, 106, 106, 106)
-                                .withOpacity(0.18),
+                                .withOpacity(0.13),
                           ],
                         ),
                       ),

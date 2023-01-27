@@ -1,22 +1,22 @@
-import 'package:dima2022/view/widgets/sidebar_widgets/cart/cart_side.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/filter.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/pdp.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/chat_side.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/clerk_requests.dart';
-import 'package:dima2022/view/widgets/sidebar_widgets/scanner_instructions.dart';
-import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utils/size_config.dart';
+
+import '../../../view_models/content_view_models/content_view_model.dart';
 import '../common/animated_resize.dart';
 import '../ui_widgets/glass_rounded_container.dart';
-import 'order_side.dart';
+import 'cart/cart_side.dart';
+import 'filter.dart';
+import 'pdp_side/pdp.dart';
+
+import 'order_side/order_side.dart';
+import 'profile_side/user_input_widget.dart';
+import 'requests_side/request_side.dart';
+import 'scanner_instructions.dart';
 
 class SideBar extends StatefulWidget {
-  SideBar({super.key});
+  const SideBar({super.key});
 
   @override
   SideBarState createState() => SideBarState();
@@ -31,7 +31,7 @@ class SideBarState extends State<SideBar> {
         }
       case CartSide.pageIndex:
         {
-          return CartSide();
+          return const CartSide();
         }
       case UserInputForm.pageIndex:
         {
@@ -39,7 +39,7 @@ class SideBarState extends State<SideBar> {
         }
       case RequestSide.pageIndex:
         {
-          return ChatSide();
+          return const RequestSide();
         }
       case ScannerInstructions.pageIndex:
         {
@@ -66,10 +66,8 @@ class SideBarState extends State<SideBar> {
         margin: EdgeInsets.symmetric(
             vertical: marginHeight,
             horizontal: marginWidth / marginHeight * marginHeight),
-        itemPadding: const EdgeInsets.symmetric(
-            vertical: 0,
-            horizontal:
-                0), // const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+        itemPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        // const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
         radius: BorderRadius.circular(20.0),
         opacity: 0.8,
         enableBorder: false,

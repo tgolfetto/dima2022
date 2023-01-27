@@ -1,21 +1,16 @@
 import 'dart:convert';
 
-import 'package:dima2022/models/position/position_area.dart';
 import 'package:http/http.dart' as http;
 import '../models/exceptions/http_exception.dart';
 
+import '../models/position/position_area.dart';
 import '../utils/constants.dart';
+import 'protected_service.dart';
 
-class PositionService {
+class PositionService extends ProtectedService {
   static const positionsPath = "/locations/man_area.json";
 
-  // The user's authentication token
-  String? authToken;
-
-  // The ID of the user
-  String? userId;
-
-  PositionService(this.authToken, this.userId);
+  PositionService(String authToken, String userId) : super(authToken, userId);
 
   Future<PositionArea> fetchAndSetPositionArea() async {
     const path = positionsPath;
@@ -31,7 +26,8 @@ class PositionService {
 
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
-      final PositionArea loadedPositionArea = PositionArea.fromJson(extractedData);
+      final PositionArea loadedPositionArea =
+          PositionArea.fromJson(extractedData);
 
       return loadedPositionArea;
     } catch (error) {
@@ -48,7 +44,7 @@ class PositionService {
     final url = Uri.https(baseUrl, path, params);
 
     try {
-      if(newPositionArea.name != null) {
+      if (newPositionArea.name != null) {
         await http.patch(
           url,
           body: json.encode(newPositionArea.toJson()),

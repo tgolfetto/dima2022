@@ -7,11 +7,11 @@ class AnimatedLinearProgressIndicator extends StatefulWidget {
       : super(key: key);
 
   @override
-  _AnimatedLinearProgressIndicatorState createState() =>
-      _AnimatedLinearProgressIndicatorState();
+  AnimatedLinearProgressIndicatorState createState() =>
+      AnimatedLinearProgressIndicatorState();
 }
 
-class _AnimatedLinearProgressIndicatorState
+class AnimatedLinearProgressIndicatorState
     extends State<AnimatedLinearProgressIndicator>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
@@ -53,8 +53,8 @@ class _AnimatedLinearProgressIndicatorState
       builder: (context, child) {
         return LinearProgressIndicator(
           value: _animation.value,
-          color: Color(0xff0f877c),
-          backgroundColor: Color(0xff9fcfca),
+          color: const Color(0xff0f877c),
+          backgroundColor: const Color(0xff9fcfca),
         );
       },
     );

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'tag.dart';
+import '../../common/tag.dart';
 
-import '../../../models/request/request_status.dart';
+import '../../../../models/request/request_status.dart';
 
 class RequestTag extends Tag {
   RequestTag({
+    Key? key,
     required RequestStatus status,
     bool hideDetails = false,
-    Key? key,
   }) : super(
           key: key,
           backgroundColor: _getBackgroundColor(status),
@@ -15,31 +15,32 @@ class RequestTag extends Tag {
           icon: _getIcon(status),
           text: status.name[0].toUpperCase() + status.name.substring(1),
           hideDetails: hideDetails,
+          isChecked: false,
         );
 
   static Color _getBackgroundColor(RequestStatus status) {
     switch (status) {
       case RequestStatus.pending:
-        return Color(0xff9C27B0);
+        return const Color(0xff9C27B0);
       case RequestStatus.accepted:
-        return Color(0xff3e9f96);
+        return const Color(0xff3e9f96);
       case RequestStatus.rejected:
         return Colors.red;
       case RequestStatus.completed:
-        return Colors.blue;
+        return const Color(0xff3e9f96);
     }
   }
 
   static Color _getGradientBackgroundColor(RequestStatus status) {
     switch (status) {
       case RequestStatus.pending:
-        return Color(0xff7B1FA2);
+        return const Color(0xff7B1FA2);
       case RequestStatus.accepted:
-        return Color.fromARGB(255, 13, 122, 113);
+        return const Color.fromARGB(255, 13, 122, 113);
       case RequestStatus.rejected:
         return Colors.red;
       case RequestStatus.completed:
-        return Colors.blue;
+        return const Color.fromARGB(255, 13, 122, 113);
     }
   }
 

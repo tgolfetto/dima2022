@@ -1,25 +1,18 @@
 import 'dart:convert';
-
-import 'package:dima2022/models/product/product_type.dart';
-import 'package:dima2022/services/user_service.dart';
 import 'package:http/http.dart' as http;
-import '../models/product/category.dart';
+
 import '../models/request/request.dart';
-
-import '../utils/constants.dart';
-
 import '../models/exceptions/http_exception.dart';
 
-class RequestListService {
-  // The user's authentication token
-  String? _authToken;
-  // The ID of the user
-  String? _userId;
+import '../utils/constants.dart';
+import 'protected_service.dart';
 
+class RequestListService extends ProtectedService {
   // Constructor for RequestListService
   // @param authToken the user's authentication token
   // @param userId the ID of the user
-  RequestListService(this._authToken, this._userId);
+  RequestListService(String authToken, String userId)
+      : super(authToken, userId);
 
   // Fetch a list of requests of the logged user from the database
   // @return a list of Request objects
@@ -28,9 +21,9 @@ class RequestListService {
   // @ensures returns a list of Request objects
   Future<List<Request>> fetchRequests() async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
-    final url = Uri.https(baseUrl, '/requests/$_userId.json', _params);
+    final url = Uri.https(baseUrl, '/requests/$userId.json', _params);
     final response = await http.get(url);
     try {
       final List<Request> loadedRequests = [];
@@ -53,14 +46,17 @@ class RequestListService {
 
   Future<List<Request>> fetchAllRequests() async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
     final url = Uri.https(baseUrl, '/requests.json', _params);
     final response = await http.get(url);
 
     try {
       List<Request> requests = [];
-      var uRequests;
+      if (response.body == 'null') {
+        return requests;
+      }
+      List<Request> uRequests;
       final requestsMap = json.decode(response.body) as Map<String, dynamic>;
       for (final ur in requestsMap.values) {
         var userRequests = ur as Map<String, dynamic>;
@@ -84,9 +80,9 @@ class RequestListService {
   // @ensure a request is added to the database and its id is returned
   Future<Request> addRequest(Request request) async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
-    final url = Uri.https(baseUrl, '/requests/$_userId.json', _params);
+    final url = Uri.https(baseUrl, '/requests/$userId.json', _params);
     try {
       final response = await http.post(
         url,
@@ -123,9 +119,9 @@ class RequestListService {
   // @ensure the request is removed from the database and the updated list of requests is returned
   Future<List<Request>> removeRequest(
       List<Request> requestList, Request _request) async {
-    final _path = "/requests/$_userId/${_request.id}.json";
+    final _path = "/requests/$userId/${_request.id}.json";
     final _params = {
-      'auth': _authToken!,
+      'auth': authToken!,
     };
 
     final url = Uri.https(baseUrl, _path, _params);

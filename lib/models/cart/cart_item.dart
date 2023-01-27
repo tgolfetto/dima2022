@@ -9,7 +9,7 @@ class CartItem with ChangeNotifier {
   // name of the product
   final String title;
   // number of items of this product in the cart
-  int quantity;
+  num quantity;
   // cost of a single item of this product
   final double price;
   // image to display
@@ -34,8 +34,8 @@ class CartItem with ChangeNotifier {
       id: json['id'],
       productId: json['productId'],
       title: json['title'],
-      quantity: json['quantity'],
-      price: json['price'],
+      quantity: num.parse(json['quantity'].toString()),
+      price: double.parse(json['price'].toString()),
       imageUrl: json['imageUrl'],
     );
   }

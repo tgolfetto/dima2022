@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:dima2022/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../utils/constants.dart';
 import '../../../../utils/size_config.dart';
 import '../../common/custom_button.dart';
 
@@ -14,14 +14,15 @@ class SelfieCard extends StatefulWidget {
   const SelfieCard({super.key, this.userImageUrl});
 
   @override
-  _SelfieCardState createState() => _SelfieCardState();
+  SelfieCardState createState() => SelfieCardState();
 }
 
-class _SelfieCardState extends State<SelfieCard> {
+class SelfieCardState extends State<SelfieCard> {
   final _picker = ImagePicker();
   PickedFile? _image;
 
   Future _getImage() async {
+    // ignore: deprecated_member_use
     final image = await _picker.getImage(source: ImageSource.gallery);
     setState(() {
       _image = image!;
@@ -54,8 +55,11 @@ class _SelfieCardState extends State<SelfieCard> {
                           ),
                           fit: BoxFit.cover)
                       : DecorationImage(
-                          image:
-                          kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(widget.userImageUrl ?? userAvatar) : Image.asset('assets/images/test.png').image ,
+                          image: kIsWeb ||
+                                  !Platform.environment
+                                      .containsKey('FLUTTER_TEST')
+                              ? NetworkImage(widget.userImageUrl ?? userAvatar)
+                              : Image.asset('assets/images/test.png').image,
                           fit: BoxFit.cover,
                         ),
                 ),

@@ -70,23 +70,22 @@ class Product with ChangeNotifier {
     Map<String, dynamic> prodData,
     Map<String, dynamic>? favData,
   ) {
-    List<ItemCategory> categories = [];
-    if (prodData['categories'] != null)
-      for (var category in prodData['categories']) {
-        categories.add(categoryFromString(category));
-      }
+    List<ItemCategory> categories = prodData['categories'] == null
+        ? []
+        : List.from(prodData['categories']
+            .map((category) => categoryFromString(category)));
 
-    var newp = Product(
-      id: prodId, //json['name'], //json['id'],
+    return Product(
+      id: prodId,
       title: prodData['title'],
       description: prodData['description'],
-      price: prodData['price']*1.00,
+      price: double.parse(prodData['price'].toString()),
       imageUrl: prodData['imageUrl'],
       isFavorite: favData == null ? false : favData[prodId] ?? false,
       categories: categories,
       type: typeFromString(prodData['type']),
-      stock: prodData['stock'],
-      rating: prodData['rating'],
+      stock: int.parse(prodData['stock'].toString()),
+      rating: num.parse(prodData['rating'].toString()),
       brand: prodData['brand'],
       material: prodData['material'],
       color: prodData['color'],
@@ -95,7 +94,7 @@ class Product with ChangeNotifier {
       madeIn: prodData['madeIn'],
     );
 
-    return newp;
+    //return newp;
   }
 
   /*

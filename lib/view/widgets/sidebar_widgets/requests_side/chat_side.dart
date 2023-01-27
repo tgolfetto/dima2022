@@ -1,12 +1,15 @@
-import 'package:dima2022/view/widgets/common/custom_button.dart';
-import 'package:dima2022/view/widgets/common/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+
 import '../../../../utils/constants.dart';
+import '../../common/custom_button.dart';
+import '../../common/custom_text_field.dart';
 import '../../ui_widgets/appbar_widget/user_avatar.dart';
 import 'chat_item.dart';
 
 class ChatSide extends StatefulWidget {
+  const ChatSide({super.key});
+
   @override
   State<ChatSide> createState() => _ChatSideState();
 }
@@ -24,64 +27,71 @@ class _ChatSideState extends State<ChatSide> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: _appBar(context),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: ListView.builder(
-                reverse: true,
-                itemCount: mockMessages.length,
-                itemBuilder: (context, index) {
-                  final message = mockMessages[index];
-                  final received = message.from == 'Prova';
-                  return ChatItemWidget(
-                    content: message.content,
-                    received: received,
-                    timestamp: message.timestamp,
-                    key: Key(
-                      message.content +
-                          (message.timestamp.toIso8601String() ?? ''),
-                    ),
-                  );
-                },
-              ),
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_pattern.png"),
+            repeat: ImageRepeat.repeat,
           ),
-          Container(
-            padding: const EdgeInsets.all(11),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    controller: textController,
-                    onChanged: (text) {},
-                    hintText: 'Type a message',
-                    prefixIcon: (Icons.message),
-                  ),
-                ),
-                const Gutter(),
-                CustomButton(
-                  outline: false,
-                  transparent: false,
-                  onPressed: () {
-                    textController.clear();
-                    mockMessages.add(
-                      ChatMessage(
-                        content: textController.text,
-                        from: 'me',
-                        timestamp: DateTime.now(),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                child: ListView.builder(
+                  reverse: true,
+                  itemCount: mockMessages.length,
+                  itemBuilder: (context, index) {
+                    final message = mockMessages[index];
+                    final received = message.from == 'Prova';
+                    return ChatItemWidget(
+                      content: message.content,
+                      received: received,
+                      timestamp: message.timestamp,
+                      key: Key(
+                        message.content + (message.timestamp.toIso8601String()),
                       ),
                     );
                   },
-                  child: const Text('Send'),
-                )
-              ],
+                ),
+              ),
             ),
-          ),
-        ],
+            Container(
+              padding: const EdgeInsets.all(11),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      controller: textController,
+                      onChanged: (text) {},
+                      hintText: 'Type a message',
+                      prefixIcon: (Icons.message),
+                    ),
+                  ),
+                  const Gutter(),
+                  CustomButton(
+                    outline: false,
+                    transparent: false,
+                    onPressed: () {
+                      textController.clear();
+                      mockMessages.add(
+                        ChatMessage(
+                          content: textController.text,
+                          from: 'me',
+                          timestamp: DateTime.now(),
+                        ),
+                      );
+                    },
+                    child: const Text('Send'),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

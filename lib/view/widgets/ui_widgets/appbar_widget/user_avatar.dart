@@ -39,7 +39,10 @@ class UserAvatar extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(avatarUrl) : Image.asset('assets/images/test.png').image,
+                  image: kIsWeb ||
+                          !Platform.environment.containsKey('FLUTTER_TEST')
+                      ? NetworkImage(avatarUrl)
+                      : Image.asset('assets/images/test.png').image,
                   fit: BoxFit.cover,
                 ),
               ),

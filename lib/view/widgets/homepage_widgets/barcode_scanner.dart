@@ -50,19 +50,13 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return context.layout.breakpoint < LayoutBreakpoint.md
-        ? PlatformAiBarcodeScannerWidget(
-            platformScannerController: _scannerController,
-          )
-        : FractionallySizedBox(
-            widthFactor: 0.95,
-            heightFactor: 0.95,
-            child: Container(
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20.0))),
-              child: PlatformAiBarcodeScannerWidget(
-                platformScannerController: _scannerController,
-              ),
-            ));
+    return Scaffold(
+      body: Margin(
+        margin: const EdgeInsets.all(20),
+        child: PlatformAiBarcodeScannerWidget(
+          platformScannerController: _scannerController,
+        ),
+      ),
+    );
   }
 }

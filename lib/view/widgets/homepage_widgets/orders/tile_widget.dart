@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_config.dart';
+import '../../../../utils/size_config.dart';
 
 class TileWidget extends StatelessWidget {
   final String textDescription;

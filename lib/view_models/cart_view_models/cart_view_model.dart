@@ -22,7 +22,7 @@ class CartViewModel with ChangeNotifier {
   // Initializes a CartViewModel with a CartService instance and a new Cart instance
   CartViewModel.fromAuth(String? token, String? userId) {
     _cart = Cart();
-    _cartService = CartService(token, userId);
+    _cartService = CartService(token!, userId!);
     _getCart();
   }
 

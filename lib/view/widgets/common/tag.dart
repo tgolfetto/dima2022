@@ -1,7 +1,6 @@
-import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 
-import '../../../utils/size_config.dart';
+import 'custom_theme.dart';
 
 class Tag extends StatefulWidget {
   final Color? backgroundColor;
@@ -11,8 +10,10 @@ class Tag extends StatefulWidget {
   final bool hideDetails;
   final bool upperCase;
   final ValueChanged<bool>? onChanged;
+  final double? fontSize;
+  final bool isChecked;
 
-  Tag({
+  const Tag({
     this.backgroundColor,
     this.gradientBackgroundColor,
     this.icon,
@@ -20,18 +21,19 @@ class Tag extends StatefulWidget {
     this.hideDetails = false,
     this.upperCase = true,
     this.onChanged,
+    this.fontSize,
+    required this.isChecked,
     Key? key,
   }) : super(key: key);
 
   @override
-  _TagState createState() => _TagState();
+  TagState createState() => TagState();
 }
 
-class _TagState extends State<Tag> {
-  bool _isChecked = false;
-
+class TagState extends State<Tag> {
   @override
   Widget build(BuildContext context) {
+    bool isChecked = widget.isChecked;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -41,9 +43,14 @@ class _TagState extends State<Tag> {
             borderRadius: BorderRadius.circular(15),
             gradient: LinearGradient(
               colors: [
-                widget.backgroundColor ?? CustomTheme.secondaryBackgroundColor,
+                widget.backgroundColor ??
+                    (widget.isChecked
+                        ? Colors.teal
+                        : CustomTheme.secondaryBackgroundColor),
                 widget.gradientBackgroundColor ??
-                    CustomTheme.secondaryBackgroundColor,
+                    (widget.isChecked
+                        ? const Color.fromARGB(255, 13, 122, 113)
+                        : CustomTheme.secondaryBackgroundColor)
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -60,11 +67,10 @@ class _TagState extends State<Tag> {
             onTap: () {
               if (widget.onChanged != null) {
                 setState(() {
-                  _isChecked = !_isChecked;
+                  isChecked = !isChecked;
+                  widget.onChanged!(isChecked);
                 });
-                widget.onChanged!(_isChecked);
               }
-              ;
             },
             child: Row(
               children: [
@@ -74,7 +80,7 @@ class _TagState extends State<Tag> {
                         color: widget.backgroundColor != null
                             ? CustomTheme.backgroundColor
                             : CustomTheme.primaryColor,
-                        size: getProportionateScreenHeight(15),
+                        size: 15,
                       )
                     : const SizedBox(
                         width: 0,
@@ -83,13 +89,14 @@ class _TagState extends State<Tag> {
                   Text(
                     widget.upperCase ? widget.text.toUpperCase() : widget.text,
                     style: TextStyle(
-                        color: _isChecked
-                            ? Colors.green
-                            : (widget.backgroundColor != null
-                                ? CustomTheme.backgroundColor
-                                : CustomTheme.primaryColor),
-                        fontSize: getProportionateScreenHeight(11),
-                        fontWeight: FontWeight.w600),
+                      color: widget.isChecked
+                          ? CustomTheme.backgroundColor
+                          : (widget.backgroundColor != null
+                              ? CustomTheme.backgroundColor
+                              : CustomTheme.primaryColor),
+                      fontSize: widget.fontSize ?? 10,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
               ],
             ),

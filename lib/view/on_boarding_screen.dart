@@ -1,10 +1,11 @@
-import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../utils/size_config.dart';
-import './custom_theme.dart';
+import 'auth_screen.dart';
+import 'widgets/common/custom_theme.dart';
 
 class OnBoarding extends StatefulWidget {
   static const routeName = '/on_boarding';
@@ -21,7 +22,8 @@ class OnBoardingState extends State<OnBoarding> {
   List<PageModel> get onBoardingPagesList {
     return [
       PageModel(
-        widget: Container(
+        widget: Flexible(
+          child: Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -71,9 +73,10 @@ class OnBoardingState extends State<OnBoarding> {
             ),
           ),
         ),
-
+      ),
       PageModel(
-        widget: Container(
+        widget: Flexible(
+          child: Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -122,10 +125,11 @@ class OnBoardingState extends State<OnBoarding> {
               ),
             ),
           ),
-
+        ),
       ),
       PageModel(
-        widget:  Container(
+        widget: Flexible(
+          child: Container(
             color: CustomTheme.backgroundColor,
             child: Center(
               child: Column(
@@ -174,7 +178,7 @@ class OnBoardingState extends State<OnBoarding> {
               ),
             ),
           ),
-
+        ),
       ),
     ];
   }
@@ -185,7 +189,7 @@ class OnBoardingState extends State<OnBoarding> {
     index = 0;
   }
 
-  ElevatedButton _skipButton({void Function(int)? setIndex}) {
+  Widget _skipButton({void Function(int)? setIndex}) {
     return ElevatedButton(
       key: const Key("skipButton"),
       style: CustomTheme.buttonStyleOutline,
@@ -195,7 +199,13 @@ class OnBoardingState extends State<OnBoarding> {
           setIndex(2);
         }
       },
-      child: const Text('Skip'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: getProportionateScreenHeight(CustomTheme.buttonPaddingV),
+            horizontal:
+                getProportionateScreenWidth(CustomTheme.buttonPaddingH)),
+        child: const Text('Skip'),
+      ),
     );
   }
 
@@ -208,7 +218,13 @@ class OnBoardingState extends State<OnBoarding> {
           setIndex(++index);
         }
       },
-      child: const Text('Next'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: getProportionateScreenHeight(CustomTheme.buttonPaddingV),
+            horizontal:
+                getProportionateScreenWidth(CustomTheme.buttonPaddingH)),
+        child: const Text('Next'),
+      ),
     );
   }
 
@@ -217,11 +233,17 @@ class OnBoardingState extends State<OnBoarding> {
       key: const Key("signupButton"),
       style: CustomTheme.buttonStyleFill,
       onPressed: () async {
+        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
         final prefs = await SharedPreferences.getInstance();
         prefs.setBool('onboarding_seen', true);
-        Navigator.of(context).pushReplacementNamed(AuthScreen.routeName);
       },
-      child: const Text('Homepage'),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: getProportionateScreenHeight(CustomTheme.buttonPaddingV),
+            horizontal:
+                getProportionateScreenWidth(CustomTheme.buttonPaddingH)),
+        child: const Text('Homepage'),
+      ),
     );
   }
 

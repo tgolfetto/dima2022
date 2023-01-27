@@ -7,21 +7,18 @@ import '../utils/constants.dart';
 
 import '../models/product/product.dart';
 import '../models/product/products.dart';
+import 'protected_service.dart';
 
-class ProductsService {
+class ProductsService extends ProtectedService {
   // Path to the products endpoint
   static const productsPath = "/products.json";
   // Path to the userFavorites endpoint
   static const userFavoritesPath = "/userFavorites";
-  // The user's authentication token
-  String? _authToken;
-  // The ID of the user
-  String? _userId;
 
   // Constructor for ProductsService
   // @param authToken the user's authentication token
   // @param userId the ID of the user
-  ProductsService(this._authToken, this._userId);
+  ProductsService(String authToken, String userId) : super(authToken, userId);
 
   // Fetches a list of products from the database
   // @param filterByUser (optional) whether to filter the list by the current user
@@ -33,14 +30,14 @@ class ProductsService {
     Map<String, String> optionalParameters = filterByUser
         ? {
             "orderBy": "creatorId",
-            "equalTo": _userId!,
+            "equalTo": userId!,
           }
         : {};
 
-    final _path = productsPath;
+    const _path = productsPath;
     final _params = optionalParameters;
     _params.addAll({
-      'auth': _authToken!,
+      'auth': authToken!,
     });
 
     final url = Uri.https(baseUrl, _path, _params);
@@ -53,10 +50,10 @@ class ProductsService {
         return [];
       }
 
-      final _pathFavorite = "$userFavoritesPath/${_userId}.json";
+      final _pathFavorite = "$userFavoritesPath/${userId}.json";
       final _paramsFavorite = optionalParameters;
       _params.addAll({
-        'auth': _authToken!,
+        'auth': authToken!,
       });
       final urlFavorite = Uri.https(baseUrl, _pathFavorite, _paramsFavorite);
 
@@ -71,7 +68,6 @@ class ProductsService {
     } catch (error) {
       throw HttpException(error.toString());
     }
-
   }
 
   // Adds a new product to the database
@@ -81,9 +77,9 @@ class ProductsService {
   // @requires _authToken != null
   // @ensures returns the added Product object
   Future<Product> addProduct(Product product) async {
-    final _path = productsPath;
+    const _path = productsPath;
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
 
     final url = Uri.https(baseUrl, _path, _params);
@@ -114,7 +110,7 @@ class ProductsService {
   Future<Product> updateProduct(String id, Product newProduct) async {
     final _path = "/products/$id.json";
     final _params = {
-      'auth': _authToken!,
+      'auth': authToken!,
     };
 
     final url = Uri.https(baseUrl, _path, _params);
@@ -140,7 +136,7 @@ class ProductsService {
   Future<Products> deleteProduct(Products _products, String id) async {
     final _path = "/products/$id.json";
     final _params = {
-      'auth': _authToken!,
+      'auth': authToken!,
     };
 
     final url = Uri.https(baseUrl, _path, _params);

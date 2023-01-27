@@ -1,12 +1,12 @@
-import 'package:dima2022/utils/routes.dart';
-import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/providers.dart';
-import 'view/custom_theme.dart';
+import 'utils/routes.dart';
+import 'view/auth_screen.dart';
+import 'view/widgets/common/custom_theme.dart';
 import 'view/on_boarding_screen.dart';
 
 void main() => runApp(const MyApp());
@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: authProviders,
+      providers: Providers.authProviders,
       child: MaterialApp(
         title: CustomTheme.appTitle,
         theme: CustomTheme().materialTheme,

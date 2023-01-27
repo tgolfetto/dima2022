@@ -4,28 +4,23 @@ import '../../../../models/product/category.dart';
 import '../../../../utils/size_config.dart';
 
 class CategoryGrid extends StatefulWidget {
+  final List<ItemCategory> selectedCategories;
+  const CategoryGrid({super.key, required this.selectedCategories});
+
   @override
-  _CategoryGridState createState() {
-    return _CategoryGridState();
-  }
-
-  late List<ItemCategory> _selectedCategories = [];
-
-  List<ItemCategory> get categories => _selectedCategories;
-
-  set initCategories(List<ItemCategory> initCategories) {
-    _selectedCategories = initCategories;
+  CategoryGridState createState() {
+    return CategoryGridState();
   }
 }
 
-class _CategoryGridState extends State<CategoryGrid> {
+class CategoryGridState extends State<CategoryGrid> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       crossAxisCount: 3,
       children: ItemCategory.values.map((category) {
         return Container(
-          decoration: widget._selectedCategories.contains(category)
+          decoration: widget.selectedCategories.contains(category)
               ? BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   gradient: const LinearGradient(
@@ -67,10 +62,9 @@ class _CategoryGridState extends State<CategoryGrid> {
           child: InkWell(
             onTap: () {
               setState(() {
-                !widget._selectedCategories.contains(category)
-                    ? widget._selectedCategories.add(category)
-                    : widget._selectedCategories
-                        .remove(category); // = category;
+                !widget.selectedCategories.contains(category)
+                    ? widget.selectedCategories.add(category)
+                    : widget.selectedCategories.remove(category); // = category;
               });
             },
             child: Center(
@@ -80,7 +74,7 @@ class _CategoryGridState extends State<CategoryGrid> {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
-                  color: widget._selectedCategories.contains(category)
+                  color: widget.selectedCategories.contains(category)
                       ? Colors.white
                       : const Color.fromARGB(115, 39, 39, 39),
                 ),

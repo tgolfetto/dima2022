@@ -32,8 +32,8 @@ class OrderItem {
   factory OrderItem.fromJson(String prodId, Map<String, dynamic> orderData) {
     return OrderItem(
       id: prodId,
-      amount: orderData['amount'],
-      dateTime: DateTime.parse(orderData['dateTime']),
+      amount: double.parse(orderData['amount'].toString()),
+      dateTime: DateTime.parse(orderData['dateTime'].toString()),
       products: (orderData['products'] as List<dynamic>)
           .map(((e) => CartItem.fromJson(e)))
           .toList(),

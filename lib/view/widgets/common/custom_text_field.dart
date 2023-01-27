@@ -1,8 +1,8 @@
-import 'package:dima2022/view/custom_theme.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
+  const CustomTextField({
+    super.key,
     this.initialValue,
     required this.hintText,
     this.onChanged,
@@ -25,7 +25,7 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String>? onSubmitted;
   final ValueChanged<String?>? onSaved;
   final ValueChanged<String>? toExecute;
-  final IconData prefixIcon;
+  final IconData? prefixIcon;
   final IconData? suffixIcon;
   final FocusNode? focusNode;
   final FocusNode? focusNextNode;
@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
   final validateString;
   final validator;
   final keyboardType;
-  bool completed = false;
+  final bool completed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +56,8 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
           suffixIcon: suffixIcon != null ? Icon(suffixIcon) : null,
           border: InputBorder.none,
+          iconColor: Colors.teal,
+          focusColor: Colors.teal,
         ),
         onChanged: onChanged,
         onSaved: onSaved,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:layout/layout.dart';
 
 import '../../../utils/size_config.dart';
-import '../../custom_theme.dart';
+import 'custom_theme.dart';
 
 class CustomButton extends StatelessWidget {
   final BorderRadiusGeometry? borderRadius;
@@ -15,8 +14,10 @@ class CustomButton extends StatelessWidget {
   final bool transparent;
   final bool outline;
   final Widget? child;
+  final double? fontSize;
 
-  CustomButton({
+  const CustomButton({
+    super.key,
     required this.onPressed,
     this.child,
     this.text,
@@ -24,6 +25,7 @@ class CustomButton extends StatelessWidget {
     this.borderRadius,
     this.width,
     this.height = 44.0,
+    this.fontSize,
     this.gradient = const LinearGradient(stops: [
       0,
       1
@@ -37,7 +39,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = this.borderRadius ?? BorderRadius.circular(0);
+    //final borderRadius = this.borderRadius ?? BorderRadius.circular(0);
     return Container(
       width: width,
       height: height,
@@ -66,16 +68,17 @@ class CustomButton extends StatelessWidget {
                   if (text != null)
                     Text(
                       text!,
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 46, 46, 46),
-                        fontSize: 14,
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 46, 46, 46),
+                        fontSize: fontSize ?? 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   if (icon != null)
                     Icon(
                       icon,
-                      color: Color.fromARGB(255, 132, 132, 132),
+                      size: fontSize != null ? fontSize! + 4 : 20,
+                      color: const Color.fromARGB(255, 132, 132, 132),
                     ),
                 ],
               ),
@@ -119,9 +122,9 @@ class CustomButton extends StatelessWidget {
                       text!,
                       style: TextStyle(
                         color: outline
-                            ? Color.fromARGB(255, 72, 72, 72)
+                            ? const Color.fromARGB(255, 72, 72, 72)
                             : Colors.white,
-                        fontSize: 14,
+                        fontSize: fontSize ?? 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -131,6 +134,7 @@ class CustomButton extends StatelessWidget {
                         const SizedBox(width: 5),
                         Icon(
                           icon,
+                          size: fontSize != null ? fontSize! + 4 : 20,
                           color: outline
                               ? CustomTheme.secondaryColor
                               : Colors.white,

@@ -22,9 +22,10 @@ import 'package:dima2022/services/user_service.dart';
 import 'package:dima2022/utils/providers.dart';
 import 'package:dima2022/utils/routes.dart';
 import 'package:dima2022/view/auth_screen.dart';
-import 'package:dima2022/view/custom_theme.dart';
+
 import 'package:dima2022/view/homepage_screen.dart';
 import 'package:dima2022/view/splash_screen.dart';
+import 'package:dima2022/view/widgets/common/custom_theme.dart';
 import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
 import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
 import 'package:dima2022/view_models/order_view_models/orders_view_model.dart';
@@ -98,7 +99,8 @@ void main() {
             'password': 'thomas',
             'returnSecureToken': true,
           },
-        ))..persist()
+        ))
+      ..persist()
       ..reply(
         200,
         '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"thomas@thomas.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
@@ -200,8 +202,9 @@ void main() {
             .get(startsWith("/locations/man_area.json"))
           ..reply(200, positionArea);
     var mockPositionUpdate =
-        nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-            .patch(startsWith("/locations/man_area.json?auth=$authToken"), '{"name":"man_area","A":{"latitude":45.517544,"longitude":9.098277},"B":{"latitude":45.439906,"longitude":9.250999},"C":{"latitude":45.441099,"longitude":9.122074},"D":{"latitude":45.439906,"longitude":9.238359},"users":{"AoYHY9BJpCM6y1gEmL0kyVkFnm32":["2023-01-23T17:08:21.258","2023-01-23T17:08:36.924","2023-01-23T17:09:22.712","2023-01-23T17:13:10.583"],"xFt5SXvRdzQibaId5Wmuojf6oZO2":["2023-01-05T20:20:36.794","2023-01-05T20:20:36.794","2023-01-05T20:21:53.913","2023-01-05T20:22:18.817","2023-01-05T20:22:46.979","2023-01-05T20:24:07.902","2023-01-05T20:26:20.256","2023-01-05T20:44:42.403","2023-01-05T20:47:09.481","2023-01-05T20:47:26.286","2023-01-05T20:52:54.077","2023-01-05T20:53:16.190","2023-01-19T17:10:43.047","2023-01-19T17:13:04.098","2023-01-19T17:13:23.819","2023-01-19T17:14:26.355","2023-01-19T17:17:30.759","2023-01-19T17:18:40.432","2023-01-20T16:24:27.743","2023-01-20T16:35:09.455","2023-01-20T16:37:10.712","2023-01-20T16:37:23.943","2023-01-20T16:37:35.367","2023-01-20T16:38:52.728","2023-01-20T16:39:22.715","2023-01-20T16:39:34.168","2023-01-20T16:39:51.819","2023-01-20T16:42:01.925","2023-01-20T16:42:14.177","2023-01-20T16:43:00.977","2023-01-20T16:45:42.823","2023-01-20T16:46:24.688","2023-01-20T16:46:53.618","2023-01-20T16:47:06.180","2023-01-20T16:47:55.389","2023-01-20T16:48:50.524","2023-01-20T16:49:11.438","2023-01-20T16:56:35.242","2023-01-20T17:08:45.306","2023-01-20T17:10:55.454","2023-01-20T17:13:05.348","2023-01-20T17:14:52.885","2023-01-20T17:15:15.374","2023-01-20T17:19:12.195","2023-01-20T17:21:29.911","2023-01-23T12:15:39.644","2023-01-23T12:28:23.161","2023-01-23T12:32:05.291","2023-01-23T12:32:38.036","2023-01-23T12:34:24.512","2023-01-23T12:37:13.266","2023-01-23T12:38:01.218","2023-01-23T12:54:56.594","2023-01-23T12:55:08.954","2023-01-23T13:10:38.149","2023-01-23T13:11:08.885","2023-01-23T13:15:58.122","2023-01-23T15:33:44.464","2023-01-23T15:35:05.933","2023-01-23T16:15:03.283","2023-01-23T16:16:13.009","2023-01-23T16:24:40.063","2023-01-23T16:27:33.325","2023-01-23T16:28:24.737","2023-01-23T16:41:09.209","2023-01-23T16:42:04.141","2023-01-23T17:16:40.804","2023-01-23T17:17:08.453","2023-01-23T17:17:28.028","2023-01-23T17:17:48.566","2023-01-23T17:18:27.828","2023-01-23T17:33:26.915","2023-01-23T17:43:26.462","2023-01-23T17:44:56.721","2023-01-23T17:45:38.153","2023-01-23T17:46:05.218","2023-01-23T17:47:04.667","2023-01-23T17:47:48.265","2023-01-23T18:01:03.758","2023-01-23T18:02:03.804","2023-01-23T18:02:58.080","2023-01-23T18:06:41.075","2023-01-23T18:14:00.970","2023-01-23T18:30:50.173","2023-01-23T18:31:44.983","2023-01-23T19:08:48.937","2023-01-23T19:10:15.593","2023-01-23T19:11:40.288","2023-01-24T14:37:48.900","2023-01-24T14:38:16.326","2023-01-24T15:56:25.535","2023-01-24T16:03:59.515","2023-01-24T16:15:00.026","2023-01-24T16:15:22.111","2023-01-24T16:42:24.693","2023-01-24T16:45:40.098","2023-01-24T16:49:19.874","2023-01-24T16:53:00.396","2023-01-24T16:55:57.004","2023-01-24T16:56:30.068","2023-01-24T16:56:42.027","2023-01-24T16:56:55.971","2023-01-24T17:03:25.469","2023-01-24T17:19:19.080","2023-01-24T17:20:37.367","2023-01-24T17:21:18.042","2023-01-24T17:22:47.595","2023-01-25T17:28:57.877","2023-01-25T17:34:46.126","2023-01-25T17:35:24.797","2023-01-25T17:43:54.577","2023-01-25T17:44:47.243","2023-01-25T17:49:33.531","2023-01-25T17:59:05.300","2023-01-25T18:19:33.446","2023-01-25T18:20:05.005"]}}')
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").patch(
+            startsWith("/locations/man_area.json?auth=$authToken"),
+            '{"name":"man_area","A":{"latitude":45.517544,"longitude":9.098277},"B":{"latitude":45.439906,"longitude":9.250999},"C":{"latitude":45.441099,"longitude":9.122074},"D":{"latitude":45.439906,"longitude":9.238359},"users":{"AoYHY9BJpCM6y1gEmL0kyVkFnm32":["2023-01-23T17:08:21.258","2023-01-23T17:08:36.924","2023-01-23T17:09:22.712","2023-01-23T17:13:10.583"],"xFt5SXvRdzQibaId5Wmuojf6oZO2":["2023-01-05T20:20:36.794","2023-01-05T20:20:36.794","2023-01-05T20:21:53.913","2023-01-05T20:22:18.817","2023-01-05T20:22:46.979","2023-01-05T20:24:07.902","2023-01-05T20:26:20.256","2023-01-05T20:44:42.403","2023-01-05T20:47:09.481","2023-01-05T20:47:26.286","2023-01-05T20:52:54.077","2023-01-05T20:53:16.190","2023-01-19T17:10:43.047","2023-01-19T17:13:04.098","2023-01-19T17:13:23.819","2023-01-19T17:14:26.355","2023-01-19T17:17:30.759","2023-01-19T17:18:40.432","2023-01-20T16:24:27.743","2023-01-20T16:35:09.455","2023-01-20T16:37:10.712","2023-01-20T16:37:23.943","2023-01-20T16:37:35.367","2023-01-20T16:38:52.728","2023-01-20T16:39:22.715","2023-01-20T16:39:34.168","2023-01-20T16:39:51.819","2023-01-20T16:42:01.925","2023-01-20T16:42:14.177","2023-01-20T16:43:00.977","2023-01-20T16:45:42.823","2023-01-20T16:46:24.688","2023-01-20T16:46:53.618","2023-01-20T16:47:06.180","2023-01-20T16:47:55.389","2023-01-20T16:48:50.524","2023-01-20T16:49:11.438","2023-01-20T16:56:35.242","2023-01-20T17:08:45.306","2023-01-20T17:10:55.454","2023-01-20T17:13:05.348","2023-01-20T17:14:52.885","2023-01-20T17:15:15.374","2023-01-20T17:19:12.195","2023-01-20T17:21:29.911","2023-01-23T12:15:39.644","2023-01-23T12:28:23.161","2023-01-23T12:32:05.291","2023-01-23T12:32:38.036","2023-01-23T12:34:24.512","2023-01-23T12:37:13.266","2023-01-23T12:38:01.218","2023-01-23T12:54:56.594","2023-01-23T12:55:08.954","2023-01-23T13:10:38.149","2023-01-23T13:11:08.885","2023-01-23T13:15:58.122","2023-01-23T15:33:44.464","2023-01-23T15:35:05.933","2023-01-23T16:15:03.283","2023-01-23T16:16:13.009","2023-01-23T16:24:40.063","2023-01-23T16:27:33.325","2023-01-23T16:28:24.737","2023-01-23T16:41:09.209","2023-01-23T16:42:04.141","2023-01-23T17:16:40.804","2023-01-23T17:17:08.453","2023-01-23T17:17:28.028","2023-01-23T17:17:48.566","2023-01-23T17:18:27.828","2023-01-23T17:33:26.915","2023-01-23T17:43:26.462","2023-01-23T17:44:56.721","2023-01-23T17:45:38.153","2023-01-23T17:46:05.218","2023-01-23T17:47:04.667","2023-01-23T17:47:48.265","2023-01-23T18:01:03.758","2023-01-23T18:02:03.804","2023-01-23T18:02:58.080","2023-01-23T18:06:41.075","2023-01-23T18:14:00.970","2023-01-23T18:30:50.173","2023-01-23T18:31:44.983","2023-01-23T19:08:48.937","2023-01-23T19:10:15.593","2023-01-23T19:11:40.288","2023-01-24T14:37:48.900","2023-01-24T14:38:16.326","2023-01-24T15:56:25.535","2023-01-24T16:03:59.515","2023-01-24T16:15:00.026","2023-01-24T16:15:22.111","2023-01-24T16:42:24.693","2023-01-24T16:45:40.098","2023-01-24T16:49:19.874","2023-01-24T16:53:00.396","2023-01-24T16:55:57.004","2023-01-24T16:56:30.068","2023-01-24T16:56:42.027","2023-01-24T16:56:55.971","2023-01-24T17:03:25.469","2023-01-24T17:19:19.080","2023-01-24T17:20:37.367","2023-01-24T17:21:18.042","2023-01-24T17:22:47.595","2023-01-25T17:28:57.877","2023-01-25T17:34:46.126","2023-01-25T17:35:24.797","2023-01-25T17:43:54.577","2023-01-25T17:44:47.243","2023-01-25T17:49:33.531","2023-01-25T17:59:05.300","2023-01-25T18:19:33.446","2023-01-25T18:20:05.005"]}}')
           ..reply(200, '');
 
     // Cart
@@ -210,8 +213,10 @@ void main() {
     var mockCart = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
         .get(startsWith("/carts/$userId.json"))
       ..reply(200, cart);
-    var mockCartUpdate = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-        .put(startsWith("/carts/$userId.json?auth=$authToken"), '{"-MEPxPT8F5BFAZbWokNc":{"id":"2023-01-23 19:33:37.349","productId":"-MEPxPT8F5BFAZbWokNc","title":"Felpa con cerniera adidas x Gucci","quantity":1,"price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg"}}')
+    var mockCartUpdate =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+            startsWith("/carts/$userId.json?auth=$authToken"),
+            '{"-MEPxPT8F5BFAZbWokNc":{"id":"2023-01-23 19:33:37.349","productId":"-MEPxPT8F5BFAZbWokNc","title":"Felpa con cerniera adidas x Gucci","quantity":1,"price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg"}}')
           ..reply(200, '');
 
     // Orders
@@ -219,9 +224,11 @@ void main() {
         .get(startsWith("/orders/$userId.json"))
       ..reply(200,
           '{"-NKxEVAjjTC7U2MXOgv4":{"amount":19.99,"dateTime":"2023-01-04T15:44:53.136","products":[{"id":"2023-01-04 15:44:06.443","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","price":19.99,"productId":"-MEPxPT8F5BFAZbWokNc","quantity":1,"title":"Felpa con cerniera adidas x Gucci"}]},"-NMidhlUFMmbnGlL_pTd":{"amount":19.99,"dateTime":"2023-01-26T16:15:38.705","products":[{"id":"2023-01-23 19:33:37.349","imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","price":19.99,"productId":"-MEPxPT8F5BFAZbWokNc","quantity":1,"title":"Felpa con cerniera adidas x Gucci"}]}}');
-    var mockOrderAdd = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
-        .post(startsWith("/orders/$userId.json?auth=$authToken"),'{"amount":100.0,"dateTime":"2023-01-26T22:17:10.084151","products":[{"id":"id","productId":"pid","title":"title","quantity":1,"price":100.0,"imageUrl":"img.jpg"}]}')
-      ..reply(200, '{"name":"id"}');
+    var mockOrderAdd =
+        nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
+            startsWith("/orders/$userId.json?auth=$authToken"),
+            '{"amount":100.0,"dateTime":"2023-01-26T22:17:10.084151","products":[{"id":"id","productId":"pid","title":"title","quantity":1,"price":100.0,"imageUrl":"img.jpg"}]}')
+          ..reply(200, '{"name":"id"}');
 
     // Shared Preferences
     SharedPreferences.setMockInitialValues({
@@ -254,7 +261,7 @@ void main() {
   testWidgets('SplashScreen test', (WidgetTester tester) async {
     await tester.pumpWidget(
       MultiProvider(
-        providers: authProviders,
+        providers: Providers.authProviders,
         child: Builder(
           builder: (_) => MaterialApp(
               title: CustomTheme.appTitle,
@@ -269,25 +276,25 @@ void main() {
   });
 
   testWidgets('Auth test', (tester) async {
-    await tester.pumpWidget(MultiProvider(
-        providers: mockAuthProviders,
-        child: MaterialApp(
-          title: CustomTheme.appTitle,
-          theme: CustomTheme().materialTheme,
-          debugShowCheckedModeBanner: false,
-          home: Layout(
-            child: Layout(
-              child: Consumer<AuthViewModel>(
-                  builder: (context, auth, child) =>
-                      Scaffold(
-                        body: auth.isAuthenticated
-                            ? const HomePage()
-                            : const AuthScreen().authScreenPage(context),
-                      )),
+    await tester.pumpWidget(
+      MultiProvider(
+          providers: mockAuthProviders,
+          child: MaterialApp(
+            title: CustomTheme.appTitle,
+            theme: CustomTheme().materialTheme,
+            debugShowCheckedModeBanner: false,
+            home: Layout(
+              child: Layout(
+                child: Consumer<AuthViewModel>(
+                    builder: (context, auth, child) => Scaffold(
+                          body: auth.isAuthenticated
+                              ? const HomePage()
+                              : const AuthScreen().authScreenPage(context),
+                        )),
+              ),
             ),
-          ),
-          routes: Routes.routeList,
-        )),
+            routes: Routes.routeList,
+          )),
     );
     await tester.pump(const Duration(milliseconds: 100));
     expect(find.byKey(const Key('loginButton')), findsOneWidget);
@@ -296,8 +303,7 @@ void main() {
     await tester.enterText(find.byKey(const Key('passField')), 'thomas');
     await tester.tap(find.byKey(const Key('signupInsteadButton')));
     await tester.pump();
-    await tester.enterText(
-        find.byKey(const Key('confirmPassField')), 'thomas');
+    await tester.enterText(find.byKey(const Key('confirmPassField')), 'thomas');
     await tester.tap(find.byKey(const Key('signupInsteadButton')));
     await tester.pump();
     await tester.tap(find.byKey(const Key('loginButton')));

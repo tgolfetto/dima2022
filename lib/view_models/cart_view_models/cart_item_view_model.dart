@@ -23,7 +23,7 @@ class CartItemViewModel with ChangeNotifier {
   }
 
   // The quantity of the cart item
-  int get quantity {
+  num get quantity {
     return _cartItem.quantity;
   }
 

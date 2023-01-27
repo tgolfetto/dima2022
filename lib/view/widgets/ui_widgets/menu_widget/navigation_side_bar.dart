@@ -66,7 +66,7 @@ class MenuSide extends StatelessWidget {
         : getProportionateScreenHeight(90);
 
     return ConstrainedBox(
-      constraints: BoxConstraints(maxHeight: 700),
+      constraints: const BoxConstraints(maxHeight: 700),
       child: GlassRoundedContainer(
         margin: EdgeInsets.symmetric(
             vertical: marginHeight, horizontal: marginWidth),
@@ -87,38 +87,38 @@ class MenuSide extends StatelessWidget {
                 curve: curve,
                 duration: duration,
                 builder: (context, t, _) {
-                  final _selectedColor = item.selectedColor ??
+                  final selectedColor = item.selectedColor ??
                       selectedItemColor ??
                       theme.primaryColor;
 
-                  final _unselectedColor = item.unselectedColor ??
+                  final unselectedColor = item.unselectedColor ??
                       unselectedItemColor ??
                       theme.iconTheme.color;
 
                   return Material(
                     color: Color.lerp(
-                        _selectedColor.withOpacity(0.0),
-                        _selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
+                        selectedColor.withOpacity(0.0),
+                        selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
                         t),
                     shape: itemShape,
                     child: InkWell(
                       onTap: () =>
                           content.updateMainContentIndex(items.indexOf(item)),
                       customBorder: itemShape,
-                      focusColor: _selectedColor.withOpacity(0.1),
-                      highlightColor: _selectedColor.withOpacity(0.1),
-                      splashColor: _selectedColor.withOpacity(0.1),
-                      hoverColor: _selectedColor.withOpacity(0.1),
+                      focusColor: selectedColor.withOpacity(0.1),
+                      highlightColor: selectedColor.withOpacity(0.1),
+                      splashColor: selectedColor.withOpacity(0.1),
+                      hoverColor: selectedColor.withOpacity(0.1),
                       child: Container(
                         width: 100,
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             IconTheme(
                               data: IconThemeData(
                                 color: Color.lerp(
-                                    _unselectedColor, _selectedColor, t),
+                                    unselectedColor, selectedColor, t),
                                 size: 40 * marginHeight * 0.01 > 40
                                     ? 40
                                     : 40 * marginHeight * 0.01,
@@ -134,8 +134,8 @@ class MenuSide extends StatelessWidget {
                                 child: DefaultTextStyle(
                                   style: TextStyle(
                                     color: Color.lerp(
-                                        _selectedColor.withOpacity(0.0),
-                                        _selectedColor,
+                                        selectedColor.withOpacity(0.0),
+                                        selectedColor,
                                         t),
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15 * marginHeight * 0.01 > 15

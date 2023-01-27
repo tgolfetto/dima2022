@@ -1,18 +1,24 @@
-import 'package:dima2022/models/product/category.dart';
 import 'package:flutter/material.dart';
-import 'tag.dart';
+import '../../../../models/product/category.dart';
+import '../../common/tag.dart';
 
 class ItemCategoryTag extends Tag {
   ItemCategoryTag({
     required ItemCategory category,
     bool hideDetails = false,
     Key? key,
+    ValueChanged<bool>? onChanged,
+    double? fontSize,
+    required bool value,
   }) : super(
           key: key,
           //icon: _getIcon(category),
           text: category.name[0].toUpperCase() + category.name.substring(1),
           hideDetails: hideDetails,
           upperCase: false,
+          onChanged: onChanged,
+          fontSize: fontSize,
+          isChecked: value,
         );
 
   static IconData _getIcon(ItemCategory category) {

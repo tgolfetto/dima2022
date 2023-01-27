@@ -10,7 +10,7 @@ class GlassRoundedContainer extends StatelessWidget {
   final bool enableShadow;
   final bool enableBorder;
 
-  GlassRoundedContainer({
+  const GlassRoundedContainer({
     Key? key,
     required this.child,
     required this.margin,
@@ -28,7 +28,7 @@ class GlassRoundedContainer extends StatelessWidget {
         shape: BoxShape.rectangle,
         border: enableBorder
             ? Border.all(
-                color: Color.fromARGB(60, 150, 150, 150),
+                color: const Color.fromARGB(60, 150, 150, 150),
               )
             : null,
         borderRadius: radius,
@@ -36,10 +36,11 @@ class GlassRoundedContainer extends StatelessWidget {
             ? null
             : [
                 BoxShadow(
-                  color: Color.fromARGB(255, 119, 119, 119).withOpacity(0.2),
+                  color:
+                      const Color.fromARGB(255, 119, 119, 119).withOpacity(0.2),
                   blurRadius: 8.0,
                   spreadRadius: 4.0,
-                  offset: Offset(4, 4),
+                  offset: const Offset(4, 4),
                 )
               ],
       ),

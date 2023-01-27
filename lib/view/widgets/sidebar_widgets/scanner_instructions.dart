@@ -1,6 +1,7 @@
-import 'package:dima2022/utils/size_config.dart';
 import 'package:flutter/material.dart';
-import '../../custom_theme.dart';
+
+import '../../../utils/size_config.dart';
+import '../common/custom_theme.dart';
 
 class ScannerInstructions extends StatelessWidget {
   static const int pageIndex = 10;

@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
-import '../utils/routes.dart';
 
 import '../utils/size_config.dart';
 import '../view_models/user_view_models/auth_view_model.dart';
-import 'custom_theme.dart';
+import 'widgets/common/custom_theme.dart';
 import 'homepage_screen.dart';
 import 'splash_screen.dart';
 import 'widgets/common/animated_circular_progress_indicator.dart';
+import 'widgets/common/custom_button.dart';
 
 enum AuthMode { signup, login }
 
@@ -201,9 +201,9 @@ class AuthCardState extends State<AuthCard> {
         elevation: 2.0,
         shadowColor: Colors.transparent,
         child: Container(
-          height: _authMode == AuthMode.signup ? 320 : 260,
+          height: _authMode == AuthMode.signup ? 340 : 280,
           constraints: BoxConstraints(
-              minHeight: _authMode == AuthMode.signup ? 320 : 260),
+              minHeight: _authMode == AuthMode.signup ? 340 : 290),
           width: deviceSize.width * 0.75,
           padding: EdgeInsets.all(
               getProportionateScreenHeight(CustomTheme.smallPadding)),
@@ -265,13 +265,13 @@ class AuthCardState extends State<AuthCard> {
                   ),
                   _isLoading
                       ? const AnimatedCircularProgressIndicator()
-                      : ElevatedButton(
+                      : CustomButton(
                           key: const Key("loginButton"),
+                          outline: false,
+                          transparent: false,
                           onPressed: _submit,
-                          style: CustomTheme.buttonStyleFill,
-                          child: Text(_authMode == AuthMode.login
-                              ? 'LOGIN'
-                              : 'SIGN UP'),
+                          text:
+                              _authMode == AuthMode.login ? 'LOGIN' : 'SIGN UP',
                         ),
                   TextButton(
                     key: const Key("signupInsteadButton"),

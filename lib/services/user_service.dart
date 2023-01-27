@@ -1,18 +1,15 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../utils/constants.dart';
 
 import '../models/exceptions/http_exception.dart';
 import '../models/user/user.dart';
+import 'protected_service.dart';
 
-class UserService {
-  // The user's authentication token
-  String? _authToken;
-  // The ID of the user
-  String? _userId;
-
-  UserService(this._authToken, this._userId);
+class UserService extends ProtectedService {
+  UserService(String authToken, String userId) : super(authToken, userId);
   /*
   Function to create a new user in the database
   @param user the user to be created
@@ -21,7 +18,7 @@ class UserService {
   */
   Future<void> createUser(String email) async {
     User newUser = User(
-      id: _userId,
+      id: userId,
       email: email,
       profileImageUrl: userAvatar,
     );
@@ -37,7 +34,7 @@ class UserService {
   */
   Future<User> updateUser(User user) async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
     final url = Uri.https(baseUrl, '/users/${user.id}.json', _params);
 
@@ -61,7 +58,7 @@ class UserService {
   */
   Future<void> deleteUser(String userId) async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
     final url = Uri.https(baseUrl, '/users/${userId}.json', _params);
     final http.Response response = await http.delete(
@@ -81,9 +78,9 @@ class UserService {
   */
   Future<User> getUser() async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
-    final url = Uri.https(baseUrl, '/users/${_userId}.json', _params);
+    final url = Uri.https(baseUrl, '/users/${userId}.json', _params);
     final http.Response response = await http.get(
       url,
     );
@@ -105,9 +102,9 @@ class UserService {
   */
   Future<User> getUserById(String id) async {
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
-    final url = Uri.https(baseUrl, '/users/${id}.json', _params);
+    final url = Uri.https(baseUrl, '/users/$id.json', _params);
     final http.Response response = await http.get(
       url,
     );

@@ -1,8 +1,10 @@
-import 'package:dima2022/models/product/category.dart';
-import 'package:dima2022/models/product/product_type.dart';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/product/category.dart';
+import '../../models/product/product_type.dart';
 import 'product_view_model.dart';
 
 import '../../services/product_service.dart';
@@ -17,6 +19,8 @@ class ProductListViewModel extends ChangeNotifier {
   // The Products instance
   late final Products _products;
 
+  late bool isLoaded;
+
   // Initializes a ProductListViewModel with an empty Products instance
   ProductListViewModel() {
     _products = Products([]);
@@ -27,8 +31,8 @@ class ProductListViewModel extends ChangeNotifier {
       String? token, String? userId, ProductListViewModel? previousProducts) {
     _products =
         previousProducts == null ? Products([]) : previousProducts._products;
-    _productsService = ProductsService(token, userId);
-
+    _productsService = ProductsService(token!, userId!);
+    isLoaded = false;
     ProductService.authToken = token;
     ProductService.userId = userId;
   }
@@ -131,6 +135,11 @@ class ProductListViewModel extends ChangeNotifier {
     final loadedProducts =
         await _productsService.fetchAndSetProducts(filterByUser);
     _products.setItems(loadedProducts);
+    notifyListeners();
+  }
+
+  void refreshProduct(ProductViewModel newProduct) async {
+    _products.updateItem(newProduct.id!, newProduct.getProduct);
     notifyListeners();
   }
 }

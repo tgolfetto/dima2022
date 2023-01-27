@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dima2022/view_models/user_view_models/auth_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../models/position/position_area.dart';
 import '../../services/position_service.dart';
+import '../user_view_models/auth_view_model.dart';
 
 class PositionViewModel extends ChangeNotifier {
   late final PositionService _positionService;
@@ -24,7 +24,7 @@ class PositionViewModel extends ChangeNotifier {
 
   PositionViewModel.fromAuth(
       String? token, String? userId, PositionViewModel? previousPosition) {
-    _positionService = PositionService(token, userId);
+    _positionService = PositionService(token!, userId!);
     _positionArea = previousPosition == null
         ? _positionArea = PositionArea()
         : previousPosition._positionArea;
@@ -33,7 +33,7 @@ class PositionViewModel extends ChangeNotifier {
   PositionArea get position => _positionArea;
 
   Future<void> updatePositionArea(PositionArea newPositionArea) async {
-    PositionArea p = await _positionService.updatePositionArea(newPositionArea);
+    _positionArea = await _positionService.updatePositionArea(newPositionArea);
     notifyListeners();
   }
 
@@ -45,7 +45,7 @@ class PositionViewModel extends ChangeNotifier {
   }
 
   Future<void> listenLocation(BuildContext ctx) async {
-    LocationPermission permission = await Geolocator.requestPermission();
+    await Geolocator.requestPermission();
 
     if (defaultTargetPlatform == TargetPlatform.android) {
       locationSettings = AndroidSettings(
@@ -123,7 +123,7 @@ class PositionViewModel extends ChangeNotifier {
   Map vector(Map<String, double>? p1, Map<String, double>? p2) {
     return {
       'latitude': (p2!['latitude']! - p1!['latitude']!),
-      'longitude': (p2!['longitude']! - p1!['longitude']!)
+      'longitude': (p2['longitude']! - p1['longitude']!)
     };
   }
 

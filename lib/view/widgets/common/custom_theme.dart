@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/size_config.dart';
+import '../../../utils/size_config.dart';
 
 class CustomTheme {
   static const String appTitle = 'My Shop App.';
@@ -8,7 +8,8 @@ class CustomTheme {
   static Color backgroundColor = Colors.white;
   static Color secondaryColor = Colors.teal;
   static Color accentColor = Colors.redAccent;
-  static Color secondaryBackgroundColor = Colors.white60;
+  static Color secondaryBackgroundColor =
+      const Color.fromARGB(153, 250, 250, 250);
 
   static double spacePadding = 8.0;
   static double smallPadding = 12.0;
@@ -20,10 +21,9 @@ class CustomTheme {
   static ButtonStyle buttonStyleFill = ElevatedButton.styleFrom(
       backgroundColor: secondaryColor,
       foregroundColor: backgroundColor,
-      padding: EdgeInsets.symmetric(
-        vertical: getProportionateScreenHeight(buttonPaddingV),
-        horizontal: getProportionateScreenWidth(buttonPaddingH)
-      ),
+      // padding: EdgeInsets.symmetric(
+      //     vertical: getProportionateScreenHeight(buttonPaddingV),
+      //     horizontal: getProportionateScreenWidth(buttonPaddingH)),
       shape: RoundedRectangleBorder(
           side: BorderSide(
               color: secondaryColor, width: 1, style: BorderStyle.solid),
@@ -37,10 +37,10 @@ class CustomTheme {
   static ButtonStyle buttonStyleOutline = ElevatedButton.styleFrom(
     backgroundColor: backgroundColor,
     foregroundColor: secondaryColor,
-    padding: EdgeInsets.symmetric(
-      vertical: getProportionateScreenHeight(buttonPaddingV),
-      // horizontal: getProportionateScreenWidth(buttonPaddingH)
-    ),
+    // padding: EdgeInsets.symmetric(
+    //   vertical: getProportionateScreenHeight(buttonPaddingV),
+    //   // horizontal: getProportionateScreenWidth(buttonPaddingH)
+    // ),
     shape: RoundedRectangleBorder(
         side: BorderSide(
             color: secondaryColor, width: 1, style: BorderStyle.solid),
@@ -67,7 +67,9 @@ class CustomTheme {
   );
 
   static TextStyle headingStyle = TextStyle(
-    fontSize: getProportionateScreenHeight(18),
+    fontSize: getProportionateScreenHeight(18) > 18
+        ? 18
+        : getProportionateScreenHeight(18),
     fontWeight: FontWeight.bold,
     color: primaryColor,
     height: 1.5,
@@ -75,7 +77,9 @@ class CustomTheme {
   );
 
   static TextStyle bodyStyle = TextStyle(
-    fontSize: getProportionateScreenHeight(16),
+    fontSize: getProportionateScreenHeight(16) > 16
+        ? 16
+        : getProportionateScreenHeight(16),
     fontWeight: FontWeight.w100,
     color: primaryColor,
     height: 1.0,
@@ -83,7 +87,9 @@ class CustomTheme {
   );
 
   static TextStyle bodySecondStyle = TextStyle(
-    fontSize: getProportionateScreenHeight(16),
+    fontSize: getProportionateScreenHeight(16) > 16
+        ? 16
+        : getProportionateScreenHeight(16),
     fontWeight: FontWeight.w100,
     color: backgroundColor,
     height: 1.0,
@@ -91,7 +97,9 @@ class CustomTheme {
   );
 
   static TextStyle smallBodyStyle = TextStyle(
-    fontSize: getProportionateScreenHeight(13),
+    fontSize: getProportionateScreenHeight(13) > 13
+        ? 13
+        : getProportionateScreenHeight(13),
     fontWeight: FontWeight.w100,
     color: primaryColor,
     height: 1.0,
@@ -102,6 +110,9 @@ class CustomTheme {
     return ThemeData(
       primaryColor: primaryColor,
       scaffoldBackgroundColor: backgroundColor,
+      colorScheme: ThemeData().colorScheme.copyWith(
+            primary: CustomTheme.secondaryColor,
+          ),
       fontFamily: 'Raleway',
       appBarTheme: const AppBarTheme(
         color: Colors.transparent,

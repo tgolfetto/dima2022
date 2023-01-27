@@ -66,3 +66,7 @@ ItemCategory categoryFromString(String category) {
       throw Exception('Invalid category');
   }
 }
+
+String categoryToString(ItemCategory category) {
+  return category.name[0] + category.name.substring(2);
+}

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../common/custom_theme.dart';
+
 class ChatItemWidget extends StatelessWidget {
   const ChatItemWidget({
     super.key,
@@ -32,7 +34,9 @@ class ChatItemWidget extends StatelessWidget {
               ),
               constraints: const BoxConstraints(maxWidth: 200),
               decoration: BoxDecoration(
-                color: received ? Colors.green : Colors.orange,
+                color: received
+                    ? CustomTheme.secondaryColor
+                    : CustomTheme.secondaryColor,
                 borderRadius: BorderRadius.circular(8),
               ),
               margin: EdgeInsets.only(

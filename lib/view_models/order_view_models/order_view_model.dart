@@ -1,7 +1,7 @@
-import 'package:dima2022/view_models/cart_view_models/cart_item_view_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/orders/order_item.dart';
+import '../cart_view_models/cart_item_view_model.dart';
 
 class OrderViewModel extends ChangeNotifier {
   late final OrderItem _order;
@@ -18,7 +18,7 @@ class OrderViewModel extends ChangeNotifier {
       .toList();
   DateTime get dateTime => _order.dateTime;
 
-  int getSingleItems() {
+  num getSingleItems() {
     return _order.products.map((e) => e.quantity).reduce((a, b) => a + b);
   }
 

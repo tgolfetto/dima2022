@@ -8,17 +8,13 @@ import '../utils/constants.dart';
 import '../models/orders/order_item.dart';
 
 import '../models/cart/cart_item.dart';
+import 'protected_service.dart';
 
-class OrdersService {
-  // The user's authentication token
-  String? _authToken;
-  // The ID of the user
-  String? _userId;
-
+class OrdersService extends ProtectedService {
   // Constructor for CartService
   // @param authToken the user's authentication token
   // @param userId the ID of the user
-  OrdersService(this._authToken, this._userId);
+  OrdersService(String authToken, String userId) : super(authToken, userId);
 
   // Fetches a list of orders made by the user
   // @return a list of OrderItem objects
@@ -26,9 +22,9 @@ class OrdersService {
   // @requires _authToken != null && _userId != null
   // @ensures returns a list of OrderItem objects
   Future<List<OrderItem>> fetchOrders() async {
-    final _path = "/orders/${_userId}.json";
+    final _path = "/orders/${userId}.json";
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
     final url = Uri.https(baseUrl, _path, _params);
     try {
@@ -60,9 +56,9 @@ class OrdersService {
   // @requires _authToken != null && _userId != null
   // @ensures returns the newly created OrderItem object
   Future<OrderItem> addOrder(List<CartItem> cartProducts, double total) async {
-    final _path = "/orders/${_userId}.json";
+    final _path = "/orders/${userId}.json";
     final _params = {
-      'auth': _authToken,
+      'auth': authToken,
     };
     final url = Uri.https(baseUrl, _path, _params);
 

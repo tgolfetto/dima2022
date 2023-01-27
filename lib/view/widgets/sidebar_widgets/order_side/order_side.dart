@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
-import '../../../view_models/order_view_models/orders_view_model.dart';
-import '../../custom_theme.dart';
-import '../common/animated_circular_progress_indicator.dart';
-import '../homepage_widgets/tile_widget.dart';
+import '../../../../view_models/order_view_models/orders_view_model.dart';
+import '../../common/animated_circular_progress_indicator.dart';
+import '../../common/custom_theme.dart';
+import '../../homepage_widgets/orders/orders_stat_grid.dart';
 
 class OrderSide extends StatefulWidget {
   static const pageIndex = 11;
@@ -16,57 +16,26 @@ class OrderSide extends StatefulWidget {
 }
 
 class _OrderSideState extends State<OrderSide> {
+  late final Future _ordersFuture;
 
-  SliverMargin getTileGrid(spacing, OrdersViewModel orderData) {
-    Map<String, String> tiles = {
-      "Total Orders": orderData.getTotalCount().toString(),
-      "Average Order Amount":
-          "€ ${orderData.getAverageAmount().toStringAsFixed(2)}",
-      "Maximum Order Amount":
-          "€ ${orderData.getMaxAmount().toStringAsFixed(1)}",
-      "Minimum Order Amount":
-          "€ ${orderData.getMinAmount().toStringAsFixed(2)}",
-      "Month with Highest Orders": orderData.computeExpensiveMonth(),
-    };
+  Future _obtainOrdersFuture() {
+    return Provider.of<OrdersViewModel>(context, listen: false)
+        .fetchAndSetOrders();
+  }
 
-    return SliverMargin(
-      margin: context.layout.breakpoint == LayoutBreakpoint.xs
-          ? EdgeInsets.symmetric(horizontal: CustomTheme.spacePadding)
-          : EdgeInsets.symmetric(horizontal: CustomTheme.mediumPadding),
-      sliver: SliverGrid(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: context.layout.value(
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 2,
-            xl: 2,
-          ),
-          mainAxisSpacing: spacing,
-          crossAxisSpacing: spacing,
-          childAspectRatio: 1.5,
-        ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return TileWidget(
-              textDescription: tiles.entries.elementAt(index).key,
-              textValue: tiles.entries.elementAt(index).value,
-            );
-          },
-          childCount: tiles.length,
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    _ordersFuture = _obtainOrdersFuture();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final double spacing =
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
-    late var ordersFuture = Provider.of<OrdersViewModel>(context, listen: false)
-        .fetchAndSetOrders();
+
     return FutureBuilder(
-        future: ordersFuture,
+        future: _ordersFuture,
         builder: (ctx, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -102,7 +71,17 @@ class _OrderSideState extends State<OrderSide> {
                       )),
                   const SliverGutter(),
                   orderData.items.isNotEmpty
-                      ? getTileGrid(spacing, orderData)
+                      ? OrderStatGrid(
+                          spacing: spacing,
+                          orderData: orderData,
+                          crossAxisCount: context.layout.value(
+                            xs: 1,
+                            sm: 1,
+                            md: 1,
+                            lg: 2,
+                            xl: 2,
+                          ),
+                        )
                       : Align(
                           alignment: Alignment.centerLeft,
                           child: Text(

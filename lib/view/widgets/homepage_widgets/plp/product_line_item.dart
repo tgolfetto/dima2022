@@ -7,27 +7,26 @@ import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/product/product.dart';
-import '../../view_models/cart_view_models/cart_view_model.dart';
-import '../../view_models/content_view_models/content_view_model.dart';
-import '../../view_models/product_view_models/product_view_model.dart';
-import '../../view_models/product_view_models/products_view_model.dart';
-import '../../view_models/request_view_models/request_list_view_model.dart';
-import '../../view_models/request_view_models/request_view_model.dart';
-import '../../view_models/user_view_models/user_view_model.dart';
-import '../custom_theme.dart';
-import 'sidebar_widgets/pdp.dart';
+import '../../../../view_models/cart_view_models/cart_view_model.dart';
+import '../../../../view_models/content_view_models/content_view_model.dart';
+import '../../../../view_models/product_view_models/product_view_model.dart';
+import '../../../../view_models/product_view_models/products_view_model.dart';
+import '../../../../view_models/request_view_models/request_list_view_model.dart';
+import '../../../../view_models/request_view_models/request_view_model.dart';
+import '../../../../view_models/user_view_models/user_view_model.dart';
+import '../../common/custom_theme.dart';
+import '../../sidebar_widgets/pdp_side/pdp.dart';
 
-class LineItem extends StatefulWidget {
-  ProductViewModel productViewModel;
+class ProductLineItem extends StatefulWidget {
+  final ProductViewModel productViewModel;
 
-  LineItem({super.key, required this.productViewModel});
+  const ProductLineItem({super.key, required this.productViewModel});
 
   @override
-  State<LineItem> createState() => _LineItemState();
+  State<ProductLineItem> createState() => _ProductLineItemState();
 }
 
-class _LineItemState extends State<LineItem> {
+class _ProductLineItemState extends State<ProductLineItem> {
   int selectedSize = 0;
   int productId = 0;
 
@@ -39,12 +38,14 @@ class _LineItemState extends State<LineItem> {
           context,
           listen: false,
         );
-        Product p = product.getProduct;
-        p.sizes = [selectedSize == 0 ? p.sizes![0] : selectedSize];
+
         var newRequestViewModel = RequestViewModel();
         newRequestViewModel.createRequest(
           userViewModel.user,
-          p,
+          product.getProduct
+            ..sizes = [
+              selectedSize == 0 ? product.getProduct.sizes![0] : selectedSize
+            ],
         );
         newRequestViewModel
             .updateMessage('May I receive this product in the dressing room?');
@@ -76,29 +77,19 @@ class _LineItemState extends State<LineItem> {
         Icons.try_sms_star,
         size: 14,
       ),
-      //  Row(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   children: [
-      //     const Icon(Icons.try_sms_star),
-      //     Padding(
-      //       padding: EdgeInsets.only(left: CustomTheme.smallPadding),
-      //       child: Text('Request', style: CustomTheme.bodyStyle),
-      //     )
-      //   ],
-      // ),
     );
   }
 
   Widget _addToCartButton(ProductViewModel productViewModel) {
     return TextButton(
       style: CustomTheme.buttonStyleFill,
-
       onPressed: () {
         Provider.of<CartViewModel>(
           context,
           listen: false,
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
             productViewModel.price!, productViewModel.title!);
+
         Timer? timer = Timer(const Duration(milliseconds: 1500), () {
           Navigator.of(context, rootNavigator: true).pop();
         });
@@ -121,18 +112,6 @@ class _LineItemState extends State<LineItem> {
         Icons.add_shopping_cart,
         size: 14,
       ),
-
-      // Row(
-      //   mainAxisAlignment: MainAxisAlignment.center,
-      //   crossAxisAlignment: CrossAxisAlignment.center,
-      //   children: [
-      //     const Icon(Icons.add_shopping_cart),
-      //     Text(
-      //       'Add to cart',
-      //       overflow: TextOverflow.ellipsis,
-      //     ),
-      //   ],
-      // ),
     );
   }
 
@@ -144,6 +123,8 @@ class _LineItemState extends State<LineItem> {
         onPressed: () {
           setState(() {
             product.toggleFavoriteStatus();
+            Provider.of<ProductListViewModel>(context, listen: false)
+                .refreshProduct(product);
           });
         },
         child: product.isFavorite
@@ -157,6 +138,7 @@ class _LineItemState extends State<LineItem> {
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
     ProductViewModel product = widget.productViewModel;
+
     return LayoutBuilder(builder: (context, constraints) {
       final width = constraints.maxWidth;
       final height = constraints.maxHeight; //width / 0.532544378698225;
@@ -177,12 +159,13 @@ class _LineItemState extends State<LineItem> {
                       content.updateProductId(product.id!);
                       if (context.layout.breakpoint < LayoutBreakpoint.md) {
                         content.updateMainContentIndex(Pdp.pageIndex);
-                        content.updateSideBarIndex(Pdp.pageIndex);
-                      } else {
-                        content.updateSideBarIndex(Pdp.pageIndex);
                       }
+                      content.updateSideBarIndex(Pdp.pageIndex);
                     },
-                    child: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? Image.network(product.imageUrl!) : Image.asset('assets/images/test.png'),
+                    child: kIsWeb ||
+                            !Platform.environment.containsKey('FLUTTER_TEST')
+                        ? Image.network(product.imageUrl!)
+                        : Image.asset('assets/images/test.png'),
                   ),
                   Positioned(
                     right: 0.0,
@@ -198,7 +181,7 @@ class _LineItemState extends State<LineItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 2,
+                    flex: 3,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 3.0),
                       child: Column(
@@ -207,7 +190,7 @@ class _LineItemState extends State<LineItem> {
                             product.title!,
                             maxLines: 2,
                             style:
-                            CustomTheme.headingStyle.copyWith(fontSize: 14),
+                                CustomTheme.headingStyle.copyWith(fontSize: 14),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ],
@@ -215,7 +198,7 @@ class _LineItemState extends State<LineItem> {
                     ),
                   ),
                   Flexible(
-                    flex: 3,
+                    flex: 4,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,

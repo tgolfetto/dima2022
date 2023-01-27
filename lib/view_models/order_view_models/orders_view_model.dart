@@ -1,6 +1,3 @@
-import 'dart:collection';
-
-import 'package:dima2022/view_models/order_view_models/order_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +6,7 @@ import '../../services/orders_service.dart';
 
 import '../../models/cart/cart_item.dart';
 import '../../models/orders/orders.dart';
+import 'order_view_model.dart';
 
 class OrdersViewModel extends ChangeNotifier {
   // The OrdersService instance
@@ -25,7 +23,7 @@ class OrdersViewModel extends ChangeNotifier {
   OrdersViewModel.fromAuth(
       String? token, String? userId, OrdersViewModel? previousOrders) {
     _orders = previousOrders == null ? Orders([]) : previousOrders._orders;
-    _ordersService = OrdersService(token, userId);
+    _ordersService = OrdersService(token!, userId!);
   }
 
   // Returns the items in the orders
@@ -72,15 +70,13 @@ class OrdersViewModel extends ChangeNotifier {
   }
 
   Map<String, double> getOrdersPerMonthData() {
-    final monthFormat = DateFormat.MMMM();
-    final result = Map<String, double>();
+    final result = <String, double>{};
     final monthGroups = groupOrdersByMonth();
     for (var month in monthGroups.keys) {
       final monthAmount = monthGroups[month]!
           .map((order) => order.amount)
           .reduce((a, b) => a + b);
       result.putIfAbsent(month, () => monthAmount);
-      // .add(OrdersPerMonth(month, monthAmount));
     }
     return result;
   }
@@ -116,8 +112,8 @@ class OrdersViewModel extends ChangeNotifier {
   // @require The cartProducts and total arguments must not be null
   // @ensure The order will be added to the orders and the OrdersService will be updated with the new order
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    final order_item = await _ordersService.addOrder(cartProducts, total);
-    _orders.addOrder(order_item);
+    final orderItem = await _ordersService.addOrder(cartProducts, total);
+    _orders.addOrder(orderItem);
     notifyListeners();
   }
 }

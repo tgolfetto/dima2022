@@ -1,21 +1,21 @@
 import 'dart:io';
 
-import 'package:dima2022/view_models/cart_view_models/cart_item_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../utils/size_config.dart';
+import '../../../../view_models/cart_view_models/cart_item_view_model.dart';
 import '../../../../view_models/cart_view_models/cart_view_model.dart';
+
 import '../../common/title_text.dart';
+import '../../../../utils/size_config.dart';
 import '../../ui_widgets/glass_rounded_container.dart';
+import '../../ui_widgets/number_container_box.dart';
 
 class CartItem extends StatelessWidget {
   final CartItemViewModel cartItemViewModel;
 
-  CartItem(
-    this.cartItemViewModel,
-  );
+  const CartItem(this.cartItemViewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +103,14 @@ class CartItem extends StatelessWidget {
                                       ),
                                     ],
                                     image: DecorationImage(
-                                      image: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')? NetworkImage(
-                                          cartItemViewModel.imageUrl) : Image.asset('assets/images/test.png').image,
+                                      image: kIsWeb ||
+                                              !Platform.environment
+                                                  .containsKey('FLUTTER_TEST')
+                                          ? NetworkImage(
+                                              cartItemViewModel.imageUrl)
+                                          : Image.asset(
+                                                  'assets/images/test.png')
+                                              .image,
                                       fit: BoxFit.cover,
                                     ),
                                     color: Colors.grey,
@@ -130,7 +136,7 @@ class CartItem extends StatelessWidget {
                         subtitle: Row(
                           children: <Widget>[
                             const TitleText(
-                              text: '\€ ',
+                              text: '€ ',
                               color: Colors.teal,
                               fontSize: 12,
                             ),
@@ -156,19 +162,22 @@ class CartItem extends StatelessWidget {
                                         cartItemViewModel.productId);
                               },
                             ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.teal.withAlpha(200),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: TitleText(
-                                color: Colors.white,
-                                text: 'x${cartItemViewModel.quantity}',
-                                fontSize: 13,
-                              ),
+                            CustomContainer(
+                              text: 'x${cartItemViewModel.quantity}',
                             ),
+                            // Container(
+                            //   width: 30,
+                            //   height: 30,
+                            //   alignment: Alignment.center,
+                            //   decoration: BoxDecoration(
+                            //       color: Colors.teal.withAlpha(200),
+                            //       borderRadius: BorderRadius.circular(10)),
+                            //   child: TitleText(
+                            //     color: Colors.white,
+                            //     text: 'x${cartItemViewModel.quantity}',
+                            //     fontSize: 13,
+                            //   ),
+                            // ),
                             IconButton(
                               iconSize: 17,
                               icon: const Icon(Icons.add),

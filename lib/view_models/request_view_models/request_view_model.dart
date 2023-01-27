@@ -1,12 +1,12 @@
-import 'package:dima2022/services/request_service.dart';
-import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
-import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../models/product/product.dart';
 import '../../models/request/request_status.dart';
 import '../../models/user/user.dart';
 import '../../models/request/request.dart';
+import '../../services/request_service.dart';
+import '../product_view_models/product_view_model.dart';
+import '../user_view_models/user_view_model.dart';
 
 class RequestViewModel with ChangeNotifier {
   late final Request _request;

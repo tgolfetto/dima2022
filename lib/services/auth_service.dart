@@ -21,7 +21,7 @@ class AuthService {
   // @ensure returns an Auth object with the authentication data if the request is successful, or throws an error if the request fails
   Future<Auth> _authenticate(
       String email, String pwd, String urlSegment) async {
-    final _path = "/v1/accounts:${urlSegment}";
+    final _path = "/v1/accounts:$urlSegment";
     final _params = {
       "key": ApiKey,
     };
@@ -64,7 +64,7 @@ class AuthService {
 
       return Auth()..setAuthData(token, userId, expiryDate);
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 

@@ -1,4 +1,3 @@
-import 'package:dima2022/view/widgets/sidebar_widgets/profile_side/user_input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +7,9 @@ import '../../../../utils/size_config.dart';
 import '../../../../view_models/cart_view_models/cart_view_model.dart';
 import '../../../../view_models/content_view_models/content_view_model.dart';
 import '../../../../view_models/user_view_models/user_view_model.dart';
-import '../../../custom_theme.dart';
+import '../../common/custom_theme.dart';
 import '../../sidebar_widgets/cart/cart_side.dart';
+import '../../sidebar_widgets/profile_side/user_input_widget.dart';
 import '../glass_rounded_container.dart';
 import 'badge.dart';
 import 'user_avatar.dart';
@@ -31,8 +31,8 @@ class _WindowBarState extends State<WindowBar> {
         Provider.of<UserViewModel>(context, listen: false);
 
     final content = context.read<ContentViewModel>();
-    final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
+    // final theme = Theme.of(context);
+    // final size = MediaQuery.of(context).size;
     SizeConfig().init(context);
     var marginWidth = getProportionateScreenWidth(10);
     var marginHeight = getProportionateScreenHeight(10);
@@ -114,6 +114,5 @@ class _WindowBarState extends State<WindowBar> {
     );
   }
 
-  @override
-  Size get preferredSize => Size(double.infinity, double.infinity);
+  Size get preferredSize => const Size(double.infinity, double.infinity);
 }
