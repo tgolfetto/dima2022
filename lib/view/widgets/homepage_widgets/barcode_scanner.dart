@@ -53,10 +53,17 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
     return Scaffold(
       body: Margin(
         margin: const EdgeInsets.all(20),
-        child: PlatformAiBarcodeScannerWidget(
-          platformScannerController: _scannerController,
-        ),
-      ),
+          child: context.layout.breakpoint < LayoutBreakpoint.md
+              ? PlatformAiBarcodeScannerWidget(
+                  platformScannerController: _scannerController,
+                )
+              : FractionallySizedBox(
+                  widthFactor: 1,
+                  heightFactor: 1,
+                  child: PlatformAiBarcodeScannerWidget(
+                    platformScannerController: _scannerController,
+                  ),
+                )),
     );
   }
 }
