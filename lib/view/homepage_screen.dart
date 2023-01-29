@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../view_models/content_view_models/content_view_model.dart';
 import '../view_models/position_view_models/position_view_model.dart';
+import '../view_models/product_view_models/product_view_model.dart';
+import '../view_models/product_view_models/products_view_model.dart';
 import '../view_models/user_view_models/user_view_model.dart';
 import 'widgets/common/animated_circular_progress_indicator.dart';
 import 'widgets/common/custom_theme.dart';
@@ -57,7 +59,10 @@ class HomePageState extends State<HomePage> {
             _barcodeScanned = code;
             try {
               final content = context.read<ContentViewModel>();
-
+              ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
+                context,
+                listen: false,
+              ).findById(code);
               WidgetsBinding.instance
                   .addPostFrameCallback((_) => content.updateProductId(code));
               if (context.layout.breakpoint < LayoutBreakpoint.md) {

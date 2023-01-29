@@ -1,6 +1,9 @@
 import 'package:ai_barcode/ai_barcode.dart';
+import 'package:dima2022/utils/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
+
+import '../common/custom_theme.dart';
 
 class BarcodeScannerWidget extends StatefulWidget {
   static const pageIndex = 1;
@@ -51,19 +54,25 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Margin(
+      body:
+      Container(
+        key: const Key('barcodeScan'),
+        color: CustomTheme.secondaryBackgroundColor,
+        child: Margin(
         margin: const EdgeInsets.all(20),
           child: context.layout.breakpoint < LayoutBreakpoint.md
               ? PlatformAiBarcodeScannerWidget(
                   platformScannerController: _scannerController,
                 )
-              : FractionallySizedBox(
-                  widthFactor: 1,
-                  heightFactor: 1,
-                  child: PlatformAiBarcodeScannerWidget(
-                    platformScannerController: _scannerController,
-                  ),
-                )),
-    );
+              : Align(
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                    width: getProportionateScreenWidth(300),
+                    height: getProportionateScreenHeight(300),
+                    child: PlatformAiBarcodeScannerWidget(
+                      platformScannerController: _scannerController,
+                    ),
+                  ))),
+    ));
   }
 }
