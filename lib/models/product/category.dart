@@ -68,5 +68,5 @@ ItemCategory categoryFromString(String category) {
 }
 
 String categoryToString(ItemCategory category) {
-  return category.name[0] + category.name.substring(2);
+  return category.name[0] + category.name.substring(1);
 }
