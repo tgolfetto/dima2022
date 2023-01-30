@@ -59,13 +59,11 @@ class _PdpState extends State<Pdp> {
   }
 
   Widget _requestButton(ProductViewModel product, bool hideDetails) {
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    RequestListViewModel requestListViewModel =
+        Provider.of<RequestListViewModel>(context);
     return CustomButton(
       onPressed: () {
-        UserViewModel userViewModel = Provider.of<UserViewModel>(
-          context,
-          listen: false,
-        );
-
         var newRequestViewModel = RequestViewModel();
         newRequestViewModel.createRequest(
           userViewModel.user,
@@ -77,10 +75,7 @@ class _PdpState extends State<Pdp> {
         newRequestViewModel
             .updateMessage('May I receive this product in the dressing room?');
 
-        Provider.of<RequestListViewModel>(
-          context,
-          listen: false,
-        ).addRequest(newRequestViewModel);
+        requestListViewModel.addRequest(newRequestViewModel);
       },
       transparent: false,
       outline: true,
@@ -111,10 +106,8 @@ class _PdpState extends State<Pdp> {
   Widget build(BuildContext context) {
     final content = context.read<ContentViewModel>();
 
-    ProductViewModel loadedProduct = Provider.of<ProductListViewModel>(
-      context,
-      listen: false,
-    ).findById(content.productId);
+    ProductViewModel loadedProduct =
+        Provider.of<ProductListViewModel>(context).findById(content.productId);
 
     return ScreenBuilder(
       builder: (

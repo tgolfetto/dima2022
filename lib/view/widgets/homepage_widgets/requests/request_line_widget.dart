@@ -32,7 +32,7 @@ class _RequestLineItemState extends State<RequestLineItem> {
   @override
   Widget build(BuildContext context) {
     RequestViewModel request = widget.requestViewModel;
-    bool isClerk = Provider.of<UserViewModel>(context, listen: false).isClerk;
+    bool isClerk = Provider.of<UserViewModel>(context).isClerk;
     checkAssignedClerk = request.clerk != null ? true : false;
     checkCompletedTask =
         request.status == RequestStatus.completed ? true : false;
@@ -175,113 +175,5 @@ class _RequestLineItemState extends State<RequestLineItem> {
         );
       },
     );
-
-    //  Margin(
-    //   margin: EdgeInsets.all(CustomTheme.mediumPadding),
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //       color: CustomTheme.secondaryColor,
-    //       borderRadius: BorderRadius.circular(10),
-    //     ),
-    //     child: Padding(
-    //       padding: EdgeInsets.all(CustomTheme.smallPadding),
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Text(
-    //             'Status: ${request.status}',
-    //             style: CustomTheme.bodySecondStyle,
-    //           ),
-    //           Text('ID: ${request.id} - ${request.message}',
-    //               style: CustomTheme.bodySecondStyle),
-    //           Text(
-    //             'Product: ${request.products[0].title} - Size: ${request.products[0].sizes}',
-    //             style: CustomTheme.bodySecondStyle,
-    //           ),
-    //           CheckableIconContainer(
-    //             value: checkCompletedTask,
-    //             icon: Icons.check,
-    //             onChanged: (bool value) {
-    //               if (request.status == RequestStatus.accepted) {
-    //                 setState(() {
-    //                   checkCompletedTask = value;
-    //                 });
-    //                 if (checkCompletedTask) {
-    //                   request.updateStatus(RequestStatus.completed);
-    //                 }
-    //               }
-    //             },
-    //             disabled: request.status == RequestStatus.pending,
-    //           ),
-    //           Container(
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.only(
-    //                   bottomLeft: Radius.circular(10),
-    //                   bottomRight: Radius.circular(10)),
-    //               color: CustomTheme.secondaryColor,
-    //             ),
-    //             child: Padding(
-    //               padding: EdgeInsets.all(CustomTheme.smallPadding),
-    //               child: isClerk
-    //                   ? Row(
-    //                       children: [
-    //                         Transform.scale(
-    //                           scale: 0.7,
-    //                           child: Switch(
-    //                             value: checkAssignedClerk,
-    //                             onChanged: (bool value) {
-    //                               setState(() {
-    //                                 checkAssignedClerk = value;
-    //                               });
-
-    //                               request.assignClerk(
-    //                                 checkAssignedClerk
-    //                                     ? Provider.of<UserViewModel>(context,
-    //                                         listen: false)
-    //                                     : null,
-    //                               );
-    //                             },
-    //                             activeColor: CustomTheme.primaryColor,
-    //                           ),
-    //                         ),
-    //                         SizedBox(width: 5),
-    //                         Text('Assign me',
-    //                             style: CustomTheme.bodySecondStyle),
-    //                       ],
-    //                     )
-    //                   : Row(
-    //                       children: [
-    //                         Transform.scale(
-    //                           scale: 0.7,
-    //                           child: Switch(
-    //                             value: checkCompletedTask,
-    //                             onChanged: (bool value) {
-    //                               if (request.status ==
-    //                                   RequestStatus.accepted) {
-    //                                 setState(() {
-    //                                   checkCompletedTask = value;
-    //                                 });
-    //                                 if (checkCompletedTask) {
-    //                                   request.updateStatus(
-    //                                       RequestStatus.completed);
-    //                                 }
-    //                               }
-    //                             },
-    //                             activeColor: CustomTheme.primaryColor,
-    //                           ),
-    //                         ),
-    //                         SizedBox(width: 5),
-    //                         Text('Request completed',
-    //                             style: CustomTheme.bodySecondStyle),
-    //                       ],
-    //                     ),
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

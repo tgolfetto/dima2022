@@ -82,12 +82,22 @@ class _OrderSideState extends State<OrderSide> {
                             xl: 2,
                           ),
                         )
-                      : Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Before seeing the statistics you need an order',
-                            style: CustomTheme.bodyStyle,
-                            textAlign: TextAlign.left,
+                      : SliverToBoxAdapter(
+                          child: Container(
+                            margin:
+                                context.layout.breakpoint == LayoutBreakpoint.xs
+                                    ? EdgeInsets.symmetric(
+                                        horizontal: CustomTheme.spacePadding)
+                                    : EdgeInsets.symmetric(
+                                        horizontal: CustomTheme.mediumPadding),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Before seeing the statistics you need an order',
+                                style: CustomTheme.bodyStyle,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
                           ),
                         ),
                 ],

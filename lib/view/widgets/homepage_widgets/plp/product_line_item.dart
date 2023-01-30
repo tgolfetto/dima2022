@@ -31,14 +31,12 @@ class _ProductLineItemState extends State<ProductLineItem> {
   int productId = 0;
 
   Widget _requestButton(ProductViewModel product) {
+    UserViewModel userViewModel = Provider.of<UserViewModel>(context);
+    RequestListViewModel requestListViewModel =
+        Provider.of<RequestListViewModel>(context);
     return TextButton(
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
-        UserViewModel userViewModel = Provider.of<UserViewModel>(
-          context,
-          listen: false,
-        );
-
         var newRequestViewModel = RequestViewModel();
         newRequestViewModel.createRequest(
           userViewModel.user,
@@ -50,10 +48,7 @@ class _ProductLineItemState extends State<ProductLineItem> {
         newRequestViewModel
             .updateMessage('May I receive this product in the dressing room?');
 
-        Provider.of<RequestListViewModel>(
-          context,
-          listen: false,
-        ).addRequest(newRequestViewModel);
+        requestListViewModel.addRequest(newRequestViewModel);
 
         Timer? timer = Timer(const Duration(milliseconds: 1500), () {
           Navigator.of(context, rootNavigator: true).pop();
@@ -123,8 +118,7 @@ class _ProductLineItemState extends State<ProductLineItem> {
         onPressed: () {
           setState(() {
             product.toggleFavoriteStatus();
-            Provider.of<ProductListViewModel>(context, listen: false)
-                .refreshProduct(product);
+            content.refreshProduct(product);
           });
         },
         child: product.isFavorite

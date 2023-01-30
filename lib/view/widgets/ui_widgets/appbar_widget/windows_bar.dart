@@ -27,8 +27,7 @@ class WindowBar extends StatefulWidget with PreferredSizeWidget {
 class _WindowBarState extends State<WindowBar> {
   @override
   Widget build(BuildContext context) {
-    final UserViewModel userViewModel =
-        Provider.of<UserViewModel>(context, listen: false);
+    final UserViewModel userViewModel = Provider.of<UserViewModel>(context);
 
     final content = context.read<ContentViewModel>();
     // final theme = Theme.of(context);

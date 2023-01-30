@@ -19,9 +19,7 @@ class NavigationSideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return MenuSide(
       currentIndex: selectedIndex,
-      items: Provider.of<UserViewModel>(context, listen: false).isClerk
-          ? clerkItems
-          : items,
+      items: Provider.of<UserViewModel>(context).isClerk ? clerkItems : items,
     );
   }
 }
