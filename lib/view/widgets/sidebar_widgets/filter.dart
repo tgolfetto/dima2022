@@ -59,7 +59,7 @@ class _FilterState extends State<Filter> {
     }
 
     Map<String, dynamic> filters =
-        Provider.of<ContentViewModel>(context, listen: false).filters;
+        Provider.of<ContentViewModel>(context).filters;
 
     return ScreenBuilder(builder: (
       BuildContext context,

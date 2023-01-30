@@ -38,7 +38,7 @@ class _RequestPageState extends State<RequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    isClerk = Provider.of<UserViewModel>(context, listen: false).isClerk;
+    isClerk = Provider.of<UserViewModel>(context).isClerk;
 
     return FutureBuilder(
       future: _requestsFuture,

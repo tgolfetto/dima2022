@@ -1,3 +1,4 @@
+import 'package:dima2022/view/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:layout/layout.dart';
 import 'package:lottie/lottie.dart';
@@ -434,7 +435,8 @@ class UserInputFormState extends State<UserInputForm> {
                                                     onPressed: () {
                                                       Navigator.of(context)
                                                           .pushReplacementNamed(
-                                                              '/auth');
+                                                              AuthScreen
+                                                                  .routeName);
                                                       Provider.of<AuthViewModel>(
                                                               context,
                                                               listen: false)

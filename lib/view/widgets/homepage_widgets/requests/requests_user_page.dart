@@ -14,10 +14,10 @@ class RequestUserPage extends StatefulWidget {
   const RequestUserPage({super.key});
 
   @override
-  State<RequestUserPage> createState() => _RequestUserPageState();
+  State<RequestUserPage> createState() => RequestUserPageState();
 }
 
-class _RequestUserPageState extends State<RequestUserPage> {
+class RequestUserPageState extends State<RequestUserPage> {
   bool checkAssignedClerk = false;
 
   @override

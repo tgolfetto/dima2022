@@ -68,8 +68,7 @@ class _PlpState extends State<Plp> {
   @override
   Widget build(BuildContext context) {
     bool isFilterActive = filters.isNotEmpty;
-    final products = Provider.of<ProductListViewModel>(context,
-        listen: false); //context.read<ProductListViewModel>();
+    final products = Provider.of<ProductListViewModel>(context);
 
     final double spacing =
         BreakpointValue(xs: CustomTheme.smallPadding).resolve(context);
