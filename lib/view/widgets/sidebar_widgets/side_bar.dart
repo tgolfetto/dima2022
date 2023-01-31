@@ -62,6 +62,7 @@ class SideBarState extends State<SideBar> {
     var marginWidth = getProportionateScreenWidth(10);
     var marginHeight = getProportionateScreenHeight(20);
     return AnimatedResize(
+      key: const Key('sideBar'),
       child: GlassRoundedContainer(
         margin: EdgeInsets.symmetric(
             vertical: marginHeight,

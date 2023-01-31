@@ -25,6 +25,7 @@ class _ChatSideState extends State<ChatSide> {
           timestamp: DateTime.now()),
     ];
     return Scaffold(
+      key: const Key('requestUserSide'),
       backgroundColor: Colors.transparent,
       appBar: _appBar(context),
       body: Container(

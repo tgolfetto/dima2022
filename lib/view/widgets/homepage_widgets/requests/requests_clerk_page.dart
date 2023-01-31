@@ -40,6 +40,7 @@ class _RequestsClerkPageState extends State<RequestsClerkPage> {
       ) {
         bool hideDetails = screenWidth < 715;
         return CustomScrollView(
+          key: const Key('requestClerkPage'),
           slivers: [
             SliverToBoxAdapter(
               child: SizedBox(

@@ -35,7 +35,12 @@ import 'package:dima2022/view/auth_screen.dart';
 import 'package:dima2022/view/homepage_screen.dart';
 import 'package:dima2022/view/on_boarding_screen.dart';
 import 'package:dima2022/view/splash_screen.dart';
+import 'package:dima2022/view/widgets/common/animated_resize.dart';
 import 'package:dima2022/view/widgets/common/custom_theme.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/order_side/order_side.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/requests_side/request_side.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/scanner_instructions.dart';
+import 'package:dima2022/view/widgets/sidebar_widgets/side_bar.dart';
 import 'package:dima2022/view_models/cart_view_models/cart_item_view_model.dart';
 import 'package:dima2022/view_models/cart_view_models/cart_view_model.dart';
 import 'package:dima2022/view_models/content_view_models/content_view_model.dart';
@@ -45,6 +50,7 @@ import 'package:dima2022/view_models/position_view_models/position_view_model.da
 import 'package:dima2022/view_models/product_view_models/product_view_model.dart';
 import 'package:dima2022/view_models/product_view_models/products_view_model.dart';
 import 'package:dima2022/view_models/request_view_models/request_list_view_model.dart';
+import 'package:dima2022/view_models/request_view_models/request_view_model.dart';
 import 'package:dima2022/view_models/user_view_models/auth_view_model.dart';
 import 'package:dima2022/view_models/user_view_models/user_view_model.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +100,42 @@ void main() {
     ),
   ];
 
+  var mockAuthClerkProviders = [
+    ChangeNotifierProvider(
+      create: (context) => AuthViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ProductListViewModel.fromAuth(
+        authToken,
+        'clerkId',
+        null,
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => OrdersViewModel.fromAuth(
+        authToken,
+        'clerkId',
+        null,
+      ),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => CartViewModel.fromAuth(authToken, 'clerkId'),
+    ),
+    ChangeNotifierProvider(
+      create: (context) =>
+          RequestListViewModel.fromAuth(authToken, 'clerkId', null),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => UserViewModel.fromAuth(authToken, 'clerkId'),
+    ),
+    ChangeNotifierProvider(
+      create: (ctx) => ContentViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (ctx) => PositionViewModel.fromAuth(authToken, 'clerkId', null),
+    ),
+  ];
+
   group('Widgets, Services and View Models', () {
     setUpAll(() {
       nock.init();
@@ -116,6 +158,14 @@ void main() {
           200,
           '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"thomas@thomas.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
         );
+      final mockAuthClerk = nock("https://identitytoolkit.googleapis.com").post(
+          "/v1/accounts:signInWithPassword?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
+          '{"email":"clerk@dima.it","password":"qwerty","returnSecureToken":true}')
+        ..persist()
+        ..reply(
+          200,
+          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"clerkId","email":"clerk@dima.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
+        );
       final mockAuthS = nock("https://identitytoolkit.googleapis.com").post(
           "/v1/accounts:signUp?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
           json.encode(
@@ -137,6 +187,12 @@ void main() {
         ..persist()
         ..reply(200,
             '{"address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}');
+      var mockClerk = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+          .get(startsWith("/users/clerkId.json"))
+        ..persist()
+        ..reply(200,
+            '{"address":"Via Milano 1","email":"clerk@dima.it","favorite_categories":["Men"],"id":"clerkId","is_clerk":true,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}');
+
       var mockUserDelete =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
               .delete("/users/$userId.json?auth=$authToken")
@@ -146,6 +202,12 @@ void main() {
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
               "/users/$userId.json?auth=$authToken",
               '{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":null,"email":"thomas@thomas.it","phone":null,"address":null,"profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":null,"shoe_size":null,"reward_points":0,"favorite_brands":[],"favorite_categories":[]}')
+            ..persist()
+            ..reply(200, '');
+      var mockUserUpdate2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              "/users/$userId.json?auth=$authToken",
+              '{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Marco","email":"fake@test.it","phone":"339000001","address":"Milan","profile_image_url":"img2.png","is_clerk":false,"size":"big","shoe_size":44,"reward_points":0,"favorite_brands":["Margiela"],"favorite_categories":["Men","Dresses"]}')
             ..persist()
             ..reply(200, '');
 
@@ -159,6 +221,11 @@ void main() {
       var mockProductsFav =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
               .get("/userFavorites/$userId.json?auth=$authToken")
+            ..persist()
+            ..reply(200, '{"-MEPxPT8F5BFAZbWokNc":true}');
+      var mockProductsClerkFav =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+              .get("/userFavorites/clerkId.json?auth=$authToken")
             ..persist()
             ..reply(200, '{"-MEPxPT8F5BFAZbWokNc":true}');
       var mockProductsAdd =
@@ -193,6 +260,15 @@ void main() {
               'true')
             ..persist()
             ..reply(200, '');
+      var mockProduct2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              startsWith(
+                  "/userFavorites/$userId/-MEPxPT8F5BFAZbWokNc.json?auth=$authToken"),
+              json.encode(
+                false,
+              ))
+            ..persist()
+            ..reply(200, '');
 
       // Requests
       var mockRequestsList = nock(
@@ -201,7 +277,6 @@ void main() {
         ..persist()
         ..reply(200,
             '{"1":{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}}');
-
       var mockRequests = nock(
               "https://dima2022-491c4-default-rtdb.firebaseio.com")
           .get(startsWith("/requests/$userId.json?auth=$authToken"))
@@ -214,16 +289,33 @@ void main() {
               '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '{"name":"-NMiZ-9hUAiMDnT6TvSV"}');
+      var mockRequestsAdd2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
+              startsWith("/requests/$userId.json?auth=$authToken"),
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+            ..persist()
+            ..reply(200, '{"name":"-NMiZ-9hUAiMDnT6TvSV"}');
       var mockRequestsDelete = nock(
               "https://dima2022-491c4-default-rtdb.firebaseio.com")
           .delete(startsWith(
               "/requests/$userId/-NMiZ-9hUAiMDnT6TvSV.json?auth=$authToken"))
         ..persist()
         ..reply(200, '');
+      var mockRequestsDelete2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+              .delete(startsWith("/requests/$userId/1.json?auth=$authToken"))
+            ..persist()
+            ..reply(200, '');
       var mockRequestsUpdate =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
               startsWith("/requests/$userId/1.json"),
               '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+            ..persist()
+            ..reply(200, '');
+      var mockRequestsUpdate2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              startsWith("/requests/$userId/1.json"),
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '');
 
@@ -261,18 +353,29 @@ void main() {
               '{"-MEPxPT8F5BFAZbWokNc":{"id":"2023-01-23 19:33:37.349","productId":"-MEPxPT8F5BFAZbWokNc","title":"Felpa con cerniera adidas x Gucci","quantity":1,"price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg"}}')
             ..persist()
             ..reply(200, '');
+      var mockCartUpdate2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              startsWith("/carts/$userId.json?auth=$authToken"),
+              '{"-MEPxPT8F5BFAZbWokNc":{"id":"2023-01-23 19:33:37.349","productId":"-MEPxPT8F5BFAZbWokNc","title":"Felpa con cerniera adidas x Gucci","quantity":2,"price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg"}}')
+            ..persist()
+            ..reply(200, '');
+      var mockCartUpdate3 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
+              .put(startsWith("/carts/$userId.json?auth=$authToken"), '{}')
+            ..persist()
+            ..reply(200, '');
       var mockCartViewUpdate =
-      nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
-          startsWith("/carts/$userId.json?auth=$authToken"),
-          '{"productId":{"id":"pid","productId":"productId","title":"title","quantity":1,"price":19.99,"imageUrl":"imageUrl"}}')
-        ..persist()
-        ..reply(200, '');
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              startsWith("/carts/$userId.json?auth=$authToken"),
+              '{"productId":{"id":"pid","productId":"productId","title":"title","quantity":1,"price":19.99,"imageUrl":"imageUrl"}}')
+            ..persist()
+            ..reply(200, '');
       var mockCartViewUpdate2 =
-      nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
-          startsWith("/carts/$userId.json?auth=$authToken"),
-          '{"productId":{"id":"pid","productId":"productId","title":"title","quantity":2,"price":19.99,"imageUrl":"imageUrl"}}')
-        ..persist()
-        ..reply(200, '');
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
+              startsWith("/carts/$userId.json?auth=$authToken"),
+              '{"productId":{"id":"pid","productId":"productId","title":"title","quantity":2,"price":19.99,"imageUrl":"imageUrl"}}')
+            ..persist()
+            ..reply(200, '');
 
       // Orders
       var mockOrder = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
@@ -284,6 +387,12 @@ void main() {
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
               startsWith("/orders/$userId.json?auth=$authToken"),
               '{"amount":100.0,"dateTime":"2023-01-26T22:17:10.084151","products":[{"id":"id","productId":"pid","title":"title","quantity":1,"price":100.0,"imageUrl":"img.jpg"}]}')
+            ..persist()
+            ..reply(200, '{"name":"id"}');
+      var mockOrderAdd2 =
+          nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
+              startsWith("/orders/$userId.json?auth=$authToken"),
+              '{"amount":39.98,"dateTime":"2023-02-01T00:00:00.000","products":[{"id":"2023-01-23 19:33:37.349","productId":"-MEPxPT8F5BFAZbWokNc","title":"Felpa con cerniera adidas x Gucci","quantity":2,"price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg"}]}')
             ..persist()
             ..reply(200, '{"name":"id"}');
 
@@ -333,7 +442,7 @@ void main() {
       expect(find.byKey(const Key('splashScreen')), findsOneWidget);
     });
 
-    testWidgets('Auth test', (tester) async {
+    Future<void> authenticateAndDisplayHome(tester) async {
       await tester.pumpWidget(
         MultiProvider(
             providers: mockAuthProviders,
@@ -370,6 +479,268 @@ void main() {
       await tester.pump();
       await tester.pump();
       await tester.pump();
+    }
+
+    testWidgets('Auth test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('PlpTitle')), findsOneWidget);
+    });
+
+    testWidgets('PDP test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      await tester.tap(find.byKey(const Key('productLineItem')).first);
+      await tester.pump();
+      expect(find.byKey(const Key('PdpWidget')), findsOneWidget);
+    });
+
+    testWidgets('LineItem test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('lineItemAddToCart-MEPxPT8F5BFAZbWokNc')));
+      await tester.tap(find.byKey(const Key('lineItemAddToCart-MEPxPT8F5BFAZbWokNc')).first, warnIfMissed: false);
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('lineItemRequest-MEPxPT8F5BFAZbWokNc')));
+      await tester.tap(find.byKey(const Key('lineItemAddToCart-MEPxPT8F5BFAZbWokNc')).first, warnIfMissed: false);
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pump();
+    });
+
+    testWidgets('Add to Cart test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      await tester.tap(find.byKey(const Key('productLineItem')).first);
+      await tester.pump();
+      expect(find.byKey(const Key('PdpWidget')), findsOneWidget);
+      expect(find.byKey(const Key('addToCartButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('addToCartButton')));
+      await tester.pump(const Duration(seconds: 2));
+      await tester.pump();
+      expect(find.byKey(const Key('cartIconButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('cartIconButton')));
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('cartOrderNowButton')));
+      await tester.tap(find.byKey(const Key('cartOrderNowButton')));
+      await tester.pump();
+    });
+
+    testWidgets('Empty Cart test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('cartIconButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('cartIconButton')));
+      await tester.pump();
+      await tester.drag(find.byKey(const ValueKey('2023-01-23 19:33:37.349')),
+          const Offset(-1000.0, 0.0));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('cartItemDismiss')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('cartItemDismiss')));
+      await tester.pump();
+      await tester.pump();
+    });
+
+    testWidgets('Filter test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('filterButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('filterButton')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('filterPage')), findsOneWidget);
+    });
+
+    testWidgets('Profile test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('userIconButton')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('userIconButton')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('userNextButton')));
+      await tester.tap(find.byKey(const Key('userNextButton')),
+          warnIfMissed: false);
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump();
+      await tester.pump();
+      await tester.ensureVisible(find.byKey(const Key('userNextButton')).last);
+      await tester.tap(find.byKey(const Key('userNextButton')).last,
+          warnIfMissed: false);
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+    });
+
+    testWidgets('Order test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('menuIcon3')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('menuIcon3')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('orderMain')), findsOneWidget);
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: mockAuthProviders,
+            child: MaterialApp(
+              title: CustomTheme.appTitle,
+              theme: CustomTheme().materialTheme,
+              debugShowCheckedModeBanner: false,
+              home: Layout(
+                child: Layout(
+                  child: Consumer<AuthViewModel>(
+                      builder: (context, auth, child) => const Scaffold(
+                            body: OrderSide(),
+                          )),
+                ),
+              ),
+              routes: Routes.routeList,
+            )),
+      );
+      await tester.pump();
+      expect(find.byKey(const Key('orderSide')), findsOneWidget);
+    });
+
+    testWidgets('Request User test', (tester) async {
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('menuIcon2')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('menuIcon2')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('requestUserPage')), findsOneWidget);
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: mockAuthProviders,
+            child: MaterialApp(
+              title: CustomTheme.appTitle,
+              theme: CustomTheme().materialTheme,
+              debugShowCheckedModeBanner: false,
+              home: Layout(
+                child: Layout(
+                  child: Consumer<AuthViewModel>(
+                      builder: (context, auth, child) => const Scaffold(
+                            body: RequestSide(),
+                          )),
+                ),
+              ),
+              routes: Routes.routeList,
+            )),
+      );
+      await tester.pump();
+      expect(find.byKey(const Key('requestUserSide')), findsOneWidget);
+    });
+
+    testWidgets('Request Clerk test', (tester) async {
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: mockAuthClerkProviders,
+            child: MaterialApp(
+              title: CustomTheme.appTitle,
+              theme: CustomTheme().materialTheme,
+              debugShowCheckedModeBanner: false,
+              home: Layout(
+                child: Layout(
+                  child: Consumer<AuthViewModel>(
+                      builder: (context, auth, child) => Scaffold(
+                            body: auth.isAuthenticated
+                                ? const HomePage()
+                                : const AuthScreen().authScreenPage(context),
+                          )),
+                ),
+              ),
+              routes: Routes.routeList,
+            )),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
+      expect(find.byKey(const Key('loginButton')), findsOneWidget);
+      await tester.enterText(
+          find.byKey(const Key('emailField')), 'clerk@dima.it');
+      await tester.enterText(find.byKey(const Key('passField')), 'qwerty');
+      await tester.pump();
+      await tester.tap(find.byKey(const Key('loginButton')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('menuIcon2')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('menuIcon2')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('requestClerkPage')), findsOneWidget);
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: mockAuthProviders,
+            child: MaterialApp(
+              title: CustomTheme.appTitle,
+              theme: CustomTheme().materialTheme,
+              debugShowCheckedModeBanner: false,
+              home: Layout(
+                child: Layout(
+                  child: Consumer<AuthViewModel>(
+                      builder: (context, auth, child) => const Scaffold(
+                            body: RequestSide(),
+                          )),
+                ),
+              ),
+              routes: Routes.routeList,
+            )),
+      );
+      await tester.pump();
+      expect(find.byKey(const Key('requestClerkSide')), findsOneWidget);
+    });
+
+    testWidgets('Barcode test', (tester) async {
+      /*
+      await authenticateAndDisplayHome(tester);
+      expect(find.byKey(const Key('menuIcon1')), findsOneWidget);
+      await tester.tap(find.byKey(const Key('menuIcon1')));
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const Key('barcodeMain')), findsOneWidget);
+      */
+      await tester.pumpWidget(
+        MultiProvider(
+            providers: mockAuthProviders,
+            child: MaterialApp(
+              title: CustomTheme.appTitle,
+              theme: CustomTheme().materialTheme,
+              debugShowCheckedModeBanner: false,
+              home: const Layout(
+                  child: Scaffold(
+                body: ScannerInstructions(),
+              )),
+              routes: Routes.routeList,
+            )),
+      );
+      await tester.pump();
+      expect(find.byKey(const Key('barcodeSide')), findsOneWidget);
+    });
+
+    testWidgets('AnimatedResize test', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          title: CustomTheme.appTitle,
+          theme: CustomTheme().materialTheme,
+          debugShowCheckedModeBanner: false,
+          home: const Layout(
+            child: AnimatedResize(
+              child: Text('test'),
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+      await tester.pumpAndSettle();
+      expect(find.byKey(const Key('animatedResize')), findsOneWidget);
     });
 
     testWidgets('AuthService login', (WidgetTester tester) async {
@@ -473,8 +844,57 @@ void main() {
       service.deleteUser(userId);
     });
 
+    testWidgets('User View Model test', (WidgetTester tester) async {
+      AuthViewModel authViewModel = AuthViewModel();
+      await authViewModel.signup('thomas@thomas.it', 'thomas');
+      await authViewModel.login('thomas@thomas.it', 'thomas');
+      expect(authViewModel.token, authToken);
+      expect(authViewModel.userId, userId);
+      expect(authViewModel.isAuthenticated, true);
+      await authViewModel.tryAutoLogin();
+      await authViewModel.logout();
+      expect(authViewModel.isAuthenticated, false);
+
+      UserViewModel userViewModel = UserViewModel.fromAuth(authToken, userId);
+      await userViewModel.getUser();
+      await userViewModel.getUserById(userId);
+      userViewModel.id = userId;
+      userViewModel.name = 'Marco';
+      userViewModel.email = 'fake@test.it';
+      userViewModel.phone = '339000001';
+      userViewModel.address = 'Milan';
+      userViewModel.profileImageUrl = 'img2.png';
+      userViewModel.size = 'big';
+      userViewModel.shoeSize = 44;
+      userViewModel.addFavoriteBrand('Margiela');
+      userViewModel.removeFavoriteBrand('Zegna');
+      userViewModel.addFavoriteCategory(ItemCategory.Dresses);
+      userViewModel.removeFavoriteCategory(ItemCategory.Formal);
+      await userViewModel.saveChanges();
+      expect(userViewModel.name, 'Thomas Golfetto');
+      expect(userViewModel.email, 'thomas@thomas.it');
+      expect(userViewModel.phone, '+393390000000');
+      expect(userViewModel.address, 'Via Milano 1');
+      expect(userViewModel.isClerk, false);
+      expect(userViewModel.profileImageUrl,
+          'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541');
+      expect(userViewModel.size, '45');
+      expect(userViewModel.shoeSizeString, '45');
+      expect(userViewModel.favoriteBrands, []);
+      expect(userViewModel.favoriteCategories, [ItemCategory.Men]);
+      expect(userViewModel.hashCode, userId.hashCode);
+      expect(userViewModel == userViewModel, true);
+    });
+
     testWidgets('Cart Item View Model test', (WidgetTester tester) async {
-      CartItemViewModel cartItemViewModel = CartItemViewModel.fromExistingCartItem(CartItem(id: 'id', productId: 'productId', title: 'title', quantity: 1, price: 9.99, imageUrl: 'img.png'));
+      CartItemViewModel cartItemViewModel =
+          CartItemViewModel.fromExistingCartItem(CartItem(
+              id: 'id',
+              productId: 'productId',
+              title: 'title',
+              quantity: 1,
+              price: 9.99,
+              imageUrl: 'img.png'));
       expect(cartItemViewModel.id, 'id');
       expect(cartItemViewModel.productId, 'productId');
       expect(cartItemViewModel.title, 'title');
@@ -483,7 +903,7 @@ void main() {
       expect(cartItemViewModel.imageUrl, 'img.png');
       cartItemViewModel.incrementQuantity();
       cartItemViewModel.decrementQuantity();
-      expect(cartItemViewModel.quantity,1);
+      expect(cartItemViewModel.quantity, 1);
     });
 
     testWidgets('Content View Model test', (WidgetTester tester) async {
@@ -518,7 +938,8 @@ void main() {
     });
 
     testWidgets('Position View Model test', (WidgetTester tester) async {
-      PositionViewModel positionViewModel = PositionViewModel.fromAuth(authToken, userId, null);
+      PositionViewModel positionViewModel =
+          PositionViewModel.fromAuth(authToken, userId, null);
       await positionViewModel.fetchAndSetPositionArea();
       PositionArea p = positionViewModel.position;
       expect(p.name, 'man_area');
@@ -526,8 +947,29 @@ void main() {
       positionViewModel.updatePositionArea(p);
       expect(positionViewModel.position.name, 'woman_area');
       expect(positionViewModel.pointInRectangle(0.0, 0.0), false);
-      expect(positionViewModel.vector({'latitude': 100.0, 'longitude': 100.0}, {'latitude': 110.0, 'longitude': 100.0})['latitude'], 10.0);
-      expect(positionViewModel.dot({'latitude': 3.0, 'longitude': 2.0}, {'latitude': 3.0, 'longitude': 2.0}), 13.0);
+      expect(
+          positionViewModel.vector({'latitude': 100.0, 'longitude': 100.0},
+              {'latitude': 110.0, 'longitude': 100.0})['latitude'],
+          10.0);
+      expect(
+          positionViewModel.dot({'latitude': 3.0, 'longitude': 2.0},
+              {'latitude': 3.0, 'longitude': 2.0}),
+          13.0);
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: mockAuthProviders,
+          child: Builder(
+              builder: (_) => MaterialApp(
+                  title: CustomTheme.appTitle,
+                  home: Layout(
+                    child: Layout(
+                        child: Consumer<AuthViewModel>(
+                            builder: (context, auth, child) =>
+                                const PositionTest())),
+                  ))),
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 100));
     });
 
     testWidgets('Product View Model test', (WidgetTester tester) async {
@@ -575,12 +1017,45 @@ void main() {
     });
 
     testWidgets('Request View Model test', (WidgetTester tester) async {
+      RequestListViewModel requestListViewModel =
+          RequestListViewModel.fromAuth(authToken, userId, null);
+      await requestListViewModel.fetchRequests();
+      await requestListViewModel.fetchAllRequests();
+      List<RequestViewModel> requests = requestListViewModel.requests;
+      RequestViewModel request = requests.first;
+      expect(requestListViewModel.pendingRequests.length, 1);
+      expect(requestListViewModel.outstandingRequests.length, 0);
+      UserViewModel userViewModel = UserViewModel.fromAuth(authToken, userId);
+      await userViewModel.getUser();
+      requests.first.assignClerk(userViewModel);
+      requestListViewModel.addRequest(requests.first);
+      requestListViewModel.updateAssignedRequests();
+      expect(requestListViewModel.assignedRequests.length, 1);
+      expect(requestListViewModel.groupByRequestStatus().keys.first,
+          RequestStatus.accepted);
+      expect(requestListViewModel.groupRequestsByUser().keys.first,
+          'xFt5SXvRdzQibaId5Wmuojf6oZO2');
+      expect(requestListViewModel.groupRequestsByProduct().keys.first,
+          '-MEPxPT8F5BFAZbWokNc');
+      expect(
+          requestListViewModel.countRequestsByProduct()['-MEPxPT8F5BFAZbWokNc'],
+          1);
+      expect(requestListViewModel.findById('1').status, RequestStatus.accepted);
+      expect(requestListViewModel.requests.length, 1);
+      requestListViewModel.removeRequest(requests.first);
+      expect(requestListViewModel.requests.length, 0);
 
+      expect(request.id, '1');
+      expect(request.status, RequestStatus.accepted);
+      expect(request.request.id, '1');
+      expect(request.user.id, userId);
+      expect(
+          request.message, 'May I receive this product in the dressing room?');
+      request.assignClerk(userViewModel);
+      request.assignClerk(userViewModel);
+      expect(request.clerk!.id, userId);
     });
 
-    testWidgets('User View Model test', (WidgetTester tester) async {
-
-    });
   });
 
   group('Models and utilities', ()
@@ -697,39 +1172,46 @@ void main() {
     });
 
     testWidgets('User Model test', (WidgetTester tester) async {
-      Address address = Address(street: 'Via x', city:'Milan', state: 'Italy', zipCode: '20111', country: 'IT',);
+      Address address = Address(
+        street: 'Via x',
+        city: 'Milan',
+        state: 'Italy',
+        zipCode: '20111',
+        country: 'IT',
+      );
       expect(address.city, 'Milan');
       Auth auth = Auth();
       auth.setAuthData(authToken, userId, DateTime.now());
       auth.token = authToken;
       auth.userId = userId;
-      auth.expiryDate =  DateTime.now().add(const Duration(days: 1));
-      auth.authTimer =  null;
+      auth.expiryDate = DateTime.now().add(const Duration(days: 1));
+      auth.authTimer = null;
       expect(auth.token, authToken);
       expect(auth.userId, userId);
       expect(auth.expiryDate?.isAfter(DateTime.now()), true);
       expect(auth.authTimer, null);
       auth.logout();
       expect(auth.token, null);
-      User u = User.fromJson(json.decode('{"id":"$userId","address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}'));
+      User u = User.fromJson(json.decode(
+          '{"id":"$userId","address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}'));
       expect(u.toJson().isNotEmpty, true);
       expect(u.toString().isNotEmpty, true);
       u.id = 'fakeId';
-      expect(u.id,'fakeId');
+      expect(u.id, 'fakeId');
       u.name = 'marco';
-      expect(u.name,'marco');
+      expect(u.name, 'marco');
       u.email = 'marco@test.it';
-      expect(u.email,'marco@test.it');
+      expect(u.email, 'marco@test.it');
       u.phone = '339000000';
-      expect(u.phone,'339000000');
+      expect(u.phone, '339000000');
       u.address = address.city;
-      expect(u.address,'Milan');
+      expect(u.address, 'Milan');
       u.profileImageUrl = 'img.png';
-      expect(u.profileImageUrl,'img.png');
+      expect(u.profileImageUrl, 'img.png');
       u.size = '48';
-      expect(u.size,'48');
+      expect(u.size, '48');
       u.shoeSize = 45;
-      expect(u.shoeSize,45);
+      expect(u.shoeSize, 45);
       u.addFavoriteBrand('Maison Margiela');
       u.removeFavoriteBrand('Gucci');
       expect(u.favoriteBrands.length, 1);
@@ -737,5 +1219,26 @@ void main() {
       u.removeFavoriteCategory(ItemCategory.Dresses);
       expect(u.favoriteCategories.length, 2);
     });
+
+    testWidgets('Routes test', (tester) async {
+      for (String k in Routes.routeList.keys) {
+        expect(Routes.routeList[k] != null, true);
+      }
+    });
   });
+}
+
+class PositionTest extends StatelessWidget {
+  const PositionTest({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Provider.of<PositionViewModel>(context, listen: false)
+        .listenLocation(context);
+    return Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        appBar: null,
+        body: Container());
+  }
 }

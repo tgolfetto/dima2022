@@ -67,6 +67,7 @@ class _OrdersPageState extends State<OrdersPage> {
                 double screenHeight,
               ) {
                 return CustomScrollView(
+                  key: const Key('orderMain'),
                   slivers: [
                     SliverToBoxAdapter(
                       child: SizedBox(

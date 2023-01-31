@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import '../models/exceptions/http_exception.dart';
 
@@ -62,7 +64,8 @@ class OrdersService extends ProtectedService {
     };
     final url = Uri.https(baseUrl, _path, _params);
 
-    final timestamp = DateTime.now();
+    final timestamp = kIsWeb ||
+        !Platform.environment.containsKey('FLUTTER_TEST')? DateTime.now() : DateTime.parse('2023-02-01');
 
     var newOrder = OrderItem(
       amount: total,

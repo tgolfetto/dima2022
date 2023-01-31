@@ -58,6 +58,7 @@ class _PlpState extends State<Plp> {
     final content = context.read<ContentViewModel>();
     return context.layout.breakpoint < LayoutBreakpoint.md
         ? ElevatedButton(
+            key: const Key('filterButton'),
             style: CustomTheme.buttonStyleIcon,
             onPressed: () => {content.updateMainContentIndex(Filter.pageIndex)},
             child: const Icon(Icons.filter_list),
@@ -101,6 +102,7 @@ class _PlpState extends State<Plp> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
+                        key: const Key('PlpTitle'),
                         'Product list',
                         style: CustomTheme.headingStyle,
                       ),

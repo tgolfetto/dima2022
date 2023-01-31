@@ -64,6 +64,7 @@ class _RequestClerkSideState extends State<RequestClerkSide> {
               double screenHeight,
             ) {
               return CustomScrollView(
+                key: const Key('requestClerkSide'),
                 slivers: [
                   const SliverGutter(),
                   SliverMargin(

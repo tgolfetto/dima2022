@@ -33,6 +33,7 @@ class RequestUserPageState extends State<RequestUserPage> {
         double screenHeight,
       ) {
         return CustomScrollView(
+          key: const Key('requestUserPage'),
           slivers: [
             SliverToBoxAdapter(
               child: SizedBox(

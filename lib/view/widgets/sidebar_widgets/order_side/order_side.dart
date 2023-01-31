@@ -50,6 +50,7 @@ class _OrderSideState extends State<OrderSide> {
           } else {
             return Consumer<OrdersViewModel>(
               builder: (context, orderData, child) => CustomScrollView(
+                key: const Key('orderSide'),
                 slivers: [
                   const SliverGutter(),
                   SliverMargin(

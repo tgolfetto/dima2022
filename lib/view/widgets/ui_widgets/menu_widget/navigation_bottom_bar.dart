@@ -98,6 +98,7 @@ class Menu extends StatelessWidget {
                       t),
                   shape: itemShape,
                   child: InkWell(
+                    key: Key('menuIcon${items.indexOf(item)}'),
                     onTap: () {
                       content.updateMainContentIndex(items.indexOf(item));
                     },

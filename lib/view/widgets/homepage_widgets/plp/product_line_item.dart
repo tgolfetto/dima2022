@@ -35,6 +35,7 @@ class _ProductLineItemState extends State<ProductLineItem> {
     RequestListViewModel requestListViewModel =
         Provider.of<RequestListViewModel>(context);
     return TextButton(
+      key: Key('lineItemRequest${product.id}'),
       style: CustomTheme.buttonStyleOutline,
       onPressed: () {
         var newRequestViewModel = RequestViewModel();
@@ -77,6 +78,7 @@ class _ProductLineItemState extends State<ProductLineItem> {
 
   Widget _addToCartButton(ProductViewModel productViewModel) {
     return TextButton(
+      key: Key('lineItemAddToCart${productViewModel.id}'),
       style: CustomTheme.buttonStyleFill,
       onPressed: () {
         Provider.of<CartViewModel>(
@@ -149,6 +151,7 @@ class _ProductLineItemState extends State<ProductLineItem> {
               child: Stack(
                 children: [
                   GestureDetector(
+                    key: const Key('productLineItem'),
                     onTap: () {
                       content.updateProductId(product.id!);
                       if (context.layout.breakpoint < LayoutBreakpoint.md) {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -63,6 +64,7 @@ class _PdpState extends State<Pdp> {
     RequestListViewModel requestListViewModel =
         Provider.of<RequestListViewModel>(context);
     return CustomButton(
+      key: const Key('requestButton'),
       onPressed: () {
         var newRequestViewModel = RequestViewModel();
         newRequestViewModel.createRequest(
@@ -76,6 +78,23 @@ class _PdpState extends State<Pdp> {
             .updateMessage('May I receive this product in the dressing room?');
 
         requestListViewModel.addRequest(newRequestViewModel);
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product requested!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       transparent: false,
       outline: true,
@@ -87,12 +106,30 @@ class _PdpState extends State<Pdp> {
 
   Widget _addToCartButton(ProductViewModel productViewModel, bool hideDetails) {
     return CustomButton(
+      key: const Key('addToCartButton'),
       onPressed: () {
         Provider.of<CartViewModel>(
           context,
           listen: false,
         ).addItem(productViewModel.id!, productViewModel.imageUrl!,
             productViewModel.price!, productViewModel.title!);
+        Timer? timer = Timer(const Duration(milliseconds: 1500), () {
+          Navigator.of(context, rootNavigator: true).pop();
+        });
+        showDialog(
+            context: context,
+            builder: (context) {
+              Future.delayed(const Duration(seconds: 2), () {
+                Navigator.of(context).pop(true);
+              });
+              return const AlertDialog(
+                title: Text('Product added to cart!'),
+              );
+            }).then((value) {
+          // dispose the timer in case something else has triggered the dismiss.
+          timer?.cancel();
+          timer = null;
+        });
       },
       transparent: false,
       outline: false,
@@ -121,6 +158,7 @@ class _PdpState extends State<Pdp> {
       ) {
         bool hideDetails = screenWidth < 315;
         return Scaffold(
+          key: const Key('PdpWidget'),
           body: SingleChildScrollView(
             child: ConditionalRowColumn(
               screenHeight: screenHeight,
@@ -305,9 +343,6 @@ class _PdpState extends State<Pdp> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             _requestButton(loadedProduct, hideDetails),
-                            SizedBox(
-                                width: getProportionateScreenWidth(5,
-                                    parentWidth: screenWidth)),
                             _addToCartButton(loadedProduct, hideDetails),
                           ],
                         ),

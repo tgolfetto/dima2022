@@ -167,6 +167,7 @@ class CartSideState extends State<CartSide> {
                                   "Your order has been received and is being processed. We'll send you a confirmation email shortly with the details of your order.",
                               backButton: true,
                               backIcon: Icons.close,
+                              key: const Key('cartOrderedBack'),
                               onPressedBack: () {
                                 final content =
                                     context.read<ContentViewModel>();
@@ -233,6 +234,7 @@ class OrderButtonState extends State<OrderButton> {
   @override
   Widget build(BuildContext context) {
     return CustomButton(
+      key: const Key('cartOrderNowButton'),
       outline: false,
       transparent: false,
       text: !_isLoading ? 'Order Now' : null,

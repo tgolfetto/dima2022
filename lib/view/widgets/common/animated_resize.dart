@@ -33,7 +33,7 @@ class AnimatedResizeState extends State<AnimatedResize>
   @override
   void dispose() {
     //animationController.stop();
-
+    animationController.dispose();
     super.dispose();
   }
 
@@ -41,6 +41,7 @@ class AnimatedResizeState extends State<AnimatedResize>
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Container(
+      key: const Key('animatedResize'),
       alignment: Alignment.center,
       child: AnimatedBuilder(
         animation: animationController,

@@ -83,6 +83,7 @@ class _FilterState extends State<Filter> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   CardHeader(
+                    key: const Key('filterPage'),
                     formKey: GlobalKey(),
                     pageController: PageController(),
                     topPadding: topPadding,

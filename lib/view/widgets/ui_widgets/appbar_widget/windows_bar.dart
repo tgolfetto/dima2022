@@ -68,6 +68,7 @@ class _WindowBarState extends State<WindowBar> {
                                   child: ch!,
                                 ),
                                 child: IconButton(
+                                  key: const Key('cartIconButton'),
                                   iconSize: 30,
                                   icon: const Icon(
                                     Icons.shopping_cart,
@@ -89,6 +90,7 @@ class _WindowBarState extends State<WindowBar> {
                             ],
                           ),
                         UserAvatar(
+                          key: const Key('userIconButton'),
                           onPressed: () {
                             if (context.layout.breakpoint <
                                 LayoutBreakpoint.md) {

@@ -50,6 +50,7 @@ class CartItem extends StatelessWidget {
                       },
                       child: const Text('NO')),
                   ElevatedButton(
+                      key: const Key('cartItemDismiss'),
                       onPressed: () {
                         Navigator.of(context).pop(true);
                       },

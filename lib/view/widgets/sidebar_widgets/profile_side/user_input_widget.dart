@@ -602,6 +602,7 @@ class CardHeader extends StatelessWidget {
           children: [
             backButton
                 ? CustomButton(
+                    key: const Key('userBackButton'),
                     outline: false,
                     transparent: true,
                     onPressed: onPressedBack ??
@@ -620,6 +621,7 @@ class CardHeader extends StatelessWidget {
                   ),
             if (nextButton)
               CustomButton(
+                key: const Key('userNextButton'),
                 outline: false,
                 transparent: false,
                 onPressed: () {

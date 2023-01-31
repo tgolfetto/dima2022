@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -77,8 +80,9 @@ class _RequestLineItemState extends State<RequestLineItem> {
                                     ),
                                   ],
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                        request.products[0].imageUrl!),
+                                    image: kIsWeb || !Platform.environment.containsKey('FLUTTER_TEST')
+                                        ? NetworkImage(
+                                        request.products[0].imageUrl!) : Image.asset('assets/images/test.png').image,
                                     fit: BoxFit.cover,
                                   ),
                                   color: Colors.grey,
