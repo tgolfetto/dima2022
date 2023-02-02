@@ -54,12 +54,11 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      Container(
-        key: const Key('barcodeScan'),
-        color: CustomTheme.secondaryBackgroundColor,
-        child: Margin(
-        margin: const EdgeInsets.all(20),
+        body: Container(
+      key: const Key('barcodeScan'),
+      color: CustomTheme.secondaryBackgroundColor,
+      child: Margin(
+          margin: const EdgeInsets.all(20),
           child: context.layout.breakpoint < LayoutBreakpoint.md
               ? PlatformAiBarcodeScannerWidget(
                   platformScannerController: _scannerController,

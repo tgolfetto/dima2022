@@ -112,7 +112,7 @@ class _FilterState extends State<Filter> {
                                 style: CustomTheme.bodyStyle),
                           )),
                       Expanded(
-                          flex: 2,
+                          flex: 1,
                           child: Align(
                               alignment: Alignment.centerLeft,
                               child: Checkbox(
@@ -133,15 +133,20 @@ class _FilterState extends State<Filter> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
-                          flex: 1,
+                          flex: 3,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: CustomTheme.smallPadding,
-                                horizontal: CustomTheme.mediumPadding),
+                            padding: EdgeInsets.fromLTRB(
+                                CustomTheme.mediumPadding,
+                                CustomTheme.smallPadding,
+                                0.0,
+                                CustomTheme.smallPadding),
+                            // .symmetric(
+                            //     vertical: CustomTheme.smallPadding,
+                            //     horizontal: CustomTheme.mediumPadding),
                             child: Text('Price', style: CustomTheme.bodyStyle),
                           )),
                       Expanded(
-                        flex: 3,
+                        flex: 6,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: CustomTheme.smallPadding,
