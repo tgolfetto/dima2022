@@ -44,11 +44,10 @@ class _AppBarcodeScannerWidgetState extends State<BarcodeScannerWidget> {
 
   @override
   void dispose() {
-    super.dispose();
-
     _scannerController
       ..stopCameraPreview()
       ..stopCamera();
+    super.dispose();
   }
 
   @override
