@@ -1,6 +1,6 @@
 ## DIMA 2022: A mobile app for in-store clothing shopping
 
-DIMA 2022 is an Android app designed to enhance the shopping experience for customers and clothing store sales staff. It offers a range of features to streamline the shopping process and improve customer satisfaction. The app was developed as a university project for the "Design and Implementation of Mobile Application" course at the Polytechnic University of Milan.
+DIMA 2022 is a Flutter app designed to enhance the shopping experience for customers and clothing store sales staff. It offers a range of features to streamline the shopping process and improve customer satisfaction. The app was developed as a university project for the "Design and Implementation of Mobile Application" course at the Polytechnic University of Milan.
 
 ## Key Features:
 - **Customer Login:** Customers can create an account to save their preferences and access personal orders.
