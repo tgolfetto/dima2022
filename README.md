@@ -22,6 +22,9 @@ Overall, DIMA 2022 offers a comprehensive solution for enhancing the shopping ex
 
 ![alt text](https://i.imgur.com/9ZXhrxH.png)
 
+## Notes:
+Across the project the auth token and the URL for Firebase have been removed, as the database was shutdown. Moreover on the unit test file the example account email and password has been removed. Please follow the structure of the database provided [HERE](dima2022-491c4-default-rtdb-export.json) and replace the instanced with your personalized data.
+
 Account Employee:
 ```
 clerk@dima.com
