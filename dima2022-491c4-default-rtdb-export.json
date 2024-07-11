@@ -1,0 +1,641 @@
+{
+  "carts": {
+    "SSIG9LKKG5aZb2vVYklYK1EhcUx1": {
+      "-MEPxPT8F5BFAZbWokNc": {
+        "id": "2023-01-03 20:31:16.863",
+        "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg",
+        "price": 19.99,
+        "productId": "-MEPxPT8F5BFAZbWokNc",
+        "quantity": 1,
+        "title": "Felpa con cerniera adidas x Gucci"
+      },
+      "-NEPxPT8F5BFAZbWokNb": {
+        "id": "2023-01-03 20:31:15.226",
+        "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1662417035/717104_ZAKBX_1000_001_100_0000_Light-Camicia-in-pizzo-GG-geometrico.jpg",
+        "price": 29.99,
+        "productId": "-NEPxPT8F5BFAZbWokNb",
+        "quantity": 1,
+        "title": "Camicia in pizzo GG geometrico"
+      },
+      "-RAPxPT8F5BFAZbWokNb": {
+        "id": "2023-01-03 20:13:52.835",
+        "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1669918555/731262_ZHS78_5585_001_100_0000_Light-Silk-chiffon-dress.jpg",
+        "price": 2200,
+        "productId": "-RAPxPT8F5BFAZbWokNb",
+        "quantity": 1,
+        "title": "Silk chiffon dress"
+      },
+      "-WAPxPT8F5BFAZbWokNb": {
+        "id": "2023-01-03 20:31:22.668",
+        "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815053/712108_ZAKXW_2254_001_100_0000_Light-adidas-x-Gucci-GG-canvas-skirt.jpg",
+        "price": 1400,
+        "productId": "-WAPxPT8F5BFAZbWokNb",
+        "quantity": 1,
+        "title": "adidas x Gucci GG canvas skirt"
+      },
+      "-WIPxPT8F5BFAZbWokNb": {
+        "id": "2023-01-03 20:31:21.644",
+        "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1669815183/717703_XKCQF_1145_001_100_0000_Light-adidas-x-Gucci-wool-cardigan.jpg",
+        "price": 1800,
+        "productId": "-WIPxPT8F5BFAZbWokNb",
+        "quantity": 1,
+        "title": "adidas x Gucci wool cardigan"
+      }
+    }
+  },
+  "locations": {
+    "man_area": {
+      "A": {
+        "latitude": 45.517544,
+        "longitude": 9.098277
+      },
+      "B": {
+        "latitude": 45.439906,
+        "longitude": 9.250999
+      },
+      "C": {
+        "latitude": 45.441099,
+        "longitude": 9.122074
+      },
+      "D": {
+        "latitude": 45.439906,
+        "longitude": 9.238359
+      },
+      "name": "man_area",
+      "users": {
+        "AoYHY9BJpCM6y1gEmL0kyVkFnm32": [
+          "2023-01-23T17:08:21.258",
+          "2023-01-23T17:08:36.924",
+          "2023-01-23T17:09:22.712",
+          "2023-01-23T17:13:10.583",
+          "2023-01-29T00:55:00.690",
+          "2023-01-29T00:55:22.002",
+          "2023-01-29T00:55:37.833"
+        ]
+      }
+    }
+  },
+  "orders": {
+    "PMkPbDNFrgU9b8U55FW0eCn81T52": {
+      "-NKrAr4smnDxzcOYlA0w": {
+        "amount": 1,
+        "dateTime": "2023-01-03T11:31:15.993",
+        "products": [
+          {
+            "id": "2023-01-03 11:30:58.284",
+            "imageUrl": "https://res.cloudinary.com/rim6/image/upload/q_75,w_1000/v1574272458/surface-laptop-3/surface-laptop-3-porta-usb-c.jpg",
+            "price": 1,
+            "productId": "12",
+            "quantity": 1,
+            "title": "prova"
+          }
+        ]
+      },
+      "-NKs0sXRDBEWPeppDS5E": {
+        "amount": 19.99,
+        "dateTime": "2023-01-03T15:27:17.688",
+        "products": [
+          {
+            "id": "2023-01-03 15:27:15.298",
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Logo_brand_Adidas.png",
+            "price": 19.99,
+            "productId": "-MEPxPT8F5BFAZbWokNc",
+            "quantity": 1,
+            "title": "Red T-Shirtt"
+          }
+        ]
+      },
+      "-NKs0ugbEJpsZ-xnsYTk": {
+        "amount": 29.99,
+        "dateTime": "2023-01-03T15:27:26.532",
+        "products": [
+          {
+            "id": "2023-01-03 15:27:19.946",
+            "imageUrl": "https://loghi-famosi.com/wp-content/uploads/2020/04/Nike-Logo.png",
+            "price": 29.99,
+            "productId": "-NEPxPT8F5BFAZbWokNb",
+            "quantity": 1,
+            "title": "Blue Jeans"
+          }
+        ]
+      },
+      "-NKs6Syype5dRT_A8EbQ": {
+        "amount": 19.99,
+        "dateTime": "2023-01-03T15:51:41.786",
+        "products": [
+          {
+            "id": "2023-01-03 15:51:37.283",
+            "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Logo_brand_Adidas.png",
+            "price": 19.99,
+            "productId": "-MEPxPT8F5BFAZbWokNc",
+            "quantity": 1,
+            "title": "Red T-Shirtt"
+          }
+        ]
+      }
+    }
+  },
+  "products": {
+    "-MEPxPT8F5BFAZbWokNc": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men",
+        "Tops"
+      ],
+      "color": "Red",
+      "description": "This is a red t-shirt made of 100% cotton.",
+      "gender": "Men",
+      "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_800x800/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg",
+      "madeIn": "USA",
+      "material": "Cotton",
+      "price": 19.99,
+      "rating": 4.5,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 10,
+      "title": "Felpa con cerniera adidas x Gucci",
+      "type": "Clothing"
+    },
+    "-NEPxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men",
+        "Bottoms"
+      ],
+      "color": "Blue",
+      "description": "These are blue jeans made of 99% cotton and 1% spandex.",
+      "gender": "Men",
+      "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_800x800/1662417035/717104_ZAKBX_1000_001_100_0000_Light-Camicia-in-pizzo-GG-geometrico.jpg",
+      "madeIn": "China",
+      "material": "Cotton, Spandex",
+      "price": 29.99,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Camicia in pizzo GG geometrico",
+      "type": "Clothing"
+    },
+    "-RAPxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Women",
+        "Dresses"
+      ],
+      "color": "Dark violet",
+      "description": "This silk chiffon dress is infused with a romantic note through classic accents. Presented with long sleeves, ruffles, pleats and frills, the piece plays with vintage details in subtle ways to reflect the House's creative narrative.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1669918555/731262_ZHS78_5585_001_100_0000_Light-Silk-chiffon-dress.jpg",
+      "madeIn": "Italy",
+      "material": "100% Silk",
+      "price": 2200,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Silk chiffon dress",
+      "type": "Clothing"
+    },
+    "-REPxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Women",
+        "Dresses"
+      ],
+      "color": "Magenta",
+      "description": "Translating to 'Original Gucci Creations,' this double-breasted jacket presents the 'Gucci Créations Originales' label as a play on traditional sartorial tags. The elegant piece is presented with a precious full canvas construction and peak lapel, while a bright shade of magnet adds an unexpected feel.",
+      "gender": "Men",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1664388069/726517_ZADVL_5896_001_100_0000_Light-Double-breasted-gauze-jacket.jpg",
+      "madeIn": "Italy",
+      "material": "100% Cupro",
+      "price": 2400,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Double-breasted gauze jacket",
+      "type": "Clothing"
+    },
+    "-WAKxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Women",
+        "Shoes"
+      ],
+      "color": "Black",
+      "description": "The Gucci Blondie first debuted along the star-studded Hollywood Boulevard in Los Angeles during Gucci Love Parade. The new line mirrors the mood found throughout the latest collection, bringing eras together by combining a retro aesthetic with a contemporary character. Taken straight from the '70s archives, the Founder's monogram defines this pair of black leather ankle boots.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXEAF2DC_Center_0_0_800x800/1650037506/700016_C9D00_1000_001_100_0000_Light-Gucci-Blondie-womens-ankle-boot.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1800,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Gucci Blondie women's ankle boot",
+      "type": "Shoes"
+    },
+    "-WALxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Women",
+        "Accessories"
+      ],
+      "color": "Shiny dark brown acetate frame",
+      "description": "Frames with unusual structures and logo details accompanied key looks during the latest collections. This geometric frame is crafted from dark brown acetate with a gold-toned Interlocking G detail along the temples",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1664577991/733331_J0740_2323_001_100_0000_Light-Geometric-frame-sunglasses.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 360,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Geometric-frame sunglasses",
+      "type": "Accessories"
+    },
+    "-WANxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Women",
+        "Dresses"
+      ],
+      "color": "Red and ivory wool cotton jacquard",
+      "description": "The Cruise 2023 Gucci Cosmogonie collection was presented against the backdrop of the historic Castel del Monte in Italy. The show brought together aesthetics from distant eras and geographies, linking elements from the past with the present. This wool and cotton jacquard cardigan elevates classic knitwear with the House's tongue-in-cheek design detail and color combination.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1674672397/731047_XKCZH_6367_001_100_0000_Light-Striped-jacquard-cardigan.jpg",
+      "madeIn": "Italy",
+      "material": "cotton",
+      "price": 2500,
+      "rating": 4,
+      "sizes": [
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44
+      ],
+      "stock": 5,
+      "title": "Striped jacquard cardigan",
+      "type": "Clothing"
+    },
+    "-WAPxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Women",
+        "Bottoms"
+      ],
+      "color": "Beige",
+      "description": "These are blue jeans made of 99% cotton and 1% spandex.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_800x800/1669815053/712108_ZAKXW_2254_001_100_0000_Light-adidas-x-Gucci-GG-canvas-skirt.jpg",
+      "madeIn": "Italy",
+      "material": "Fabric: 71% Cotton, 29% Polyester",
+      "price": 1400,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "adidas x Gucci GG canvas skirt",
+      "type": "Clothing"
+    },
+    "-WAQxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Women",
+        "Shoes"
+      ],
+      "color": "Black and Green",
+      "description": "Subtle House details add a logo touch to this pair of sandals. Crafted from lamé tweed, a T-strap detail with the Double G logo on the front enhances the elegance of the style's classic silhouette.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1668193269/724851_FAA4U_8648_002_095_0000_Light-Womens-T-bar-tweed-sandal.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 980,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Women's T-bar tweed sandal",
+      "type": "Shoes"
+    },
+    "-WERxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Women",
+        "Dresses"
+      ],
+      "color": "Black and Green",
+      "description": "For Cruise 2023 Gucci Cosmogonie, sartorial pieces are mixed with unexpected elements, giving way to a new, elevated elegance. The layering of different styles shows the eclectic nature of the House, where there are no rules when dressing up. This black and white wool shirt has a bicolor design reminiscent of jester tops.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1666344654/722213_ZALNN_9248_001_100_0000_Light-Wool-comfort-bicolor-shirt.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1800,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Wool comfort bicolor shirt",
+      "type": "Clothing"
+    },
+    "-WIIxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men"
+      ],
+      "color": "Black and Green",
+      "description": "A second chapter in the adidas and Gucci collection, where the Web continues to juxtapose with the three white stripes and the GG monogram combines with the Trefoil. Inspired by the '80s and '90s, emblematic House’s motifs mix with those of the historic sportswear brand adidas resulting in a series of hybrid looks. This blue down jacket is crafted in matte nylon with a Gucci Trefoil print and 3-Stripe on the sleeves",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_800x800/1672853430/713718_ZALC7_4309_001_100_0000_Light-adidas-x-Gucci-nylon-down-jacket.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1800,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "adidas x Gucci nylon down jacket",
+      "type": "Clothing"
+    },
+    "-WINxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men",
+        "Bottoms"
+      ],
+      "color": "Black and Green",
+      "description": "A second chapter in the adidas and Gucci collection, where the Web continues to juxtapose with the three white stripes and the GG monogram combines with the Trefoil. Pulling inspiration from the Creative Director’s memories of the '80s and '90s, emblematic House’s motifs mix with those of the historic sportswear brand adidas resulting in a series of hybrid looks. This soft wool cardigan features contrasting green intarsia cable knit and ivory 3-Stripe intarsia on the front.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_800x800/1669815183/717703_XKCQF_1145_001_100_0000_Light-adidas-x-Gucci-wool-cardigan.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1800,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "adidas x Gucci wool cardigan",
+      "type": "Clothing"
+    },
+    "-WRRxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men",
+        "Formal"
+      ],
+      "color": "Black and Green",
+      "description": "The Cruise 2023 Gucci Cosmogonie collection was presented against the backdrop of the historic Castel del Monte in Italy. The show brought together aesthetics from distant eras and geographies and linked elements from the past with the present. Suiting separates continue to speak to the Gucci narrative, this light grey wool cashmere formal jacket has a clean double-breasted front and strong shoulders.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1669920303/721274_ZAK73_1401_001_100_0000_Light-Wool-cashmere-formal-jacket.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1800,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Wool cashmere formal jacket",
+      "type": "Clothing"
+    },
+    "-WUPxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men",
+        "Bottoms"
+      ],
+      "color": "Black and Green",
+      "description": "A blue, yellow, red and white striped crew neck sweater is crafted from fine knitted wool. Textured sweater styles instill a contemporary feel into traditional silhouettes, the tone-on-tone knit Gucci knit gives a subtle nod the House's heritage.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_800x800/1664386216/729528_XKC0P_4684_001_100_0000_Light-Striped-wool-knit-sweater-with-Gucci.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1280,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Striped wool knit sweater with Gucci",
+      "type": "Clothing"
+    },
+    "-WWFxPT8F5BFAZbWokNb": {
+      "brand": "Gucci",
+      "categories": [
+        "Men"
+      ],
+      "color": "Black and Green",
+      "description": "In celebration of the Year of the Rabbit, as well as the arrival of Spring, the House presents a wide-ranging selection of colorful ready-to-wear pieces and accessories featuring various renditions of the wistful creature. Animal motifs often feature in Gucci collections, sometimes accompanied by signature emblems or floral patterns as an expression of the House's fascination with the beauty of the natural world.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXE8F1E3_Center_0_0_800x800/1672150504/723823_ZALHX_1066_001_100_0000_Light-Silk-twill-shirt.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 1400,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Silk twill shirt",
+      "type": "Clothing"
+    },
+    "-WYFxPT8F5BFAZbWokNb": {
+      "brand": "adidas x Gucci",
+      "categories": [
+        "Men"
+      ],
+      "color": "Black and Green",
+      "description": "In celebration of the Year of the Rabbit, as well as the arrival of Spring, the House presents a wide-ranging selection of colorful ready-to-wear pieces and accessories featuring various renditions of the wistful creature. Animal motifs often feature in Gucci collections, sometimes accompanied by signature emblems or floral patterns as an expression of the House's fascination with the beauty of the natural world.",
+      "gender": "Women",
+      "imageUrl": "https://media.gucci.com/style/HEXE8F1E3_Center_0_0_800x800/1672151489/714501_XKCWN_7533_001_100_0000_Light-Wool-mohair-sweater.jpg",
+      "madeIn": "Italy",
+      "material": "100% Wool.",
+      "price": 2400,
+      "rating": 4,
+      "sizes": [
+        38,
+        40
+      ],
+      "stock": 5,
+      "title": "Wool mohair sweater",
+      "type": "Clothing"
+    }
+  },
+  "requests": {
+    "w6KLTRyo6rdegv17f3784ChDMcJ2": {
+      "-NMcxFVhJmccnEmKZP1f": {
+        "clerk": {
+          "address": "via Milano 32, Roma",
+          "email": "clerk@dima.com",
+          "favorite_categories": [
+            "Women",
+            "Bottoms",
+            "Tops",
+            "Swimwear",
+            "Loungewear"
+          ],
+          "id": "AoYHY9BJpCM6y1gEmL0kyVkFnm32",
+          "is_clerk": true,
+          "name": "Clerk",
+          "phone": "3334455678",
+          "profile_image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
+          "reward_points": 0,
+          "shoe_size": 39,
+          "size": "40"
+        },
+        "message": "May I receive this product in the dressing room?",
+        "products": {
+          "-NEPxPT8F5BFAZbWokNb": {
+            "brand": "adidas x Gucci",
+            "categories": [
+              "Men",
+              "Bottoms"
+            ],
+            "color": "Blue",
+            "description": "These are blue jeans made of 99% cotton and 1% spandex.",
+            "gender": "Men",
+            "imageUrl": "https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1662417035/717104_ZAKBX_1000_001_100_0000_Light-Camicia-in-pizzo-GG-geometrico.jpg",
+            "madeIn": "China",
+            "material": "Cotton, Spandex",
+            "price": 29.99,
+            "rating": 4,
+            "sizes": [
+              38
+            ],
+            "stock": 5,
+            "title": "Camicia in pizzo GG geometrico",
+            "type": "Clothing"
+          }
+        },
+        "status": "accepted",
+        "user": {
+          "address": "via Milano, Roma",
+          "email": "prova12@dima.com",
+          "favorite_categories": [
+            "Men",
+            "Kids",
+            "Shoes",
+            "Tops"
+          ],
+          "id": "w6KLTRyo6rdegv17f3784ChDMcJ2",
+          "is_clerk": false,
+          "name": "Liz",
+          "phone": "3449878655",
+          "profile_image_url": "https://i.pinimg.com/564x/7c/f6/d6/7cf6d698b183abcc6c7497045f001a2b--tony-garrn-golden-blonde.jpg",
+          "reward_points": 0,
+          "shoe_size": 39,
+          "size": "43"
+        }
+      },
+      "-NMcxGaaXjb3h27FW4bH": {
+        "message": "May I receive this product in the dressing room?",
+        "products": {
+          "-REPxPT8F5BFAZbWokNb": {
+            "brand": "Gucci",
+            "categories": [
+              "Women",
+              "Dresses"
+            ],
+            "color": "Magenta",
+            "description": "Translating to 'Original Gucci Creations,' this double-breasted jacket presents the 'Gucci Créations Originales' label as a play on traditional sartorial tags. The elegant piece is presented with a precious full canvas construction and peak lapel, while a bright shade of magnet adds an unexpected feel.",
+            "gender": "Men",
+            "imageUrl": "https://media.gucci.com/style/HEXF1E9FB_Center_0_0_1200x1200/1664388069/726517_ZADVL_5896_001_100_0000_Light-Double-breasted-gauze-jacket.jpg",
+            "madeIn": "Italy",
+            "material": "100% Cupro",
+            "price": 2400,
+            "rating": 4,
+            "sizes": [
+              38
+            ],
+            "stock": 5,
+            "title": "Double-breasted gauze jacket",
+            "type": "Clothing"
+          }
+        },
+        "status": "pending",
+        "user": {
+          "address": "via Milano, Roma",
+          "email": "prova12@dima.com",
+          "favorite_categories": [
+            "Men",
+            "Kids",
+            "Shoes",
+            "Tops"
+          ],
+          "id": "w6KLTRyo6rdegv17f3784ChDMcJ2",
+          "is_clerk": false,
+          "name": "Liz",
+          "phone": "3449878655",
+          "profile_image_url": "https://i.pinimg.com/564x/7c/f6/d6/7cf6d698b183abcc6c7497045f001a2b--tony-garrn-golden-blonde.jpg",
+          "reward_points": 0,
+          "shoe_size": 39,
+          "size": "43"
+        }
+      }
+    }
+  },
+  "userFavorites": {
+    "AoYHY9BJpCM6y1gEmL0kyVkFnm32": {
+      "-MEPxPT8F5BFAZbWokNc": false,
+      "-NEPxPT8F5BFAZbWokNb": true,
+      "-RAPxPT8F5BFAZbWokNb": true,
+      "-REPxPT8F5BFAZbWokNb": false,
+      "-WALxPT8F5BFAZbWokNb": false,
+      "-WIPxPT8F5BFAZbWokNb": false,
+      "-WUPxPT8F5BFAZbWokNb": false
+    }
+  },
+  "users": {
+    "AoYHY9BJpCM6y1gEmL0kyVkFnm32": {
+      "address": "via Milano 32, Roma",
+      "email": "clerk@dima.com",
+      "favorite_categories": [
+        "Women",
+        "Bottoms",
+        "Tops",
+        "Swimwear",
+        "Loungewear",
+        "Kids"
+      ],
+      "id": "AoYHY9BJpCM6y1gEmL0kyVkFnm32",
+      "is_clerk": true,
+      "name": "Clerk",
+      "phone": "3334455678",
+      "profile_image_url": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541",
+      "reward_points": 0,
+      "shoe_size": 39,
+      "size": "40"
+    }
+  }
+}

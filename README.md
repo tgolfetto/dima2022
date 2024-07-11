@@ -16,7 +16,7 @@ DIMA 2022 is an Android app designed to enhance the shopping experience for cust
 
 ## Technologies:
 - **Built with Flutter:** Flutter is an open-source framework from Google that allows you to build beautiful, fast, and native-feeling apps for mobile (Android & iOS), web, desktop (Windows, macOS, Linux), and even embedded devices. This means the app you're using can run smoothly on a variety of platforms with a single codebase.
-- **Powered by Firebase:** Firebase is a back-end development platform from Google that provides services like databases, user authentication, cloud storage, and analytics.  In this case, Firebase acts as the brain of the app, handling data storage and user management.
+- **Powered by Firebase:** Firebase is a back-end development platform from Google that provides services like databases, user authentication, cloud storage, and analytics.  In this case, Firebase acts as the brain of the app, handling data storage and user management. The structure of the database can be found [HERE](dima2022-491c4-default-rtdb-export.json). Note that most of the data has been deleted, the file attached has to be considered for structural purposes only.
 
 Overall, DIMA 2022 offers a comprehensive solution for enhancing the shopping experience in clothing stores, benefiting both customers and businesses.
 
