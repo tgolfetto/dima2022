@@ -62,7 +62,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   const String authToken =
-      "eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw";
+      "<YOUR AUTH TOKEN HERE>";
   const String userId = "xFt5SXvRdzQibaId5Wmuojf6oZO2";
   var mockAuthProviders = [
     ChangeNotifierProvider(
@@ -148,15 +148,15 @@ void main() {
           "/v1/accounts:signInWithPassword?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
           json.encode(
             {
-              'email': 'thomas@thomas.it',
-              'password': 'thomas',
+              'email': '<YOUR ACCOUNT EMAIL HERE>',
+              'password': '<YOUR ACCOUNT PWD HERE>',
               'returnSecureToken': true,
             },
           ))
         ..persist()
         ..reply(
           200,
-          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"thomas@thomas.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
+          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"<YOUR ACCOUNT EMAIL HERE>","displayName":"","idToken":"<YOUR AUTH TOKEN HERE>","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
         );
       final mockAuthClerk = nock("https://identitytoolkit.googleapis.com").post(
           "/v1/accounts:signInWithPassword?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
@@ -164,21 +164,21 @@ void main() {
         ..persist()
         ..reply(
           200,
-          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"clerkId","email":"clerk@dima.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
+          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"clerkId","email":"clerk@dima.it","displayName":"","idToken":"<YOUR AUTH TOKEN HERE>","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
         );
       final mockAuthS = nock("https://identitytoolkit.googleapis.com").post(
           "/v1/accounts:signUp?key=AIzaSyCjphU9SWwimRUhpIjGGzQRlqfSd72H-Zc",
           json.encode(
             {
-              'email': 'thomas@thomas.it',
-              'password': 'thomas',
+              'email': '<YOUR ACCOUNT EMAIL HERE>',
+              'password': '<YOUR ACCOUNT PWD HERE>',
               'returnSecureToken': true,
             },
           ))
         ..persist()
         ..reply(
           200,
-          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"thomas@thomas.it","displayName":"","idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImQwNWI0MDljNmYyMmM0MDNlMWY5MWY5ODY3YWM0OTJhOTA2MTk1NTgiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZGltYTIwMjItNDkxYzQiLCJhdWQiOiJkaW1hMjAyMi00OTFjNCIsImF1dGhfdGltZSI6MTY3NDY3NTA1NywidXNlcl9pZCI6InhGdDVTWHZSZHpRaWJhSWQ1V211b2pmNm9aTzIiLCJzdWIiOiJ4RnQ1U1h2UmR6UWliYUlkNVdtdW9qZjZvWk8yIiwiaWF0IjoxNjc0Njc1MDU3LCJleHAiOjE2NzQ2Nzg2NTcsImVtYWlsIjoidGhvbWFzQHRob21hcy5pdCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXNAdGhvbWFzLml0Il19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.QU4f4YUGGguJYXtFlRNkn5yIaB1FYn94l25uBBE5gMsTaCsVw9tX_8PArH8fc98_BSQ0eQWK_yzPq2yn8lEebNKAVwA0PsdQp_CQwD0MZ4ihcUS3sttcVtLGrMo6h0j6Je-qB9D8hxO19EnINmqlWsveJnAFHp8hZVkwgvj3LLtv7EqcKp5NNCQyQc6_Q5a2XX-vp3Jet23IdrpxxuMwiUmlUCr_7sJFhkHPSCl4VGJjq_WgtIgPUrfKEnt8yvhkyCnbROFdBsFaK-zALS6IqSC1OnzFa8DZL4aJoF-XqY3ZuXLs-8hqT774x6mhG7q4AQG8f0w_Q7na5HOizyHCtw","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
+          '{"kind":"identitytoolkit#VerifyPasswordResponse","localId":"xFt5SXvRdzQibaId5Wmuojf6oZO2","email":"<YOUR ACCOUNT EMAIL HERE>","displayName":"","idToken":"<YOUR AUTH TOKEN HERE>","registered":true,"refreshToken":"APJWN8f-Ql1aF1UQsZmqEMDjmifcIApPt5TcOklkHETU8m_WrbqoooNV_oHpMwzdiYLCn0cyxGVpMfFYWuK5xIEQfzPEtkKm-Oqrz_qJyekVxMSxsBIUgS4e67eV-PMZZhKwPKof44VRVc9E5kgkJ8LIY4TDGZ-u5sp-nRBA5tzec-JCTUOLRiAE2LCS2cgclIuQX5mz_lIfk86ACzAQr0gc4SvZH7MqjQ","expiresIn":"3600"}',
         );
 
       // User
@@ -186,7 +186,7 @@ void main() {
           .get(startsWith("/users/$userId.json"))
         ..persist()
         ..reply(200,
-            '{"address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}');
+            '{"address":"Via Milano 1","email":"<YOUR ACCOUNT EMAIL HERE>","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}');
       var mockClerk = nock("https://dima2022-491c4-default-rtdb.firebaseio.com")
           .get(startsWith("/users/clerkId.json"))
         ..persist()
@@ -201,7 +201,7 @@ void main() {
       var mockUserUpdate =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
               "/users/$userId.json?auth=$authToken",
-              '{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":null,"email":"thomas@thomas.it","phone":null,"address":null,"profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":null,"shoe_size":null,"reward_points":0,"favorite_brands":[],"favorite_categories":[]}')
+              '{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":null,"email":"<YOUR ACCOUNT EMAIL HERE>","phone":null,"address":null,"profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":null,"shoe_size":null,"reward_points":0,"favorite_brands":[],"favorite_categories":[]}')
             ..persist()
             ..reply(200, '');
       var mockUserUpdate2 =
@@ -276,23 +276,23 @@ void main() {
           .get(startsWith("/requests.json?auth=$authToken"))
         ..persist()
         ..reply(200,
-            '{"1":{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}}');
+            '{"1":{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}}');
       var mockRequests = nock(
               "https://dima2022-491c4-default-rtdb.firebaseio.com")
           .get(startsWith("/requests/$userId.json?auth=$authToken"))
         ..persist()
         ..reply(200,
-            '{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}');
+            '{"1":{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"pending"}}');
       var mockRequestsAdd =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
               startsWith("/requests/$userId.json?auth=$authToken"),
-              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '{"name":"-NMiZ-9hUAiMDnT6TvSV"}');
       var mockRequestsAdd2 =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").post(
               startsWith("/requests/$userId.json?auth=$authToken"),
-              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '{"name":"-NMiZ-9hUAiMDnT6TvSV"}');
       var mockRequestsDelete = nock(
@@ -309,13 +309,13 @@ void main() {
       var mockRequestsUpdate =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
               startsWith("/requests/$userId/1.json"),
-              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":null,"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '');
       var mockRequestsUpdate2 =
           nock("https://dima2022-491c4-default-rtdb.firebaseio.com").put(
               startsWith("/requests/$userId/1.json"),
-              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"thomas@thomas.it","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
+              '{"user":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"clerk":{"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","name":"Thomas Golfetto","email":"<YOUR ACCOUNT EMAIL HERE>","phone":"+393390000000","address":"Via Milano 1","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","is_clerk":false,"size":"45","shoe_size":45,"reward_points":0,"favorite_brands":[],"favorite_categories":["Men"]},"products":{"-MEPxPT8F5BFAZbWokNc":{"title":"Felpa con cerniera adidas x Gucci","description":"This is a red t-shirt made of 100% cotton.","price":19.99,"imageUrl":"https://media.gucci.com/style/HEXE0E8E5_Center_0_0_1200x1200/1672418808/724623_XJEGU_7476_001_100_0000_Light-Felpa-con-cerniera-adidas-x-Gucci.jpg","categories":["Men","Tops"],"type":"Clothing","stock":10,"rating":4.5,"brand":"adidas x Gucci","material":"Cotton","color":"Red","sizes":[38],"gender":"Men","madeIn":"USA"}},"message":"May I receive this product in the dressing room?","status":"accepted"}')
             ..persist()
             ..reply(200, '');
 
@@ -467,12 +467,12 @@ void main() {
       await tester.pump(const Duration(milliseconds: 100));
       expect(find.byKey(const Key('loginButton')), findsOneWidget);
       await tester.enterText(
-          find.byKey(const Key('emailField')), 'thomas@thomas.it');
-      await tester.enterText(find.byKey(const Key('passField')), 'thomas');
+          find.byKey(const Key('emailField')), '<YOUR ACCOUNT EMAIL HERE>');
+      await tester.enterText(find.byKey(const Key('passField')), '<YOUR ACCOUNT PWD HERE>');
       await tester.tap(find.byKey(const Key('signupInsteadButton')));
       await tester.pump();
       await tester.enterText(
-          find.byKey(const Key('confirmPassField')), 'thomas');
+          find.byKey(const Key('confirmPassField')), '<YOUR ACCOUNT PWD HERE>');
       await tester.tap(find.byKey(const Key('signupInsteadButton')));
       await tester.pump();
       await tester.tap(find.byKey(const Key('loginButton')));
@@ -746,7 +746,7 @@ void main() {
     testWidgets('AuthService login', (WidgetTester tester) async {
       AuthService service = AuthService();
       late Auth l;
-      l = await service.login('thomas@thomas.it', 'thomas');
+      l = await service.login('<YOUR ACCOUNT EMAIL HERE>', '<YOUR ACCOUNT PWD HERE>');
       expect(l.userId, 'xFt5SXvRdzQibaId5Wmuojf6oZO2');
       l.logout();
     });
@@ -754,7 +754,7 @@ void main() {
     testWidgets('AuthService signup', (WidgetTester tester) async {
       AuthService service = AuthService();
       late Auth l;
-      l = await service.signup('thomas@thomas.it', 'thomas');
+      l = await service.signup('<YOUR ACCOUNT EMAIL HERE>', '<YOUR ACCOUNT PWD HERE>');
       expect(l.userId, 'xFt5SXvRdzQibaId5Wmuojf6oZO2');
       l.logout();
     });
@@ -836,7 +836,7 @@ void main() {
 
     testWidgets('UserService', (WidgetTester tester) async {
       UserService service = UserService(authToken, userId);
-      service.createUser('thomas@thomas.it');
+      service.createUser('<YOUR ACCOUNT EMAIL HERE>');
       User u = await service.getUser();
       expect(u.email.isNotEmpty, true);
       u = await service.getUserById(userId);
@@ -846,8 +846,8 @@ void main() {
 
     testWidgets('User View Model test', (WidgetTester tester) async {
       AuthViewModel authViewModel = AuthViewModel();
-      await authViewModel.signup('thomas@thomas.it', 'thomas');
-      await authViewModel.login('thomas@thomas.it', 'thomas');
+      await authViewModel.signup('<YOUR ACCOUNT EMAIL HERE>', '<YOUR ACCOUNT PWD HERE>');
+      await authViewModel.login('<YOUR ACCOUNT EMAIL HERE>', '<YOUR ACCOUNT PWD HERE>');
       expect(authViewModel.token, authToken);
       expect(authViewModel.userId, userId);
       expect(authViewModel.isAuthenticated, true);
@@ -872,7 +872,7 @@ void main() {
       userViewModel.removeFavoriteCategory(ItemCategory.Formal);
       await userViewModel.saveChanges();
       expect(userViewModel.name, 'Thomas Golfetto');
-      expect(userViewModel.email, 'thomas@thomas.it');
+      expect(userViewModel.email, '<YOUR ACCOUNT EMAIL HERE>');
       expect(userViewModel.phone, '+393390000000');
       expect(userViewModel.address, 'Via Milano 1');
       expect(userViewModel.isClerk, false);
@@ -1193,7 +1193,7 @@ void main() {
       auth.logout();
       expect(auth.token, null);
       User u = User.fromJson(json.decode(
-          '{"id":"$userId","address":"Via Milano 1","email":"thomas@thomas.it","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}'));
+          '{"id":"$userId","address":"Via Milano 1","email":"<YOUR ACCOUNT EMAIL HERE>","favorite_categories":["Men"],"id":"xFt5SXvRdzQibaId5Wmuojf6oZO2","is_clerk":false,"name":"Thomas Golfetto","phone":"+393390000000","profile_image_url":"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541","reward_points":0,"shoe_size":45,"size":"45"}'));
       expect(u.toJson().isNotEmpty, true);
       expect(u.toString().isNotEmpty, true);
       u.id = 'fakeId';
