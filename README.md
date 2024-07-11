@@ -1,11 +1,5 @@
 ## DIMA 2022: A mobile app for in-store clothing shopping
 
-App utilizzata nei negozi di vestiti dai clienti con funzionalità: 
-- login (sia cliente che commesso)
-- scan di un tag/codice dal vestito per avere informazioni
-- richiesta taglia/colore differente da camerino con notifica sull'app del commesso
-- tracciamento reparto in cui è l'utente a fini di business (Location GPS)
-
 DIMA 2022 is an Android app designed to enhance the shopping experience for customers and clothing store sales staff. It offers a range of features to streamline the shopping process and improve customer satisfaction. The app was developed as a university project for the "Design and Implementation of Mobile Application" course at the Polytechnic University of Milan.
 
 ## Key Features:
@@ -19,6 +13,10 @@ DIMA 2022 is an Android app designed to enhance the shopping experience for cust
 - **Enhanced Customer Experience:** Customers can find product information quickly, request assistance easily, and enjoy a more personalized shopping experience.
 - **Improved Sales Efficiency:** Sales staff can receive customer requests promptly, assist customers efficiently, and track inventory levels more effectively.
 - **Data-Driven Insights:** Store managers can gain valuable insights into customer behavior and store traffic patterns, enabling data-driven decision-making.
+
+## Technologies:
+- **Built with Flutter:** Flutter is an open-source framework from Google that allows you to build beautiful, fast, and native-feeling apps for mobile (Android & iOS), web, desktop (Windows, macOS, Linux), and even embedded devices. This means the app you're using can run smoothly on a variety of platforms with a single codebase.
+- **Powered by Firebase:** Firebase is a back-end development platform from Google that provides services like databases, user authentication, cloud storage, and analytics.  In this case, Firebase acts as the brain of the app, handling data storage and user management.
 
 Overall, DIMA 2022 offers a comprehensive solution for enhancing the shopping experience in clothing stores, benefiting both customers and businesses.
 
